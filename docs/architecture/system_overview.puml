@@ -1,2 +1,50 @@
 @startuml
+' Injera-Making Machine — System Overview
+' Save as: docs/architecture/system_overview.puml
+
+skinparam rectangleStyle round
+skinparam shadowing false
+skinparam defaultTextAlignment center
+skinparam ArrowColor #111
+
+rectangle "HMI / UART" as HMI
+rectangle "STM32 Controller\nFreeRTOS + HAL" as MCU
+rectangle "MAX31865\nRTD-to-digital (SPI)" as MAX
+rectangle "PT100 (3-wire)\nThreaded probe" as RTD
+rectangle "SSR (zero-cross)\n10 Hz" as SSR
+rectangle "Heater\n≈1.2 kW" as HEAT
+rectangle "Baking Plate\nØ450 mm" as PLATE
+rectangle "TB6600 Driver\nSTEP/DIR/EN" as TB
+rectangle "NEMA23 Motor\nθ = 1.0 rev/s" as MOTOR
+rectangle "Pump Interface\nPWM" as PUMP
+rectangle "7-Way Manifold" as MANI
+rectangle "Nozzle Arm ×7\nConcentric rings" as NOZ
+
+HMI -[#111]> MCU : UART
+MCU -[#111]> MAX : SPI
+MAX -[#111]> RTD : RTD
+
+MCU -[#111]> SSR : SSR_CTRL
+SSR -[#111]> HEAT : AC
+HEAT -[#111]> PLATE
+
+MCU -[#111]> TB : STEP/DIR/EN
+TB -[#111]> MOTOR
+
+MCU -[#111]> PUMP : PWM
+PUMP -[#111]> MANI
+MANI -[#111]> NOZ : 7 branches
+
+package "Safety (hardware)" {
+  rectangle "E-STOP CH1 (NC)" as E1
+  rectangle "E-STOP CH2 (NC)" as E2
+  rectangle "Cover Interlock (NC)" as COV
+  rectangle "HARD CUT\nθ-EN & SSR_CTRL" as CUT
+  E1 -[#111]> E2 -[#111]> COV -[#111]> CUT
+}
+
+note bottom
+E-stop + cover interlock hard-cut θ-enable and SSR control in hardware.
+MCU only mirrors safety state.
+end note
 @enduml

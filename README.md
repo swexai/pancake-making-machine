@@ -1,3 +1,14 @@
+# Documentation Index
 
-# Injera-Making Machine
-Quick links: docs/specs/PRD.md, docs/specs/SRS.md; PlantUML in docs/architecture (rendered by CI).
+- **PRD:** [specs/PRD.md](specs/PRD.md)
+- **SRS:** [specs/SRS.md](specs/SRS.md)
+
+## Architecture
+- System Overview  
+  ![System Overview](architecture/png/system_overview.png)
+
+- Power & Safety  
+  ![Power Single-line](architecture/png/power_singleline.png)
+
+- Nozzle Arm & Rings  
+  ![Nozzle & Rings](architecture/png/nozzle_and_rings.png)
