@@ -1,41 +1,58 @@
-name: Render PlantUML
+name: Render diagrams (PlantUML + draw.io)
+
 on:
   push:
     paths:
       - 'docs/architecture/**/*.puml'
-      - '.github/workflows/plantuml-render.yml'
+      - 'docs/architecture/drawio/**/*.drawio'
+      - '.github/workflows/diagrams-render.yml'
   workflow_dispatch:
 
-permissions:
-  contents: write   # allow the workflow to commit PNGs back
-
 jobs:
-  render:
+  render-diagrams:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Install PlantUML & Graphviz
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # ---------- PlantUML -> PNG ----------
+      - name: Install PlantUML toolchain
         run: |
           sudo apt-get update
           sudo apt-get install -y plantuml graphviz
 
-      - name: Render .puml to .png
+      - name: Render PlantUML to PNG
+        working-directory: docs/architecture
         run: |
-          set -e
-          find docs/architecture -name "*.puml" -print0 | while IFS= read -r -d '' f; do
-            echo "Rendering $f"
-            plantuml -tpng "$f"
+          # render all .puml (recursively), PNGs are placed next to sources
+          find . -name '*.puml' -print0 | xargs -0 -I{} plantuml -tpng {}
+          # gather all PNGs into a single folder (flattened)
+          mkdir -p png
+          find . -name '*.png' -not -path './png/*' -print0 | while IFS= read -r -d '' f; do
+            base="$(basename "$f")"
+            cp -f "$f" "png/$base"
           done
-          mkdir -p docs/architecture/png
-          find docs/architecture -name "*.png" -not -path "docs/architecture/png/*" -exec cp {} docs/architecture/png/ \;
-          ls -la docs/architecture/png
 
-      - name: Commit rendered PNGs
-        uses: EndBug/add-and-commit@v9
+      # ---------- draw.io -> PNG ----------
+      - name: Export draw.io to PNG
+        uses: rlespinasse/drawio-export-action@v2
         with:
-          add: "docs/architecture/png/*.png"
-          message: "chore(ci): render PlantUML PNGs"
-          default_author: github_actions
+          format: png
+          input: docs/architecture/drawio
+          output: docs/architecture/png
+          sheets: all
+          scale: 2
+
+      # ---------- Commit artifacts ----------
+      - name: Commit diagram updates (if any)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/architecture/png
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore(diagrams): render PlantUML + draw.io to PNG"
+            git push
+          fi
