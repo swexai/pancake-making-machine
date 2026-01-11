@@ -1,29 +1,34 @@
 @startuml
-' Safety Chain — Hardware interlock with software mirror
+' Safety Chain — Hardware interlock with software mirror (compat-safe)
+
 left to right direction
 skinparam shadowing false
 skinparam ArrowColor #111
 skinparam RoundCorner 8
+skinparam DefaultTextAlignment center
 
 rectangle "E-STOP CH1 (NC)" as E1
 rectangle "E-STOP CH2 (NC)" as E2
 rectangle "Cover Interlock (NC)" as COV
-rectangle "HARD CUT:\nθ-EN & SSR_CTRL" as CUT
+rectangle "HARD CUT:\ntheta-EN & SSR_CTRL" as CUT
 
-E1 -[#111]> E2 -[#111]> COV -[#111]> CUT
+E1 --> E2
+E2 --> COV
+COV --> CUT
 
 rectangle "Safety Task\n(status, alarms)" as T_SAF
-E1 -[#gray,dashed]> T_SAF
-E2 -[#gray,dashed]> T_SAF
-COV -[#gray,dashed]> T_SAF
+E1 ..> T_SAF
+E2 ..> T_SAF
+COV ..> T_SAF
 
 rectangle "TB6600 EN" as TBEN
-rectangle "SSR CTRL" as SSR
+rectangle "SSR CTRL" as SSRCTRL
 
-CUT -[#111]> TBEN : disable
-CUT -[#111]> SSR : force OFF
+CUT --> TBEN : disable
+CUT --> SSRCTRL : force OFF
 
 note bottom
-Hardware removes power/control; MCU only mirrors state and alarms.\nTest both NC channels and cover interlock periodically.
+Hardware removes power/control; MCU only mirrors state and raises alarms.
+Test both NC channels and the cover interlock periodically.
 end note
 @enduml
