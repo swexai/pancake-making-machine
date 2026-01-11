@@ -11,4 +11,4 @@
   ![Power Single-line](docs/architecture/png/power_singleline.png)
 
 - Nozzle Arm & Rings  
-  ![Nozzle & Rings](doc/architecture/png/nozzle_and_rings.png)
+  ![Nozzle & Rings](docs/architecture/png/nozzle_and_rings.png)
