@@ -22,15 +22,15 @@ rectangle "7-Way Manifold" as MANI
 rectangle "Nozzle Arm ×7\nConcentric rings" as NOZ
 
 HMI -[#111]> MCU : UART
-MCU -[#111]> MAX : SPI
-MAX -[#111]> RTD : RTD
+MCU -[#111]-> MAX : SPI
+MAX -[#111]-> RTD : RTD
 
-MCU -[#111]> SSR : SSR_CTRL
-SSR -[#111]> HEAT : AC
+MCU -[#111]-> SSR : SSR_CTRL
+SSR -[#111]-> HEAT : AC
 HEAT -[#111]> PLATE
 
-MCU -[#111]> TB : STEP/DIR/EN
-TB -[#111]> MOTOR
+MCU -[#111]-> TB : STEP/DIR/EN
+TB -[#111]-> MOTOR
 
 MCU -[#111]> PUMP : PWM
 PUMP -[#111]> MANI
