@@ -40,7 +40,6 @@ PT100 → MAX31865 → Temp PID → SSR → heater → plate. Target: 210–230 
 ### 4.3 Dispense (pump + manifold)
 Single pump → 3-way RUN/CIP → 7-way manifold → trim/check/tube → 7 nozzles; equal-length branches; outer rings get higher mL/s.
 
-![Pump / Dispense Subsystem (Horizontal)](docs/architecture/png/pump_overview_horizontal.png)
 ![Pump / Dispense Control](docs/architecture/png/control_pump_dispense.png)
 ![Nozzle Arm & Rings](docs/architecture/png/nozzle_and_rings.png)
 
@@ -54,7 +53,7 @@ Safety (1 kHz), TempCtrl (25 Hz; SSR 10 Hz), ThetaCtrl (timer-driven), PumpCtrl 
 ---
 
 ## 6) Timing & Key Parameters
-- θ speed: **1.0 rev/s**  
+- θ speed: **0.2 rev/s**  
 - Dispense: **5 s**, **~28.3 mL/s** total (~141 mL)  
 - Temp sample: **25 Hz** (PID), **10 Hz** SSR drive  
 - Safety scan: **1 kHz** • Logging: **1 Hz**
