@@ -21,7 +21,7 @@ The STM32 controller supervises three subsystems—thermal, motion, and dispense
 ## 3) Control Electronics (24 V domain)
 STM32 (FreeRTOS), MAX31865 + PT100, SSR at 10 Hz, TB6600 + NEMA23 (θ), pump PWM, HMI/Logger.
 
-![HMI & Logger](docs/architecture/png/control_hmi_logger.png)
+![HMI & Logger](docs/architecture/png/control_hmi_logging.png)
 
 ---
 
