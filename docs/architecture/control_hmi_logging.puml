@@ -18,14 +18,14 @@ package "Tasks" {
   rectangle "Safety Task" as T_SAF
 }
 
-T_UI -[#111]> T_PID : T_set
-T_UI -[#111]> T_THETA : RPM_cmd
-T_UI -[#111]> T_PUMP : Flow/CIP
-T_UI -[#111]> T_SAF : ack/reset
+T_UI -[#111]-> T_PID : T_set
+T_UI -[#111]-> T_THETA : RPM_cmd
+T_UI -[#111]-> T_PUMP : Flow/CIP
+T_UI -[#111]-> T_SAF : ack/reset
 
 rectangle "Logger (1 Hz)\nCSV/serial" as LOG
-T_PID -[#gray,dashed]> LOG : T_set, T_meas, duty
-T_THETA -[#gray,dashed]> LOG : RPM, home
-T_PUMP -[#gray,dashed]> LOG : PWM, CIP
-T_SAF -[#gray,dashed]> LOG : E-stop, cover, faults
+T_PID -[#gray,dashed]-> LOG : T_set, T_meas, duty
+T_THETA -[#gray,dashed]-> LOG : RPM, home
+T_PUMP -[#gray,dashed]-> LOG : PWM, CIP
+T_SAF -[#gray,dashed]-> LOG : E-stop, cover, faults
 @enduml
