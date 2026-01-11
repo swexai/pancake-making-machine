@@ -1,4 +1,3 @@
-
 @startuml
 ' Pump / Dispense — PWM + 7 branches (compat-safe)
 left to right direction
