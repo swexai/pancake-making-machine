@@ -76,3 +76,4 @@ Animated visualization of a single **5 s** cycle where the arm completes **exact
 Place this file at `docs/architecture/media/dispense_simulation_one_rev.gif` and embed as below:
 
 ![Dispense Simulation](docs/architecture/media/dispense_simulation_one_rev.gif)
+![Dispense Simulation](docs/architecture/drawio/system_design_overview.drawio)

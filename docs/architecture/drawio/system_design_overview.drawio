@@ -1,0 +1,174 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36" version="29.3.0">
+  <diagram id="system-architecture" name="System Design (Non-crossing)">
+    <mxGraphModel dx="2066" dy="1103" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hmi" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="HMI Panel&#xa;(setpoints, recipes, alarms)" vertex="1">
+          <mxGeometry height="80" width="200" x="60" y="253" as="geometry" />
+        </mxCell>
+        <mxCell id="mcu" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="STM32 Controller&#xa;FreeRTOS tasks and IO" vertex="1">
+          <mxGeometry height="100" width="260" x="700" y="243" as="geometry" />
+        </mxCell>
+        <mxCell id="safety_grp" parent="1" style="swimlane;childLayout=stackLayout;horizontal=1;rounded=1;html=1;startSize=26;fillColor=#f8cecc;strokeColor=#b85450;container=0;expand=0;" value="Safety Chain (hardware)" vertex="1">
+          <mxGeometry height="130" width="490" x="1050" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="hardcut" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffdddd;strokeColor=#b85450;" value="Hard Cut&#xa;(Theta EN &amp; SSR CTRL)" vertex="1">
+          <mxGeometry height="60" width="130" x="1430" y="473" as="geometry" />
+        </mxCell>
+        <mxCell id="thermal_pkg" parent="1" style="swimlane;rounded=1;html=1;childLayout=stackLayout;horizontal=0;startSize=26;fillColor=#e1f5fe;strokeColor=#1e88e5;container=0;" value="Thermal Subsystem" vertex="1">
+          <mxGeometry height="260" width="380" x="40" y="473" as="geometry" />
+        </mxCell>
+        <mxCell id="motion_pkg" parent="1" style="swimlane;rounded=1;html=1;childLayout=stackLayout;horizontal=0;startSize=26;fillColor=#e8f5e9;strokeColor=#43a047;container=0;" value="Motion Subsystem" vertex="1">
+          <mxGeometry height="250" width="390" x="530" y="473" as="geometry" />
+        </mxCell>
+        <mxCell id="dispense_pkg" parent="1" style="swimlane;rounded=1;html=1;childLayout=stackLayout;horizontal=0;startSize=26;fillColor=#fff3e0;strokeColor=#fb8c00;container=0;" value="Dispense Subsystem" vertex="1">
+          <mxGeometry height="240" width="380" x="980" y="473" as="geometry" />
+        </mxCell>
+        <mxCell id="sig_hmi_mcu" edge="1" parent="1" source="hmi" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=#ffffff;" target="mcu" value="UART">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="300" y="293" />
+              <mxPoint x="700" y="293" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sig_spi" edge="1" parent="1" source="mcu" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=#ffffff;" target="max31865" value="SPI">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="830" y="433" />
+              <mxPoint x="460" y="433" />
+              <mxPoint x="460" y="538" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sig_ssr" edge="1" parent="1" source="mcu" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=#ffffff;" target="ssr" value="SSR CTRL">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="730" y="393" />
+              <mxPoint x="150" y="393" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sig_stepdir" edge="1" parent="1" source="mcu" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=#ffffff;" target="tb6600" value="STEP DIR EN">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="760" y="493" />
+              <mxPoint x="660" y="493" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sig_home" edge="1" parent="1" source="mcu" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=#ffffff;" target="home" value="HOME">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="820" y="373" />
+              <mxPoint x="820" y="473" />
+              <mxPoint x="820" y="583" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sig_pwm" edge="1" parent="1" source="mcu" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=#ffffff;" target="pumpdrv" value="PWM">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="880" y="443" />
+              <mxPoint x="1100" y="443" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cut_theta" edge="1" parent="1" source="cov" style="strokeColor=#b85450;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontColor=#b85450;" target="nema23" value="Theta EN cut">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1410" y="413" />
+              <mxPoint x="1380" y="413" />
+              <mxPoint x="1380" y="743" />
+              <mxPoint x="950" y="743" />
+              <mxPoint x="950" y="538" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cut_ssr" edge="1" parent="1" source="cov" style="strokeColor=#b85450;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontColor=#b85450;" target="ssr" value="SSR CTRL">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1470" y="413" />
+              <mxPoint x="1420" y="413" />
+              <mxPoint x="1420" y="763" />
+              <mxPoint x="150" y="763" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tb6600" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#43a047;" value="TB6600 Driver" vertex="1">
+          <mxGeometry height="50" width="160" x="580" y="513" as="geometry" />
+        </mxCell>
+        <mxCell id="nema23" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#43a047;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" value="NEMA23 Motor" vertex="1">
+          <mxGeometry height="50" width="140" x="760" y="513" as="geometry" />
+        </mxCell>
+        <mxCell id="home" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#43a047;" value="Home / Index Sensor" vertex="1">
+          <mxGeometry height="50" width="160" x="760" y="583" as="geometry" />
+        </mxCell>
+        <mxCell id="m_tb_motor" edge="1" parent="1" source="tb6600" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="nema23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pt100" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#1e88e5;" value="PT100 (3-wire)" vertex="1">
+          <mxGeometry height="50" width="140" x="80" y="513" as="geometry" />
+        </mxCell>
+        <mxCell id="max31865" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#1e88e5;" value="MAX31865 (SPI)" vertex="1">
+          <mxGeometry height="50" width="150" x="240" y="513" as="geometry" />
+        </mxCell>
+        <mxCell id="ssr" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#1e88e5;" value="SSR Control" vertex="1">
+          <mxGeometry height="50" width="140" x="80" y="583" as="geometry" />
+        </mxCell>
+        <mxCell id="heater" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#1e88e5;" value="Heater" vertex="1">
+          <mxGeometry height="50" width="120" x="240" y="583" as="geometry" />
+        </mxCell>
+        <mxCell id="plate" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#1e88e5;" value="Plate" vertex="1">
+          <mxGeometry height="50" width="120" x="240" y="673" as="geometry" />
+        </mxCell>
+        <mxCell id="t_pt100_max" edge="1" parent="1" source="pt100" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="max31865">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t_ssr_heater" edge="1" parent="1" source="ssr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="heater">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t_heater_plate" edge="1" parent="1" source="heater" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="plate">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;" value="E-STOP CH1 (NC)" vertex="1">
+          <mxGeometry height="38" width="120" x="1080" y="266" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;" value="E-STOP CH2 (NC)" vertex="1">
+          <mxGeometry height="40" width="120" x="1240" y="265" as="geometry" />
+        </mxCell>
+        <mxCell id="cov" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;" value="Cover Interlock (NC)" vertex="1">
+          <mxGeometry height="40" width="120" x="1390" y="265" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_e1_e2" edge="1" parent="1" source="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="e2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_e2_cov" edge="1" parent="1" source="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="cov">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pumpdrv" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#fb8c00;" value="Pump Drive (PWM)" vertex="1">
+          <mxGeometry height="50" width="160" x="1020" y="513" as="geometry" />
+        </mxCell>
+        <mxCell id="pump" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#fb8c00;" value="Single Pump" vertex="1">
+          <mxGeometry height="50" width="140" x="1200" y="513" as="geometry" />
+        </mxCell>
+        <mxCell id="mani" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#fb8c00;" value="7 Way Manifold" vertex="1">
+          <mxGeometry height="50" width="140" x="1200" y="583" as="geometry" />
+        </mxCell>
+        <mxCell id="nozzles" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#fb8c00;" value="Nozzles x7" vertex="1">
+          <mxGeometry height="50" width="140" x="1020" y="583" as="geometry" />
+        </mxCell>
+        <mxCell id="d_drv_pump" edge="1" parent="1" source="pumpdrv" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pump">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d_pump_mani" edge="1" parent="1" source="pump" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="mani">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d_mani_noz" edge="1" parent="1" source="mani" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="nozzles">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
