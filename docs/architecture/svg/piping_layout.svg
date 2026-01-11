@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="640" viewBox="0 0 1100 640">
+  <style>
+    .blk { fill: #fff; stroke: #222; stroke-width: 2; rx: 8; ry: 8; }
+    .circ { fill: #eef7ff; stroke: #222; stroke-width: 2; }
+    .pipe { stroke: #333; stroke-width: 3; fill: none; }
+    .dash { stroke-dasharray: 6 6; }
+    .arrow { marker-end: url(#arrow); }
+    .label { font: 14px Arial, sans-serif; fill: #111; }
+    .small { font: 12px Arial, sans-serif; fill: #444; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+  </defs>
+  <text class="label" x="550" y="30" text-anchor="middle">Dispensing — 2D Piping Layout</text>
+  <text class="small" x="550" y="50" text-anchor="middle">RUN path and CIP path with 7-way branch fan-out (schematic)</text>
+  <rect class="blk" x="40" y="120" width="140" height="70"/>
+  <text class="label" x="110" y="145" text-anchor="middle">Batter Tank</text>
+  <text class="small" x="110" y="165" text-anchor="middle">(food grade)</text>
+  <rect class="blk" x="210" y="120" width="150" height="70"/>
+  <text class="label" x="285" y="145" text-anchor="middle">Inline Strainer</text>
+  <text class="small" x="285" y="165" text-anchor="middle">200–500 µm</text>
+  <rect class="blk" x="390" y="120" width="140" height="70"/>
+  <text class="label" x="460" y="145" text-anchor="middle">Single Pump</text>
+  <text class="small" x="460" y="165" text-anchor="middle">peristaltic/diaphragm</text>
+  <rect class="blk" x="560" y="120" width="160" height="70"/>
+  <text class="label" x="640" y="145" text-anchor="middle">Pulsation Damper</text>
+  <text class="small" x="640" y="165" text-anchor="middle">(optional)</text>
+  <rect class="blk" x="760" y="110" width="140" height="90"/>
+  <text class="label" x="830" y="145" text-anchor="middle">3-Way Valve</text>
+  <text class="small" x="830" y="165" text-anchor="middle">RUN ↔ CIP</text>
+  <rect class="blk" x="940" y="110" width="140" height="90"/>
+  <text class="label" x="1010" y="145" text-anchor="middle">7-Way Manifold</text>
+  <path class="pipe arrow" d="M180,155 L210,155"/>
+  <path class="pipe arrow" d="M360,155 L390,155"/>
+  <path class="pipe arrow" d="M530,155 L560,155"/>
+  <path class="pipe arrow" d="M720,155 L760,155"/>
+  <path class="pipe arrow" d="M900,155 L940,155"/>
+  <rect class="blk" x="760" y="260" width="140" height="70"/>
+  <text class="label" x="830" y="285" text-anchor="middle">CIP Port</text>
+  <text class="small" x="830" y="305" text-anchor="middle">rinse/det/sanitize</text>
+  <path class="pipe" d="M830,200 L830,240"/>
+  <path class="pipe arrow" d="M830,240 L830,260"/>
+  <path class="pipe" d="M900,155 L900,320 L960,320 L960,200" />
+  <circle class="circ" cx="900" cy="155" r="6"/>
+  <circle class="circ" cx="960" cy="200" r="6"/>
+  <text class="label" x="1010" y="230" text-anchor="middle">Branches x7</text>
+  <g>
+    <path class="pipe" d="M1010,200 L1010,240"/>
+    <rect class="blk" x="980" y="240" width="60" height="28"/>
+    <text class="small" x="1010" y="259" text-anchor="middle">Trim</text>
+    <path class="pipe" d="M1010,268 L1010,296"/>
+    <rect class="blk" x="980" y="296" width="60" height="28"/>
+    <text class="small" x="1010" y="315" text-anchor="middle">Check</text>
+    <path class="pipe" d="M1010,324 L1010,372"/>
+    <text class="small" x="1010" y="365" text-anchor="middle">Equal-length tube</text>
+    <path class="pipe arrow" d="M1010,372 L1010,400"/>
+    <circle class="circ" cx="1010" cy="400" r="6"/>
+    <text class="small" x="1040" y="405">Nozzle</text>
+  </g>
+  <g transform="translate(-90,0)">
+    <path class="pipe" d="M1010,200 L1010,240"/>
+    <rect class="blk" x="980" y="240" width="60" height="28"/>
+    <text class="small" x="1010" y="259" text-anchor="middle">Trim</text>
+    <path class="pipe" d="M1010,268 L1010,296"/>
+    <rect class="blk" x="980" y="296" width="60" height="28"/>
+    <text class="small" x="1010" y="315" text-anchor="middle">Check</text>
+    <path class="pipe" d="M1010,324 L1010,372"/>
+    <path class="pipe arrow" d="M1010,372 L1010,400"/>
+    <circle class="circ" cx="1010" cy="400" r="6"/>
+  </g>
+  <g transform="translate(-180,0)">
+    <path class="pipe" d="M1010,200 L1010,240"/>
+    <rect class="blk" x="980" y="240" width="60" height="28"/>
+    <path class="pipe" d="M1010,268 L1010,296"/>
+    <rect class="blk" x="980" y="296" width="60" height="28"/>
+    <path class="pipe" d="M1010,324 L1010,372"/>
+    <path class="pipe arrow" d="M1010,372 L1010,400"/>
+    <circle class="circ" cx="1010" cy="400" r="6"/>
+  </g>
+  <g transform="translate(-270,0)">
+    <path class="pipe" d="M1010,200 L1010,240"/>
+    <rect class="blk" x="980" y="240" width="60" height="28"/>
+    <path class="pipe" d="M1010,268 L1010,296"/>
+    <rect class="blk" x="980" y="296" width="60" height="28"/>
+    <path class="pipe" d="M1010,324 L1010,372"/>
+    <path class="pipe arrow" d="M1010,372 L1010,400"/>
+    <circle class="circ" cx="1010" cy="400" r="6"/>
+  </g>
+  <g transform="translate(-360,0)">
+    <path class="pipe" d="M1010,200 L1010,240"/>
+    <rect class="blk" x="980" y="240" width="60" height="28"/>
+    <path class="pipe" d="M1010,268 L1010,296"/>
+    <rect class="blk" x="980" y="296" width="60" height="28"/>
+    <path class="pipe" d="M1010,324 L1010,372"/>
+    <path class="pipe arrow" d="M1010,372 L1010,400"/>
+    <circle class="circ" cx="1010" cy="400" r="6"/>
+  </g>
+  <g transform="translate(-450,0)">
+    <path class="pipe" d="M1010,200 L1010,240"/>
+    <rect class="blk" x="980" y="240" width="60" height="28"/>
+    <path class="pipe" d="M1010,268 L1010,296"/>
+    <rect class="blk" x="980" y="296" width="60" height="28"/>
+    <path class="pipe" d="M1010,324 L1010,372"/>
+    <path class="pipe arrow" d="M1010,372 L1010,400"/>
+    <circle class="circ" cx="1010" cy="400" r="6"/>
+  </g>
+  <g transform="translate(-540,0)">
+    <path class="pipe" d="M1010,200 L1010,240"/>
+    <rect class="blk" x="980" y="240" width="60" height="28"/>
+    <path class="pipe" d="M1010,268 L1010,296"/>
+    <rect class="blk" x="980" y="296" width="60" height="28"/>
+    <path class="pipe" d="M1010,324 L1010,372"/>
+    <path class="pipe arrow" d="M1010,372 L1010,400"/>
+    <circle class="circ" cx="1010" cy="400" r="6"/>
+  </g>
+  <rect class="blk" x="40" y="420" width="260" height="120"/>
+  <text class="label" x="170" y="450" text-anchor="middle">Control Signals</text>
+  <text class="small" x="65" y="475">PWM → Pump</text>
+  <text class="small" x="65" y="495">RUN/CIP → Valve</text>
+</svg>

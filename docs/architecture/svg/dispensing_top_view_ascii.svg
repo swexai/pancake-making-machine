@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="0 0 900 600">
+  <style>
+    .plate { fill: #f9f9f9; stroke: #222222; stroke-width: 2; }
+    .ring { fill: none; stroke: #b5b5b5; stroke-width: 1.4; }
+    .arm { stroke: #444444; stroke-width: 4; }
+    .noz { fill: #d33; stroke: #660000; stroke-width: 1; }
+    .label { font: 14px Arial, sans-serif; fill: #111111; }
+    .sub { font: 12px Arial, sans-serif; fill: #444444; }
+    .guide { stroke: #888888; stroke-dasharray: 4 4; stroke-width: 1; fill: none; }
+  </style>
+
+  <!-- Plate (approx diameter scaled) -->
+  <circle class="plate" cx="450" cy="300" r="220"/>
+  <text class="label" x="450" y="42" text-anchor="middle">Top View - Plate and Nozzle Arm (7 outlets)</text>
+  <text class="sub" x="450" y="60" text-anchor="middle">Concentric deposition while plate spins at 1.0 rev/s</text>
+
+  <!-- Concentric rings (7 paths) -->
+  <circle class="ring" cx="450" cy="300" r="25"/>
+  <circle class="ring" cx="450" cy="300" r="55"/>
+  <circle class="ring" cx="450" cy="300" r="85"/>
+  <circle class="ring" cx="450" cy="300" r="115"/>
+  <circle class="ring" cx="450" cy="300" r="145"/>
+  <circle class="ring" cx="450" cy="300" r="175"/>
+  <circle class="ring" cx="450" cy="300" r="205"/>
+
+  <!-- Rotational guide arrow -->
+  <path class="guide" d="M450,80 A220,220 0 0,1 665,300" />
+  <polygon points="665,300 657,294 657,306" fill="#888888"/>
+
+  <!-- Nozzle arm -->
+  <line class="arm" x1="450" y1="300" x2="690" y2="300"/>
+  <!-- 7 nozzles equally spaced along arm -->
+  <circle class="noz" cx="485" cy="300" r="6"/>
+  <circle class="noz" cx="520" cy="300" r="6"/>
+  <circle class="noz" cx="555" cy="300" r="6"/>
+  <circle class="noz" cx="590" cy="300" r="6"/>
+  <circle class="noz" cx="625" cy="300" r="6"/>
+  <circle class="noz" cx="660" cy="300" r="6"/>
+  <circle class="noz" cx="690" cy="300" r="6"/>
+
+  <!-- Labels for inner/outer rings with target flow concept -->
+  <text class="sub" x="480" y="330">Ring 1 (low flow)</text>
+  <text class="sub" x="685" y="330" text-anchor="end">Ring 7 (high flow)</text>
+
+  <!-- Center dot -->
+  <circle cx="450" cy="300" r="3" fill="#222222"/>
+
+  <!-- Legend -->
+  <rect x="40" y="470" width="380" height="110" fill="#ffffff" stroke="#222222" stroke-width="1.2" rx="8"/>
+  <text class="label" x="60" y="495">Legend</text>
+  <circle class="noz" cx="60" cy="520" r="6"/>
+  <text class="sub" x="78" y="525">Nozzle outlet (7x)</text>
+  <line class="arm" x1="60" y1="540" x2="110" y2="540"/>
+  <text class="sub" x="120" y="545">Nozzle arm (rigid)</text>
+  <circle class="ring" cx="60" cy="560" r="12"/>
+  <text class="sub" x="78" y="565">Concentric ring path (deposition)</text>
+</svg>
