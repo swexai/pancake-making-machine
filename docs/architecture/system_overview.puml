@@ -1,11 +1,12 @@
 @startuml
-' Injera-Making Machine — System Overview
-' Save as: docs/architecture/system_overview.puml
+' Injera-Making Machine — System Overview (compat-safe)
+' Works with older PlantUML on Ubuntu runners
 
-skinparam rectangleStyle round
+left to right direction
 skinparam shadowing false
-skinparam defaultTextAlignment center
 skinparam ArrowColor #111
+skinparam DefaultTextAlignment center
+skinparam RoundCorner 8
 
 rectangle "HMI / UART" as HMI
 rectangle "STM32 Controller\nFreeRTOS + HAL" as MCU
@@ -15,7 +16,7 @@ rectangle "SSR (zero-cross)\n10 Hz" as SSR
 rectangle "Heater\n≈1.2 kW" as HEAT
 rectangle "Baking Plate\nØ450 mm" as PLATE
 rectangle "TB6600 Driver\nSTEP/DIR/EN" as TB
-rectangle "NEMA23 Motor\nTheta = 1.0 rev/s" as MOTOR
+rectangle "NEMA23 Motor\ntheta = 1.0 rev/s" as MOTOR
 rectangle "Pump Interface\nPWM" as PUMP
 rectangle "7-Way Manifold" as MANI
 rectangle "Nozzle Arm ×7\nConcentric rings" as NOZ
@@ -39,12 +40,14 @@ package "Safety (hardware)" {
   rectangle "E-STOP CH1 (NC)" as E1
   rectangle "E-STOP CH2 (NC)" as E2
   rectangle "Cover Interlock (NC)" as COV
-  rectangle "HARD CUT\nTheta-EN & SSR_CTRL" as CUT
-  E1 -[#111]> E2 -[#111]> COV -[#111]> CUT
+  rectangle "HARD CUT\ntheta-EN & SSR_CTRL" as CUT
+  E1 -[#111]> E2
+  E2 -[#111]> COV
+  COV -[#111]> CUT
 }
 
 note bottom
-E-stop + cover interlock hard-cut θ-enable and SSR control in hardware.
+E-stop + cover interlock hard-cut theta-enable and SSR control in hardware.
 MCU only mirrors safety state.
 end note
 @enduml
