@@ -15,7 +15,7 @@
 
 ## Control Design (modular)
 - Overview  
-  ![Overview](architecture/png/control_overview_modules.png)
+  ![Overview](docs/architecture/png/control_overview_modules.png)
 
 - Temperature Loop  
   ![Temp Loop](docs/architecture/png/control_temp_loop.png)
