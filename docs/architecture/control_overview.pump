@@ -1,0 +1,54 @@
+@startuml
+' Control Overview — Modules
+left to right direction
+skinparam shadowing false
+skinparam ArrowColor #111
+skinparam RoundCorner 8
+skinparam DefaultTextAlignment center
+
+package "HMI / Supervision" {
+  rectangle "HMI Panel" as HMI
+  rectangle "Logger (1 Hz)" as LOG
+}
+
+package "STM32 (FreeRTOS)" {
+  rectangle "Safety Task" as T_SAF
+  rectangle "TempCtrl Task (PID)" as T_PID
+  rectangle "ThetaCtrl Task" as T_THETA
+  rectangle "PumpCtrl Task" as T_PUMP
+  rectangle "HMI Link Task" as T_UI
+}
+
+package "Actuation / Plant" {
+  rectangle "SSR + Heater + Plate" as PLANT
+  rectangle "TB6600 + NEMA23 (θ)" as THETA
+  rectangle "Pump Drive + Manifold + Nozzles" as PUMP
+  rectangle "MAX31865 + PT100" as RTD
+}
+
+' Supervisory links
+HMI -[#111]> T_UI
+T_UI -[#111]-> T_PID : T_set
+T_UI -[#111]-> T_THETA : RPM_cmd
+T_UI -[#111]-> T_PUMP : Flow/CIP
+
+' Loops
+T_PID -[#111]-> PLANT : SSR_CTRL
+RTD -[#111]-> T_PID : T_meas
+
+T_THETA -[#111]-> THETA : STEP/DIR/EN
+
+T_PUMP -[#111]-> PUMP : PWM
+
+' Safety
+rectangle "E-STOP CH1/CH2 + Cover (NC)\nHARD CUT: θ-EN & SSR_CTRL" as SAFE
+SAFE -[#111]> THETA
+SAFE -[#111]> PLANT
+SAFE -[#gray,dashed]> T_SAF
+
+' Logging
+T_PID -[#gray,dashed]> LOG
+T_THETA -[#gray,dashed]> LOG
+T_PUMP -[#gray,dashed]> LOG
+T_SAF -[#gray,dashed]> LOG
+@enduml

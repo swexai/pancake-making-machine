@@ -12,3 +12,23 @@
 
 - Nozzle Arm & Rings  
   ![Nozzle & Rings](docs/architecture/png/nozzle_and_rings.png)
+
+## Control Design (modular)
+- Overview  
+  ![Overview](architecture/png/control_overview_modules.png)
+
+- Temperature Loop  
+  ![Temp Loop](docs/architecture/png/control_temp_loop.png)
+
+- Theta Motion  
+  ![Theta Motion](architecture/png/control_theta_motion.png)
+
+- Pump / Dispense  
+  ![Pump](docs7architecture/png/control_pump_dispense.png)
+
+- Safety Chain  
+  ![Safety](docs/architecture/png/control_safety_chain.png)
+
+- HMI & Logger  
+  ![HMI](docs/architecture/png/control_hmi_logger.png)
+

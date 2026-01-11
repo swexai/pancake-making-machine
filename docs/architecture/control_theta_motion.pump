@@ -1,0 +1,23 @@
+
+@startuml
+' Theta Motion — STEP/DIR + Homing
+left to right direction
+skinparam shadowing false
+skinparam ArrowColor #111
+skinparam RoundCorner 8
+
+rectangle "ThetaCtrl Task\n(1.0 rev/s setpoint,\naccel ramp, homing)" as T_THETA
+rectangle "TB6600 Driver" as TB
+rectangle "NEMA23 Motor (θ)" as MOTOR
+rectangle "Home / Index Sensor" as HOME
+rectangle "Safety HARD CUT\n(disable EN)" as CUT
+
+T_THETA -[#111]> TB : STEP/DIR/EN
+TB -[#111]> MOTOR : drive
+HOME -[#111]> T_THETA : home/index
+CUT -[#111]> TB : EN=LOW
+
+note bottom
+• Microstep 1/8–1/16.\n• Jerk-limited accel to avoid stalls.\n• Homing must succeed before RUN.
+end note
+@enduml

@@ -1,0 +1,25 @@
+@startuml
+' Temperature Loop — PID + SSR
+left to right direction
+skinparam shadowing false
+skinparam ArrowColor #111
+skinparam RoundCorner 8
+
+rectangle "TempCtrl Task (25 Hz)\nPID(T_set, T_meas) → duty" as T_PID
+rectangle "MAX31865 (SPI)" as MAX
+rectangle "PT100 (3-wire)\nThreaded probe" as RTD
+rectangle "SSR (zero-cross)\n10 Hz time-prop" as SSR
+rectangle "Heater (≈1.2 kW)" as HEAT
+rectangle "Plate (thermal plant)" as PLATE
+
+T_PID -[#111]> SSR : duty → SSR_CTRL
+SSR -[#111]> HEAT : AC
+HEAT -[#111]> PLATE : heat
+PLATE -[#111]> RTD : temp
+RTD -[#111]> MAX : RTD
+MAX -[#111]> T_PID : T_meas
+
+note bottom
+• Sample @25 Hz, drive SSR @10 Hz TPWM.\n• One-point offset calibration after install.\n• Over-temp → cut SSR in hardware + alarm.
+end note
+@enduml

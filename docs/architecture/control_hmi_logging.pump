@@ -1,0 +1,31 @@
+
+@startuml
+' HMI & Logger — supervision layer
+left to right direction
+skinparam shadowing false
+skinparam ArrowColor #111
+skinparam RoundCorner 8
+
+rectangle "HMI Panel\n(setpoints, recipes,\nalarms)" as HMI
+rectangle "HMI Link Task\n(param server)" as T_UI
+
+HMI -[#111]> T_UI : setpoints/commands
+
+package "Tasks" {
+  rectangle "TempCtrl" as T_PID
+  rectangle "ThetaCtrl" as T_THETA
+  rectangle "PumpCtrl" as T_PUMP
+  rectangle "Safety Task" as T_SAF
+}
+
+T_UI -[#111]> T_PID : T_set
+T_UI -[#111]> T_THETA : RPM_cmd
+T_UI -[#111]> T_PUMP : Flow/CIP
+T_UI -[#111]> T_SAF : ack/reset
+
+rectangle "Logger (1 Hz)\nCSV/serial" as LOG
+T_PID -[#gray,dashed]> LOG : T_set, T_meas, duty
+T_THETA -[#gray,dashed]> LOG : RPM, home
+T_PUMP -[#gray,dashed]> LOG : PWM, CIP
+T_SAF -[#gray,dashed]> LOG : E-stop, cover, faults
+@enduml
