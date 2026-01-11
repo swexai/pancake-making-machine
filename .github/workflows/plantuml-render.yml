@@ -1,0 +1,41 @@
+name: Render PlantUML
+on:
+  push:
+    paths:
+      - 'docs/architecture/**/*.puml'
+      - '.github/workflows/plantuml-render.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write   # allow the workflow to commit PNGs back
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install PlantUML & Graphviz
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y plantuml graphviz
+
+      - name: Render .puml to .png
+        run: |
+          set -e
+          find docs/architecture -name "*.puml" -print0 | while IFS= read -r -d '' f; do
+            echo "Rendering $f"
+            plantuml -tpng "$f"
+          done
+          mkdir -p docs/architecture/png
+          find docs/architecture -name "*.png" -not -path "docs/architecture/png/*" -exec cp {} docs/architecture/png/ \;
+          ls -la docs/architecture/png
+
+      - name: Commit rendered PNGs
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: "docs/architecture/png/*.png"
+          message: "chore(ci): render PlantUML PNGs"
+          default_author: github_actions
