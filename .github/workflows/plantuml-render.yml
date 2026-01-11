@@ -25,13 +25,10 @@ jobs:
       - name: Render PlantUML to PNG
         working-directory: docs/architecture
         run: |
-          # render all .puml (recursively), PNGs are placed next to sources
           find . -name '*.puml' -print0 | xargs -0 -I{} plantuml -tpng {}
-          # gather all PNGs into a single folder (flattened)
           mkdir -p png
           find . -name '*.png' -not -path './png/*' -print0 | while IFS= read -r -d '' f; do
-            base="$(basename "$f")"
-            cp -f "$f" "png/$base"
+            cp -f "$f" "png/$(basename "$f")"
           done
 
       # ---------- draw.io -> PNG ----------
@@ -39,10 +36,11 @@ jobs:
         uses: rlespinasse/drawio-export-action@v2
         with:
           format: png
-          input: docs/architecture/drawio
+          path: docs/architecture/drawio              # <- was 'input'
           output: docs/architecture/png
-          sheets: all
+          all-pages: true                              # <- was 'sheets'
           scale: 2
+          embed-diagram: true                          # include diagram data in PNG
 
       # ---------- Commit artifacts ----------
       - name: Commit diagram updates (if any)
