@@ -21,10 +21,10 @@
   ![Temp Loop](docs/architecture/png/control_temp_loop.png)
 
 - Theta Motion  
-  ![Theta Motion](architecture/png/control_theta_motion.png)
+  ![Theta Motion](docs/architecture/png/control_theta_motion.png)
 
 - Pump / Dispense  
-  ![Pump](docs7architecture/png/control_pump_dispense.png)
+  ![Pump](docs/architecture/png/control_pump_dispense.png)
 
 - Safety Chain  
   ![Safety](docs/architecture/png/control_safety_chain.png)
