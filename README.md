@@ -30,5 +30,5 @@
   ![Safety](docs/architecture/png/control_safety_chain.png)
 
 - HMI & Logger  
-  ![HMI](docs/architecture/png/control_hmi_logger.png)
+  ![HMI](docs/architecture/png/control_hmi_logging.png)
 
