@@ -126,6 +126,7 @@ extern system_state_t g_system_state;
  * ========================================================================= */
 
 void control_system_init(void);
+void control_system_update(void);
 
 /* ============================================================================
  * FUNCTION PROTOTYPES - THERMAL CONTROL

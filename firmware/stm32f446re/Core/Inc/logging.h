@@ -40,7 +40,7 @@ typedef struct {
 void logging_init(void);
 
 /* Add an entry to the log (internal call from main loop) */
-void loggingstroke_add_entry(void);
+void logging_add_entry(void);
 
 /* Write log entries to UART (debug/telemetry) */
 void logging_transmit_entry(log_entry_t *entry);

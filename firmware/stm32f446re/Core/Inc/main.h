@@ -82,6 +82,9 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN Private defines */
 
+/* Custom utility functions */
+uint32_t HAL_GetMicrosecond(void);
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

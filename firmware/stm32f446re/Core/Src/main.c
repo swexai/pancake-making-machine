@@ -81,6 +81,17 @@ static void task_idle(void *pvParameters);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+/**
+ * @brief Get current time in microseconds
+ * @note This is a simple implementation using HAL_GetTick().
+ * For better precision, a dedicated timer should be used.
+ * @return Current time in microseconds
+ */
+uint32_t HAL_GetMicrosecond(void)
+{
+    return HAL_GetTick() * 1000UL;
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -560,7 +571,7 @@ static void task_logging(void *pvParameters)
     const TickType_t xDelay = pdMS_TO_TICKS(1000);  /* 1000 ms = 1 Hz */
     
     for (;;) {
-        loggingstroke_add_entry();
+        logging_add_entry();
         vTaskDelay(xDelay);
     }
 }

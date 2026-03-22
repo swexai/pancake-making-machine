@@ -36,7 +36,7 @@ void logging_init(void)
  * @brief Add current system state to log
  * Called at 1 Hz intervals
  */
-void loggingstroke_add_entry(void)
+void logging_add_entry(void)
 {
     uint32_t now_ms = HAL_GetTick();
     

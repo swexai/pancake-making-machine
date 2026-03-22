@@ -80,39 +80,119 @@ firmware/
 
 ### Using CMake (Recommended)
 
-1. **Create build directory:**
+1. **Install ARM GCC toolchain:**
+   ```bash
+   sudo apt install gcc-arm-none-eabi
+   ```
+
+2. **Download FreeRTOS:**
    ```bash
    cd firmware/stm32f446re
+   wget https://github.com/FreeRTOS/FreeRTOS-Kernel/archive/V10.0.0.zip
+   unzip V10.0.0.zip
+   mv FreeRTOS-Kernel-10.0.0 FreeRTOS
+   ```
+
+3. **Create build directory:**
+   ```bash
+   cd firmware/stm32f446re/Core
    mkdir build && cd build
    ```
 
-2. **Run CMake:**
+4. **Run CMake:**
    ```bash
-   cmake .. -DCMAKE_TOOLCHAIN_FILE=arm-none-eabi.cmake
+   cmake ..
    ```
 
-3. **Build:**
+5. **Build:**
    ```bash
    make -j4
    ```
 
+#### Compiler Configuration
+The CMakeLists.txt automatically sets:
+- `-DUSE_HAL_DRIVER`
+- `-DSTM32F446xx`
+- Include paths for HAL, CMSIS, and FreeRTOS
+
+#### Troubleshooting Common Errors
+
+**"unknown type name 'UART_HandleTypeDef'"**
+- Ensure `#define HAL_UART_MODULE_ENABLED` in `stm32f4xx_hal_conf.h`
+- Verify `stm32f4xx_hal_uart.h` exists in HAL Inc directory
+- Check that `-DSTM32F446xx` is defined
+
+**GPIO macro conflicts (e.g., "expected ')' before '*' token")**
+- Remove `extern GPIO_TypeDef *GPIOx;` declarations
+- Use GPIO port macros: `HAL_GPIO_ReadPin(GPIO_Port, GPIO_Pin)`
+
+**FreeRTOS config errors**
+- Add `#define configUSE_16_BIT_TICKS 0` to `FreeRTOSConfig.h`
+- Ensure FreeRTOS source files are included in build
+
+**"HAL_GetMicrosecond" not declared**
+- Add `uint32_t HAL_GetMicrosecond(void);` prototype to `main.h`
+- Implement the function in `main.c`: `uint32_t HAL_GetMicrosecond(void) { return HAL_GetTick() * 1000UL; }`
+
+**"logging_add_entry" or "control_system_update" not declared**
+- Ensure all custom module headers are included: `#include "motion_control.h"`, `#include "logging.h"`, etc.
+- Add missing function prototypes to respective header files
+- Fix typos in function names (e.g., `loggingstroke_add_entry` → `logging_add_entry`)
+
 ### Using STM32CubeIDE
 
-1. Open `pancake-making-machine.ioc` in CubeMX
-2. Verify peripheral configuration:
-   - **SPI1:** Master, 8-bit, Mode 0, ~2 MHz clock
-   - **TIM1:** PWM mode, 16-bit, appropriate frequency
-   - **TIM2:** Output comparison for stepper steps
-   - **UART3:** 115200 baud, 8N1
+1. **Open STM32CubeMX:**
+   - Open `pancake-making-machine.ioc`
+   - Verify peripheral configuration:
+     - **SPI1:** Master, 8-bit, Mode 0, ~2 MHz clock
+     - **TIM1:** PWM mode, 16-bit, appropriate frequency
+     - **TIM2:** Output comparison for stepper steps
+     - **UART3:** 115200 baud, 8N1
 
-3. Generate code (preserves USER CODE sections)
+2. **Enable FreeRTOS:**
+   - In CubeMX, go to Middleware → FreeRTOS
+   - Select CMSIS_V2 interface
+   - Configure tasks as needed
 
-4. Import into STM32CubeIDE
+3. **Generate Code:**
+   - Generate code (preserves USER CODE sections)
+   - This will create FreeRTOS source files in `Middlewares/Third_Party/FreeRTOS`
 
-5. Add FreeRTOS source to project:
+4. **Import into STM32CubeIDE:**
+   - Open STM32CubeIDE
+   - Import the project
+
+5. **Add Custom Source Files:**
+   - Copy the custom control files to appropriate locations:
+     - `Core/Inc/` and `Core/Src/` for application headers/sources
+   - Add them to the project build
+
+6. **Configure Include Paths:**
    - Right-click project → Properties
-   - C/C++ General → Source locations
-   - Add FreeRTOS include and source directories
+   - C/C++ General → Paths and Symbols → Includes → GNU C
+   - Add the following include paths:
+     - `FreeRTOS/FreeRTOS/Source/include`
+     - `FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM4F`
+     - `Core/Inc` (should already be there)
+
+7. **Add FreeRTOS Source Files:**
+   - Right-click project → Properties
+   - C/C++ General → Paths and Symbols → Source Location
+   - Add folder: `FreeRTOS/FreeRTOS/Source`
+   - Add folder: `FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM4F`
+   - Add folder: `FreeRTOS/FreeRTOS/Source/portable/MemMang`
+
+8. **Add Custom Application Files:**
+   - Copy the control system files to `Core/Src/` and `Core/Inc/`
+   - Ensure they are included in the build (check .cproject file or project settings)
+
+9. **Fix Missing Function Declarations:**
+   - Ensure `hmi.c` includes `motion_control.h` and `logging.h`
+   - Add any missing function prototypes
+
+10. **Build and Debug:**
+    - Clean and rebuild the project
+    - Use ST-Link for debugging
 
 6. Build project
 
