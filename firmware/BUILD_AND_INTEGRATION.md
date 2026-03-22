@@ -141,6 +141,8 @@ The CMakeLists.txt automatically sets:
 
 ### Using STM32CubeIDE
 
+**Note:** The project `.cproject` file has been pre-configured with the correct include paths and source locations for FreeRTOS. If you're still getting build errors, follow these manual steps:
+
 1. **Open STM32CubeMX:**
    - Open `pancake-making-machine.ioc`
    - Verify peripheral configuration:
@@ -162,39 +164,28 @@ The CMakeLists.txt automatically sets:
    - Open STM32CubeIDE
    - Import the project
 
-5. **Add Custom Source Files:**
-   - Copy the custom control files to appropriate locations:
-     - `Core/Inc/` and `Core/Src/` for application headers/sources
-   - Add them to the project build
-
-6. **Configure Include Paths:**
+5. **Verify Include Paths:**
    - Right-click project → Properties
    - C/C++ General → Paths and Symbols → Includes → GNU C
-   - Add the following include paths:
-     - `FreeRTOS/FreeRTOS/Source/include`
+   - Ensure these paths are present:
+     - `../Core/Inc`
+     - `../Drivers/STM32F4xx_HAL_Driver/Inc`
+     - `../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy`
+     - `../Drivers/CMSIS/Device/ST/STM32F4xx/Include`
+     - `../Drivers/CMSIS/Include`
+     - `../FreeRTOS/FreeRTOS/Source/include`
+     - `../FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM4F`
+
+6. **Verify Source Locations:**
+   - The project should automatically include FreeRTOS source files
+   - If not, add source locations for:
+     - `FreeRTOS/FreeRTOS/Source`
      - `FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM4F`
-     - `Core/Inc` (should already be there)
+     - `FreeRTOS/FreeRTOS/Source/portable/MemMang`
 
-7. **Add FreeRTOS Source Files:**
-   - Right-click project → Properties
-   - C/C++ General → Paths and Symbols → Source Location
-   - Add folder: `FreeRTOS/FreeRTOS/Source`
-   - Add folder: `FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM4F`
-   - Add folder: `FreeRTOS/FreeRTOS/Source/portable/MemMang`
-
-8. **Add Custom Application Files:**
-   - Copy the control system files to `Core/Src/` and `Core/Inc/`
-   - Ensure they are included in the build (check .cproject file or project settings)
-
-9. **Fix Missing Function Declarations:**
-   - Ensure `hmi.c` includes `motion_control.h` and `logging.h`
-   - Add any missing function prototypes
-
-10. **Build and Debug:**
-    - Clean and rebuild the project
-    - Use ST-Link for debugging
-
-6. Build project
+7. **Build and Debug:**
+   - Clean and rebuild the project
+   - Use ST-Link for debugging
 
 ### Using ARM GCC Directly
 
