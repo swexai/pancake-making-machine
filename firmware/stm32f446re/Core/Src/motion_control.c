@@ -64,8 +64,7 @@ void motion_home_axis(void)
     while (HAL_GetTick() < timeout_ms && !g_stepper.is_homed) {
         /* Poll home switch - assuming it's on a GPIO */
         /* This is pseudo-code; actual implementation depends on hardware */
-        extern GPIO_TypeDef *GPIOA;
-        if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8) == GPIO_PIN_SET) {  /* Home switch active */
+        if (HAL_GPIO_ReadPin(Home_Switch_GPIO_Port, Home_Switch_Pin) == GPIO_PIN_SET) {  /* Home switch active */
             g_stepper.position_revolutions = 0.0f;
             g_stepper.step_counter = 0;
             g_stepper.is_homed = true;

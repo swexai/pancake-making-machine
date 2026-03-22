@@ -88,6 +88,7 @@
 #define HAL_FLASH_MODULE_ENABLED
 #define HAL_PWR_MODULE_ENABLED
 #define HAL_CORTEX_MODULE_ENABLED
+#define HAL_UART_MODULE_ENABLED
 
 /* ########################## HSE/HSI Values adaptation ##################### */
 /**

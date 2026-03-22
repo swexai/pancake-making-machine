@@ -541,11 +541,8 @@ static void task_hmi(void *pvParameters)
         /* Periodic status refresh */
         static uint32_t refresh_counter = 0;
         if ((refresh_counter++ % 10) == 0) {  /* Every 5 seconds */
-            extern GPIO_TypeDef *GPIOB;
-            extern uint16_t Power_Indicator_Pin;
-            
             /* Toggle power indicator LED */
-            HAL_GPIO_TogglePin(GPIOB, Power_Indicator_Pin);
+            HAL_GPIO_TogglePin(Power_Indicator_GPIO_Port, Power_Indicator_Pin);
         }
         
         vTaskDelay(xDelay);

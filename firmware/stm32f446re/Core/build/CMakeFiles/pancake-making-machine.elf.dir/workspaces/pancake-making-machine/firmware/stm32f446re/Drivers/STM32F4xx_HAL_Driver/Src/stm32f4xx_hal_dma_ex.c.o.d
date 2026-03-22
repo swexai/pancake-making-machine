@@ -1,0 +1,33 @@
+CMakeFiles/pancake-making-machine.elf.dir/workspaces/pancake-making-machine/firmware/stm32f446re/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.o: \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/Inc/stm32f4xx_hal_conf.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f446xx.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/CMSIS/Include/core_cm4.h \
+ /usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/CMSIS/Include/cmsis_version.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/CMSIS/Include/cmsis_compiler.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/CMSIS/Include/cmsis_gcc.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/CMSIS/Include/mpu_armv7.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h \
+ /usr/lib/gcc/arm-none-eabi/13.2.1/include/stddef.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
+ /workspaces/pancake-making-machine/firmware/stm32f446re/Core/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h

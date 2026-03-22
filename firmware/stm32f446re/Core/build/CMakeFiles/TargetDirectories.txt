@@ -1,0 +1,3 @@
+/workspaces/pancake-making-machine/firmware/stm32f446re/Core/build/CMakeFiles/pancake-making-machine.elf.dir
+/workspaces/pancake-making-machine/firmware/stm32f446re/Core/build/CMakeFiles/edit_cache.dir
+/workspaces/pancake-making-machine/firmware/stm32f446re/Core/build/CMakeFiles/rebuild_cache.dir

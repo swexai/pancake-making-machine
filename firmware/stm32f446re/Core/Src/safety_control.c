@@ -56,10 +56,7 @@ void safety_init(void)
  */
 void safety_estop_check(void)
 {
-    extern GPIO_TypeDef *GPIOA;
-    extern uint16_t ESTOP_Pin;
-    
-    GPIO_PinState estop_pin = HAL_GPIO_ReadPin(GPIOA, ESTOP_Pin);
+    GPIO_PinState estop_pin = HAL_GPIO_ReadPin(ESTOP_GPIO_Port, ESTOP_Pin);
     
     if (estop_pin == GPIO_PIN_RESET) {
         /* E-stop pressed (active low) */
@@ -89,10 +86,7 @@ void safety_estop_check(void)
  */
 void safety_cover_check(void)
 {
-    extern GPIO_TypeDef *GPIOA;
-    extern uint16_t NC_Switch_Pin;
-    
-    GPIO_PinState cover_pin = HAL_GPIO_ReadPin(GPIOA, NC_Switch_Pin);
+    GPIO_PinState cover_pin = HAL_GPIO_ReadPin(NC_Switch_GPIO_Port, NC_Switch_Pin);
     
     if (cover_pin == GPIO_PIN_RESET) {
         /* Cover open */

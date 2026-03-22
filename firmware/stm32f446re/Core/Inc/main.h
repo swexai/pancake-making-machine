@@ -77,6 +77,8 @@ void Error_Handler(void);
 #define PWM_PUMP_GPIO_Port GPIOB
 #define Power_Indicator_Pin GPIO_PIN_7
 #define Power_Indicator_GPIO_Port GPIOB
+#define Home_Switch_Pin GPIO_PIN_8
+#define Home_Switch_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
 

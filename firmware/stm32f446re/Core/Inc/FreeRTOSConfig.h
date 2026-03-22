@@ -27,6 +27,9 @@
 /* System clock frequency - STM32F446 at 180 MHz */
 #define configCPU_CLOCK_HZ                  ((unsigned long) 180000000UL)
 
+/* Use 32-bit ticks */
+#define configUSE_16_BIT_TICKS              0
+
 /* ============================================================================
  * FREERTOS FEATURE CONFIGURATION
  * ========================================================================= */
@@ -129,7 +132,7 @@ extern void vApplicationMallocFailedHook(void);
 #define configUSE_MALLOC_FAILED_HOOK        1
 
 /* Stack overflow hook */
-extern void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName);
+extern void vApplicationStackOverflowHook(void *xTask, char *pcTaskName);
 #define configCHECK_FOR_STACK_OVERFLOW      2
 
 #endif /* FREERTOS_CONFIG_H */
