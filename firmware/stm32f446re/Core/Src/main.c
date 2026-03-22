@@ -21,6 +21,16 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "control_system.h"
+#include "thermal_control.h"
+#include "motion_control.h"
+#include "pump_control.h"
+#include "safety_control.h"
+#include "hmi.h"
+#include "logging.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "timers.h"
 
 /* USER CODE END Includes */
 
@@ -56,6 +66,15 @@ static void MX_SPI1_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
+
+/* FreeRTOS Task Prototypes */
+static void task_safety_monitor(void *pvParameters);
+static void task_thermal_control(void *pvParameters);
+static void task_motion_control(void *pvParameters);
+static void task_pump_control(void *pvParameters);
+static void task_hmi(void *pvParameters);
+static void task_logging(void *pvParameters);
+static void task_idle(void *pvParameters);
 
 /* USER CODE END PFP */
 
@@ -98,13 +117,69 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
+  /* Initialize control system and all modules */
+  control_system_init();
+  
+  /* Create FreeRTOS tasks */
+  
+  /* Safety task - HIGHEST priority (1 kHz rate) */
+  xTaskCreate(task_safety_monitor, 
+              "SafetyMonitor",
+              configMINIMAL_STACK_SIZE + 128,
+              NULL,
+              5,  /* Priority: very high */
+              NULL);
+  
+  /* Thermal control task (25 Hz rate) */
+  xTaskCreate(task_thermal_control,
+              "ThermalCtrl",
+              configMINIMAL_STACK_SIZE + 256,
+              NULL,
+              4,  /* Priority: high */
+              NULL);
+  
+  /* Motion control task (25 Hz rate) */
+  xTaskCreate(task_motion_control,
+              "MotionCtrl",
+              configMINIMAL_STACK_SIZE + 256,
+              NULL,
+              4,  /* Priority: high */
+              NULL);
+  
+  /* Pump control task (10 Hz rate) */
+  xTaskCreate(task_pump_control,
+              "PumpCtrl",
+              configMINIMAL_STACK_SIZE + 128,
+              NULL,
+              3,  /* Priority: normal */
+              NULL);
+  
+  /* HMI task (2 Hz rate) */
+  xTaskCreate(task_hmi,
+              "HMI",
+              configMINIMAL_STACK_SIZE + 256,
+              NULL,
+              2,  /* Priority: below normal */
+              NULL);
+  
+  /* Logging task (1 Hz rate) */
+  xTaskCreate(task_logging,
+              "Logging",
+              configMINIMAL_STACK_SIZE + 256,
+              NULL,
+              1,  /* Priority: low */
+              NULL);
+  
+  /* Start FreeRTOS scheduler */
+  vTaskStartScheduler();
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
+  /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
@@ -378,6 +453,120 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+/* ============================================================================
+ * FREERTOS TASK IMPLEMENTATIONS
+ * ========================================================================= */
+
+/**
+ * @brief Safety monitoring task - 1 kHz rate (HIGHEST priority)
+ * Continuously monitors E-stop, cover interlock, and thermal cutoff
+ */
+static void task_safety_monitor(void *pvParameters)
+{
+    if (pvParameters);  /* Unused parameter */
+    
+    const TickType_t xDelay = pdMS_TO_TICKS(1);  /* 1 ms = 1 kHz */
+    
+    for (;;) {
+        /* Safety is always checked first */
+        safety_monitor();
+        control_system_update();
+        
+        vTaskDelay(xDelay);
+    }
+}
+
+/**
+ * @brief Thermal control task - 25 Hz rate
+ * PID control loop for plate temperature
+ */
+static void task_thermal_control(void *pvParameters)
+{
+    if (pvParameters);  /* Unused parameter */
+    
+    const TickType_t xDelay = pdMS_TO_TICKS(40);  /* 40 ms = 25 Hz */
+    
+    for (;;) {
+        thermal_pid_update();
+        vTaskDelay(xDelay);
+    }
+}
+
+/**
+ * @brief Motion control task - 25 Hz rate
+ * Stepper motor velocity profile and step generation
+ */
+static void task_motion_control(void *pvParameters)
+{
+    if (pvParameters);  /* Unused parameter */
+    
+    const TickType_t xDelay = pdMS_TO_TICKS(40);  /* 40 ms = 25 Hz */
+    
+    for (;;) {
+        motion_update();
+        vTaskDelay(xDelay);
+    }
+}
+
+/**
+ * @brief Pump control task - 10 Hz rate
+ * PWM duty cycle adjustments and trim valve control
+ */
+static void task_pump_control(void *pvParameters)
+{
+    if (pvParameters);  /* Unused parameter */
+    
+    const TickType_t xDelay = pdMS_TO_TICKS(100);  /* 100 ms = 10 Hz */
+    
+    for (;;) {
+        pump_update();
+        vTaskDelay(xDelay);
+    }
+}
+
+/**
+ * @brief HMI task - 2 Hz rate
+ * Serial command processing and status display
+ */
+static void task_hmi(void *pvParameters)
+{
+    if (pvParameters);  /* Unused parameter */
+    
+    const TickType_t xDelay = pdMS_TO_TICKS(500);  /* 500 ms = 2 Hz */
+    
+    for (;;) {
+        hmi_update();
+        
+        /* Periodic status refresh */
+        static uint32_t refresh_counter = 0;
+        if ((refresh_counter++ % 10) == 0) {  /* Every 5 seconds */
+            extern GPIO_TypeDef *GPIOB;
+            extern uint16_t Power_Indicator_Pin;
+            
+            /* Toggle power indicator LED */
+            HAL_GPIO_TogglePin(GPIOB, Power_Indicator_Pin);
+        }
+        
+        vTaskDelay(xDelay);
+    }
+}
+
+/**
+ * @brief Logging task - 1 Hz rate
+ * Record system state to circular log buffer
+ */
+static void task_logging(void *pvParameters)
+{
+    if (pvParameters);  /* Unused parameter */
+    
+    const TickType_t xDelay = pdMS_TO_TICKS(1000);  /* 1000 ms = 1 Hz */
+    
+    for (;;) {
+        loggingstroke_add_entry();
+        vTaskDelay(xDelay);
+    }
+}
 
 /* USER CODE END 4 */
 
