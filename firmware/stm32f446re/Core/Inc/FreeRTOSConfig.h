@@ -8,6 +8,9 @@
 
 #include <stdint.h>
 
+/* Include the port-specific definitions */
+#include "portmacro.h"
+
 /* ============================================================================
  * FREERTOS KERNEL CONFIGURATION
  * ========================================================================= */
