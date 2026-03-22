@@ -92,16 +92,7 @@ typedef struct {
     uint32_t total_runtime_seconds;
 } machine_stats_t;
 
-typedef struct {
-    uint32_t timestamp_ms;
-    float plate_temp_c;
-    float pump_duty;
-    float theta_rpm;
-    bool estop_active;
-    bool cover_open;
-    bool pump_enabled;
-    uint8_t fault_code;
-} log_entry_t;
+/* log_entry_t is defined in logging.h to avoid duplicate typedef conflicts across modules */
 
 typedef enum {
     MODE_IDLE = 0,
@@ -166,7 +157,7 @@ bool motion_is_homed(void);
 void pump_control_init(void);
 void pump_control_update(void);
 void pump_enable(bool enabled);
-void pump_set_duty(float percent);
+void pump_set_duty_cycle(float percent);
 void pump_set_trim(uint8_t nozzle, uint8_t trim_value);
 
 /* ============================================================================
