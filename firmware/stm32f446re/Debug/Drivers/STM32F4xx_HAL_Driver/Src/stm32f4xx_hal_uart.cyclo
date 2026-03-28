@@ -1,0 +1,8 @@
+../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:53:19:HAL_UART_Init	2
+../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:77:19:HAL_UART_DeInit	2
+../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:101:13:HAL_UART_MspInit	1
+../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:116:13:HAL_UART_MspDeInit	1
+../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:142:19:HAL_UART_Transmit	1
+../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:161:19:HAL_UART_Receive	1
+../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:179:19:HAL_UART_Transmit_IT	5
+../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c:220:19:HAL_UART_Receive_IT	1

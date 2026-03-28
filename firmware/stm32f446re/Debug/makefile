@@ -9,12 +9,19 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/subdir.mk
+-include Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/subdir.mk
+-include Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/subdir.mk
+-include Middlewares/Third_Party/FreeRTOS/Source/subdir.mk
 -include Drivers/STM32F4xx_HAL_Driver/Src/subdir.mk
+-include Core/build/CMakeFiles/pancake-making-machine.elf.dir/workspaces/pancake-making-machine/firmware/stm32f446re/FreeRTOS/FreeRTOS/Source/portable/MemMang/subdir.mk
+-include Core/build/CMakeFiles/pancake-making-machine.elf.dir/workspaces/pancake-making-machine/firmware/stm32f446re/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM4F/subdir.mk
+-include Core/build/CMakeFiles/pancake-making-machine.elf.dir/workspaces/pancake-making-machine/firmware/stm32f446re/FreeRTOS/FreeRTOS/Source/subdir.mk
+-include Core/build/CMakeFiles/pancake-making-machine.elf.dir/workspaces/pancake-making-machine/firmware/stm32f446re/Drivers/STM32F4xx_HAL_Driver/Src/subdir.mk
+-include Core/build/CMakeFiles/pancake-making-machine.elf.dir/Src/subdir.mk
+-include Core/build/CMakeFiles/3.28.3/CompilerIdC/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
--include FreeRTOS/FreeRTOS/Source/subdir.mk
--include FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM4F/subdir.mk
--include FreeRTOS/FreeRTOS/Source/portable/MemMang/subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -63,8 +70,8 @@ all: main-build
 main-build: pancake-making-machine.elf secondary-outputs
 
 # Tool invocations
-pancake-making-machine.elf pancake-making-machine.map: $(OBJS) $(USER_OBJS) ../STM32F446RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "pancake-making-machine.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"../STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="pancake-making-machine.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+pancake-making-machine.elf pancake-making-machine.map: $(OBJS) $(USER_OBJS) C:\Users\Admin\git\pancake-making-machine\firmware\stm32f446re\STM32F446RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "pancake-making-machine.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Admin\git\pancake-making-machine\firmware\stm32f446re\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="pancake-making-machine.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
