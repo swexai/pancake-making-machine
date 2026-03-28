@@ -8,6 +8,7 @@
 #include "control_system.h"
 #include "motion_control.h"
 #include "logging.h"
+#include "stm32f4xx_hal_uart.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdarg.h>
@@ -27,8 +28,8 @@ static uart_buffer_t g_uart = {0};
  */
 static void uart_init(void)
 {
-    extern UART_HandleTypeDef huart3;
-    HAL_UART_Receive_IT(&huart3, g_uart.rx_buffer, 1);
+    extern UART_HandleTypeDef huart2;
+    HAL_UART_Receive_IT(&huart2, g_uart.rx_buffer, 1);
 }
 
 /**
@@ -36,8 +37,8 @@ static void uart_init(void)
  */
 static void uart_tx(const uint8_t *data, uint16_t length)
 {
-    extern UART_HandleTypeDef huart3;
-    HAL_UART_Transmit(&huart3, (uint8_t*)data, length, 100);
+    extern UART_HandleTypeDef huart2;
+    HAL_UART_Transmit(&huart2, (uint8_t*)data, length, 100);
 }
 
 /* ============================================================================

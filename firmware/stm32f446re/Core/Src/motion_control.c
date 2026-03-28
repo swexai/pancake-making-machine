@@ -16,7 +16,6 @@
 static stepper_motor_t g_stepper = {0};
 static motion_profile_t g_profile = {0};
 static bool g_home_in_progress = false;
-static uint32_t g_step_interval_us = 0;
 
 /* ============================================================================
  * FUNCTION IMPLEMENTATIONS
@@ -64,7 +63,7 @@ void motion_home_axis(void)
     while (HAL_GetTick() < timeout_ms && !g_stepper.is_homed) {
         /* Poll home switch - assuming it's on a GPIO */
         /* This is pseudo-code; actual implementation depends on hardware */
-        if (HAL_GPIO_ReadPin(Home_Switch_GPIO_Port, Home_Switch_Pin) == GPIO_PIN_SET) {  /* Home switch active */
+        if (HAL_GPIO_ReadPin(NC_Switch_GPIO_Port, NC_Switch_Pin) == GPIO_PIN_SET) {  /* Home switch active */
             g_stepper.position_revolutions = 0.0f;
             g_stepper.step_counter = 0;
             g_stepper.is_homed = true;

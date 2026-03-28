@@ -6,6 +6,7 @@
 #include "main.h"
 #include "logging.h"
 #include "control_system.h"
+#include "stm32f4xx_hal_uart.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -81,7 +82,7 @@ void logging_add_entry(void)
  */
 void logging_transmit_entry(log_entry_t *entry)
 {
-    extern UART_HandleTypeDef huart3;
+    extern UART_HandleTypeDef huart2;
     
     char buffer[128];
     uint16_t length = snprintf(buffer, sizeof(buffer),
@@ -94,7 +95,7 @@ void logging_transmit_entry(log_entry_t *entry)
         entry->cover_open
     );
     
-    HAL_UART_Transmit(&huart3, (uint8_t*)buffer, length, 100);
+    HAL_UART_Transmit(&huart2, (uint8_t*)buffer, length, 100);
 }
 
 /**
@@ -102,10 +103,10 @@ void logging_transmit_entry(log_entry_t *entry)
  */
 void logging_dump_buffer(void)
 {
-    extern UART_HandleTypeDef huart3;
+    extern UART_HandleTypeDef huart2;
     
     char header[] = "=== LOG DUMP ===\r\n";
-    HAL_UART_Transmit(&huart3, (uint8_t*)header, strlen(header), 100);
+    HAL_UART_Transmit(&huart2, (uint8_t*)header, strlen(header), 100);
     
     uint16_t count = g_log_buffer.is_full ? LOG_BUFFER_SIZE : g_log_buffer.entry_count;
     
@@ -114,7 +115,7 @@ void logging_dump_buffer(void)
     }
     
     char footer[] = "=== END LOG ===\r\n";
-    HAL_UART_Transmit(&huart3, (uint8_t*)footer, strlen(footer), 100);
+    HAL_UART_Transmit(&huart2, (uint8_t*)footer, strlen(footer), 100);
 }
 
 /**
