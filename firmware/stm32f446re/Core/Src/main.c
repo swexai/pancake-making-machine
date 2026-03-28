@@ -87,7 +87,6 @@ static void task_motion_control(void *pvParameters);
 static void task_pump_control(void *pvParameters);
 static void task_hmi(void *pvParameters);
 static void task_logging(void *pvParameters);
-static void task_idle(void *pvParameters);
 
 /* USER CODE END PFP */
 
@@ -154,7 +153,7 @@ int main(void)
               NULL,
               5,  /* Priority: very high */
               NULL);
-  
+
   /* Thermal control task (25 Hz rate) */
   xTaskCreate(task_thermal_control,
               "ThermalCtrl",
@@ -245,6 +244,15 @@ int main(void)
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
+}
+
+/* User-defined idle task stub, not used by the current task set */
+static void task_idle(void *pvParameters)
+{
+    (void)pvParameters;
+    for (;;) {
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
 }
 
 /**
