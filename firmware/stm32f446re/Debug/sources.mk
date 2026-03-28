@@ -24,12 +24,6 @@ C_DEPS :=
 SUBDIRS := \
 Core/Src \
 Core/Startup \
-Core/build/CMakeFiles/3.28.3/CompilerIdC \
-Core/build/CMakeFiles/pancake-making-machine.elf.dir/Src \
-Core/build/CMakeFiles/pancake-making-machine.elf.dir/workspaces/pancake-making-machine/firmware/stm32f446re/Drivers/STM32F4xx_HAL_Driver/Src \
-Core/build/CMakeFiles/pancake-making-machine.elf.dir/workspaces/pancake-making-machine/firmware/stm32f446re/FreeRTOS/FreeRTOS/Source \
-Core/build/CMakeFiles/pancake-making-machine.elf.dir/workspaces/pancake-making-machine/firmware/stm32f446re/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM4F \
-Core/build/CMakeFiles/pancake-making-machine.elf.dir/workspaces/pancake-making-machine/firmware/stm32f446re/FreeRTOS/FreeRTOS/Source/portable/MemMang \
 Drivers/STM32F4xx_HAL_Driver/Src \
 Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 \
 Middlewares/Third_Party/FreeRTOS/Source \

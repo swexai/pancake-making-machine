@@ -1,0 +1,11 @@
+../Core/Src/motion_control.c:27:6:motion_init	8	static
+../Core/Src/motion_control.c:50:6:motion_home_axis	16	static
+../Core/Src/motion_control.c:89:6:motion_enable	16	static
+../Core/Src/motion_control.c:106:6:motion_set_target_speed	16	static
+../Core/Src/motion_control.c:112:6:motion_set_target_rpm	16	static
+../Core/Src/motion_control.c:125:6:motion_step	8	static
+../Core/Src/motion_control.c:144:7:motion_get_position	4	static
+../Core/Src/motion_control.c:153:7:motion_get_rpm	4	static
+../Core/Src/motion_control.c:162:6:motion_is_homed	4	static
+../Core/Src/motion_control.c:171:6:motion_is_enabled	4	static
+../Core/Src/motion_control.c:185:6:motion_update	32	static
