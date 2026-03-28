@@ -47,6 +47,7 @@ void thermal_init(void)
 
 /**
  * @brief Read PT100 RTD temperature via MAX31865 over SPI
+ * In simulation mode, simulates temperature ramping up over time
  * 
  * The MAX31865 is a 2-wire RTD-to-digital converter.
  * Register map:
@@ -58,6 +59,37 @@ void thermal_init(void)
  */
 bool thermal_read_rtd_spi(void)
 {
+#if SIMULATION_MODE
+    /* Simulation: Temperature starts at 25°C and ramps up when heating is enabled */
+    static float sim_temp = 25.0f;
+    static uint32_t last_sim_time = 0;
+    uint32_t now = HAL_GetTick();
+    
+    if (last_sim_time == 0) last_sim_time = now;
+    
+    float dt_seconds = (now - last_sim_time) / 1000.0f;
+    last_sim_time = now;
+    
+    /* Check if SSR is enabled (heating on) */
+    extern TIM_HandleTypeDef htim1;
+    bool heating_on = (htim1.Instance != NULL && HAL_TIM_PWM_GetState(&htim1) == HAL_TIM_STATE_BUSY);
+    
+    if (heating_on) {
+        /* Ramp up temperature at 2°C per second when heating */
+        sim_temp += 2.0f * dt_seconds;
+        if (sim_temp > 250.0f) sim_temp = 250.0f;  /* Safety limit */
+    } else {
+        /* Cool down slowly */
+        sim_temp -= 0.5f * dt_seconds;
+        if (sim_temp < 20.0f) sim_temp = 20.0f;
+    }
+    
+    g_rtd_sensor.temperature_c = sim_temp;
+    g_rtd_sensor.raw_adc = (sim_temp / 300.0f) * 32768.0f;  /* Fake ADC value */
+    g_rtd_sensor.last_read_ms = now;
+    
+    return true;
+#else
     uint8_t tx_buf[3] = {0x00, 0x00, 0x00};  /* Read config+rtd */
     uint8_t rx_buf[3] = {0x00, 0x00, 0x00};
     
@@ -103,6 +135,7 @@ bool thermal_read_rtd_spi(void)
     g_rtd_sensor.last_read_ms = HAL_GetTick();
     
     return true;
+#endif
 }
 
 /**
@@ -203,6 +236,17 @@ void thermal_pid_update(void)
         uint32_t period = htim1.Init.Period + 1;
         uint32_t pulse = (period * (uint32_t)ssr_duty) / 100;
         __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, pulse);
+        
+#if SIMULATION_MODE
+        /* Debug print in simulation */
+        extern void uart_printf(const char *format, ...);
+        static uint32_t last_debug_ms = 0;
+        if (now_ms - last_debug_ms > 1000) {  /* Print every second */
+            uart_printf("SIM: Temp=%.1f C, Setpoint=%.1f C, Duty=%.1f%%\r\n",
+                       g_rtd_sensor.temperature_c, g_thermal_pid.setpoint_c, ssr_duty);
+            last_debug_ms = now_ms;
+        }
+#endif
     }
 }
 

@@ -56,6 +56,19 @@ void motion_home_axis(void)
     motion_enable(true);
     motion_set_target_speed(HOMING_SPEED_RPM);
     
+#if SIMULATION_MODE
+    /* Simulation: Simulate homing taking 2 seconds */
+    uint32_t start_time = HAL_GetTick();
+    while (HAL_GetTick() - start_time < 2000) {
+        /* Simulate polling home switch */
+        if (HAL_GetTick() - start_time > 1000) {  /* "Detect" home after 1 second */
+            g_stepper.position_revolutions = 0.0f;
+            g_stepper.step_counter = 0;
+            g_stepper.is_homed = true;
+            break;
+        }
+    }
+#else
     /* Wait for home switch (this would be polled in main loop) */
     /* Timeout after 10 seconds */
     uint32_t timeout_ms = HAL_GetTick() + 10000;
@@ -70,6 +83,7 @@ void motion_home_axis(void)
             break;
         }
     }
+#endif
     
     if (!g_stepper.is_homed) {
         /* Homing failed - disable motor */
@@ -209,6 +223,29 @@ void motion_update(void)
     float steps_per_second = g_profile.current_velocity * MOTOR_STEPS_PER_REV;
     float step_interval_us = (steps_per_second > 0) ? (1000000.0f / steps_per_second) : 0;
     
+#if SIMULATION_MODE
+    /* In simulation, update position based on velocity without real stepping */
+    static uint32_t last_update_us = 0;
+    if (last_update_us == 0) last_update_us = now_us;
+    
+    float dt_seconds = (now_us - last_update_us) / 1000000.0f;
+    last_update_us = now_us;
+    
+    g_stepper.position_revolutions += g_profile.current_velocity * dt_seconds;
+    
+    /* Simulate step counter */
+    g_stepper.step_counter = (uint32_t)(g_stepper.position_revolutions * MOTOR_STEPS_PER_REV);
+    
+    /* Debug print */
+    extern void uart_printf(const char *format, ...);
+    static uint32_t last_debug_ms = 0;
+    uint32_t now_ms = HAL_GetTick();
+    if (now_ms - last_debug_ms > 2000) {  /* Print every 2 seconds */
+        uart_printf("SIM: Motor RPM=%.1f, Pos=%.2f rev, Homed=%d\r\n",
+                   g_stepper.current_rpm, g_stepper.position_revolutions, g_stepper.is_homed);
+        last_debug_ms = now_ms;
+    }
+#else
     /* Generate step pulses when time is right */
     if ((now_us - last_step_time_us) >= step_interval_us) {
         motion_step();
@@ -217,4 +254,5 @@ void motion_update(void)
         /* Update position counter */
         g_stepper.position_revolutions += 1.0f / MOTOR_STEPS_PER_REV;
     }
+#endif
 }

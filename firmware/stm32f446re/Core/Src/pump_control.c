@@ -97,6 +97,12 @@ void pump_set_duty_cycle(float percent)
     
     /* Update PWM */
     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, (uint32_t)g_pump.pwm_pulse);
+    
+#if SIMULATION_MODE
+    /* Debug print */
+    extern void uart_printf(const char *format, ...);
+    uart_printf("SIM: Pump duty set to %.1f%%\r\n", percent);
+#endif
 }
 
 /**

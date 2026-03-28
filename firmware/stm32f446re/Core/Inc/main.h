@@ -109,6 +109,9 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN Private defines */
 
+/* Simulation mode for testing without hardware */
+#define SIMULATION_MODE 1  /* Set to 1 for simulation, 0 for real hardware */
+
 /* Custom utility functions */
 uint32_t HAL_GetMicrosecond(void);
 

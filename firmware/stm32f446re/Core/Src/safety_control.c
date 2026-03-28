@@ -56,7 +56,12 @@ void safety_init(void)
  */
 void safety_estop_check(void)
 {
+#if SIMULATION_MODE
+    /* Simulation: E-stop is never pressed unless manually triggered */
+    GPIO_PinState estop_pin = GPIO_PIN_SET;  /* Released (not pressed) */
+#else
     GPIO_PinState estop_pin = HAL_GPIO_ReadPin(ESTOP_GPIO_Port, ESTOP_Pin);
+#endif
     
     if (estop_pin == GPIO_PIN_RESET) {
         /* E-stop pressed (active low) */
@@ -86,7 +91,12 @@ void safety_estop_check(void)
  */
 void safety_cover_check(void)
 {
+#if SIMULATION_MODE
+    /* Simulation: Cover is always closed */
+    GPIO_PinState cover_pin = GPIO_PIN_SET;  /* Closed */
+#else
     GPIO_PinState cover_pin = HAL_GPIO_ReadPin(NC_Switch_GPIO_Port, NC_Switch_Pin);
+#endif
     
     if (cover_pin == GPIO_PIN_RESET) {
         /* Cover open */
