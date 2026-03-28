@@ -8,7 +8,6 @@
 #include "control_system.h"
 #include "motion_control.h"
 #include "logging.h"
-#include "stm32f4xx_hal_uart.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdarg.h>

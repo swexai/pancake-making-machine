@@ -6,7 +6,6 @@
 #include "main.h"
 #include "logging.h"
 #include "control_system.h"
-#include "stm32f4xx_hal_uart.h"
 #include <string.h>
 #include <stdio.h>
 
