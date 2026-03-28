@@ -1,8 +1,0 @@
-../Core/Src/thermal_control.c:35:6:thermal_init	1
-../Core/Src/thermal_control.c:59:6:thermal_read_rtd_spi	5
-../Core/Src/thermal_control.c:112:7:thermal_get_temperature	1
-../Core/Src/thermal_control.c:120:6:thermal_pid_reset	1
-../Core/Src/thermal_control.c:134:7:thermal_pid_compute	5
-../Core/Src/thermal_control.c:176:6:thermal_pid_update	4
-../Core/Src/thermal_control.c:213:6:thermal_ssr_enable	2
-../Core/Src/thermal_control.c:229:6:thermal_is_stable	1

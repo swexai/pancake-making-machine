@@ -36,6 +36,7 @@ void motion_init(void);
 void motion_home_axis(void);
 void motion_enable(bool enable);
 void motion_set_target_speed(float rpm);
+void motion_set_target_rpm(float rpm); /* legacy alias used by control_system */
 void motion_step(void);
 void motion_update(void);
 float motion_get_position(void);

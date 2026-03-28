@@ -109,6 +109,11 @@ void motion_set_target_speed(float rpm)
     g_profile.target_velocity = rpm / 60.0f;  /* Convert to rev/s */
 }
 
+void motion_set_target_rpm(float rpm)
+{
+    motion_set_target_speed(rpm);
+}
+
 /**
  * @brief Generate step pulse to stepper driver
  * 

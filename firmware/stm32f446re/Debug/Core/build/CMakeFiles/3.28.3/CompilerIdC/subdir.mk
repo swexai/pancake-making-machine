@@ -3,15 +3,13 @@
 # Toolchain: GNU Tools for STM32 (13.3.rel1)
 ################################################################################
 
-# Add inputs and outputs from these tool invocations to the build variables 
+# Disable CompilerIdC helper sources in this environment (avoid duplicate main)
 C_SRCS += \
-../Core/build/CMakeFiles/3.28.3/CompilerIdC/CMakeCCompilerId.c 
 
 OBJS += \
-./Core/build/CMakeFiles/3.28.3/CompilerIdC/CMakeCCompilerId.o 
 
 C_DEPS += \
-./Core/build/CMakeFiles/3.28.3/CompilerIdC/CMakeCCompilerId.d 
+
 
 
 # Each subdirectory must supply rules for building sources it contributes

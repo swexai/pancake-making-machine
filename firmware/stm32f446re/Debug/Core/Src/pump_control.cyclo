@@ -1,8 +1,0 @@
-../Core/Src/pump_control.c:36:6:pump_init	2
-../Core/Src/pump_control.c:60:6:pump_enable	2
-../Core/Src/pump_control.c:81:6:pump_set_duty_cycle	3
-../Core/Src/pump_control.c:106:7:pump_get_duty_cycle	1
-../Core/Src/pump_control.c:116:6:pump_set_trim	3
-../Core/Src/pump_control.c:138:9:pump_get_trim	2
-../Core/Src/pump_control.c:150:6:pump_is_enabled	1
-../Core/Src/pump_control.c:163:6:pump_update	2
