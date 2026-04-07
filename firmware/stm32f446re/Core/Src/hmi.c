@@ -63,6 +63,10 @@ void hmi_init(void)
  */
 void hmi_update(void)
 {
+//#if SIMULATION_MODE
+//	uart_rx_callback
+//#endif
+
     if (g_uart.command_ready) {
         hmi_process_command(g_uart.rx_buffer, g_uart.rx_index);
         g_uart.command_ready = false;

@@ -29,35 +29,6 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
 
-/* Minimal UART HAL compatibility stubs (UART module source/header not present) */
-#ifndef UART_HandleTypeDef
-typedef struct {
-    void *Instance;
-    struct {
-        uint32_t BaudRate;
-        uint32_t WordLength;
-        uint32_t StopBits;
-        uint32_t Parity;
-        uint32_t Mode;
-        uint32_t HwFlowCtl;
-        uint32_t OverSampling;
-    } Init;
-} UART_HandleTypeDef;
-#endif
-
-#ifndef UART_WORDLENGTH_8B
-#define UART_WORDLENGTH_8B      0x00000000U
-#define UART_STOPBITS_1         0x00000000U
-#define UART_PARITY_NONE        0x00000000U
-#define UART_MODE_TX_RX         0x00000000U
-#define UART_HWCONTROL_NONE     0x00000000U
-#define UART_OVERSAMPLING_16    0x00000000U
-#endif
-
-static inline HAL_StatusTypeDef HAL_UART_Init(UART_HandleTypeDef *huart) { (void)huart; return HAL_OK; }
-static inline HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout) { (void)huart; (void)pData; (void)Size; (void)Timeout; return HAL_OK; }
-static inline HAL_StatusTypeDef HAL_UART_Receive_IT(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size) { (void)huart; (void)pData; (void)Size; return HAL_OK; }
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -92,8 +63,8 @@ void Error_Handler(void);
 #define ESTOP_GPIO_Port GPIOA
 #define NC_Switch_Pin GPIO_PIN_1
 #define NC_Switch_GPIO_Port GPIOA
-#define UART_TX_Pin GPIO_PIN_2
-#define UART_TX_GPIO_Port GPIOA
+#define USART_TX_Pin GPIO_PIN_2
+#define USART_TX_GPIO_Port GPIOA
 #define USART_RX_Pin GPIO_PIN_3
 #define USART_RX_GPIO_Port GPIOA
 #define SPI1_CLK_Pin GPIO_PIN_5

@@ -15,6 +15,7 @@
   *
   ******************************************************************************
   */
+#include "hmi.h"
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
@@ -55,10 +56,11 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
+extern UART_HandleTypeDef huart2;
 extern TIM_HandleTypeDef htim6;
 
 /* USER CODE BEGIN EV */
-
+extern UART_HandleTypeDef huart2;
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -158,6 +160,28 @@ void DebugMon_Handler(void)
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file (startup_stm32f4xx.s).                    */
 /******************************************************************************/
+
+/**
+  * @brief This function handles USART2 global interrupt.
+  */
+void USART2_IRQHandler(void)
+{
+	/* 1. DO NOT call HAL_UART_IRQHandler(&huart2); if you want to read DR manually */
+
+	/* 2. Check for Overrun (Standard F4 clear sequence: Read SR then Read DR) */
+	if (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_ORE) != RESET)
+	{
+		__HAL_UART_CLEAR_OREFLAG(&huart2);
+		(void)USART2->DR; // Dummy read to ensure the flag is cleared
+	}
+
+	/* 3. Your manual logic */
+	if (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_RXNE) != RESET)
+	{
+		uint8_t byte = (uint8_t)(USART2->DR & 0xFF);
+		uart_rx_callback(byte);
+	}
+}
 
 /**
   * @brief This function handles TIM6 global interrupt and DAC1, DAC2 underrun error interrupts.

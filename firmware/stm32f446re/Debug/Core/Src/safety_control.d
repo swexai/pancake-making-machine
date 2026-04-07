@@ -27,6 +27,7 @@ Core/Src/safety_control.o: ../Core/Src/safety_control.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/safety_control.h ../Core/Inc/control_system.h \
  ../Core/Inc/thermal_control.h
 ../Core/Inc/main.h:
@@ -58,6 +59,7 @@ Core/Src/safety_control.o: ../Core/Src/safety_control.c \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 ../Core/Inc/safety_control.h:
 ../Core/Inc/control_system.h:
 ../Core/Inc/thermal_control.h:

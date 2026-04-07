@@ -1,8 +1,8 @@
 ../Core/Src/pump_control.c:36:6:pump_init	16	static
 ../Core/Src/pump_control.c:60:6:pump_enable	16	static
 ../Core/Src/pump_control.c:81:6:pump_set_duty_cycle	16	static
-../Core/Src/pump_control.c:106:7:pump_get_duty_cycle	4	static
-../Core/Src/pump_control.c:116:6:pump_set_trim	16	static
-../Core/Src/pump_control.c:138:9:pump_get_trim	16	static
-../Core/Src/pump_control.c:150:6:pump_is_enabled	4	static
-../Core/Src/pump_control.c:163:6:pump_update	16	static
+../Core/Src/pump_control.c:112:7:pump_get_duty_cycle	4	static
+../Core/Src/pump_control.c:122:6:pump_set_trim	16	static
+../Core/Src/pump_control.c:144:9:pump_get_trim	16	static
+../Core/Src/pump_control.c:156:6:pump_is_enabled	4	static
+../Core/Src/pump_control.c:169:6:pump_update	16	static

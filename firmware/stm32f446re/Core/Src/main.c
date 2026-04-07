@@ -15,6 +15,7 @@
   *
   ******************************************************************************
   */
+#include <stdio.h>
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -32,6 +33,8 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "timers.h"
+
+#include <sys/stat.h>
 
 /* USER CODE END Includes */
 
@@ -104,6 +107,11 @@ uint32_t HAL_GetMicrosecond(void)
     return HAL_GetTick() * 1000UL;
 }
 
+int _fstat(int fd, struct stat *st) {
+  st->st_mode = S_IFCHR;
+  return 0;
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -141,6 +149,12 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
+  char buffer[128];
+  uint16_t length = snprintf(buffer, sizeof(buffer),
+	  "%s","Welcome to YASMIN"
+  );
+
+  HAL_UART_Transmit(&huart2, (uint8_t*)buffer, length, 100);
   /* Initialize control system and all modules */
   control_system_init();
   
@@ -244,15 +258,6 @@ int main(void)
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
-}
-
-/* User-defined idle task stub, not used by the current task set */
-static void task_idle(void *pvParameters)
-{
-    (void)pvParameters;
-    for (;;) {
-        vTaskDelay(pdMS_TO_TICKS(1000));
-    }
 }
 
 /**
@@ -469,59 +474,6 @@ static void MX_TIM2_Init(void)
 }
 
 /**
-  * @brief GPIO Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_GPIO_Init(void)
-{
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
-  /* USER CODE BEGIN MX_GPIO_Init_1 */
-
-  /* USER CODE END MX_GPIO_Init_1 */
-
-  /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, DIR_Pin|EN_THETA_Pin|Power_Indicator_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pins : ESTOP_Pin NC_Switch_Pin */
-  GPIO_InitStruct.Pin = ESTOP_Pin|NC_Switch_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : UART_TX_Pin USART_RX_Pin */
-  GPIO_InitStruct.Pin = UART_TX_Pin|USART_RX_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-  GPIO_InitStruct.Alternate = GPIO_AF7_USART2;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : DIR_Pin EN_THETA_Pin Power_Indicator_Pin */
-  GPIO_InitStruct.Pin = DIR_Pin|EN_THETA_Pin|Power_Indicator_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PWM_PUMP_Pin */
-  GPIO_InitStruct.Pin = PWM_PUMP_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.Alternate = GPIO_AF2_TIM4;
-  HAL_GPIO_Init(PWM_PUMP_GPIO_Port, &GPIO_InitStruct);
-
-  /* USER CODE BEGIN MX_GPIO_Init_2 */
-
-  /* USER CODE END MX_GPIO_Init_2 */
-}
-
-/**
   * @brief USART2 Initialization Function
   * @param None
   * @retval None
@@ -549,9 +501,54 @@ static void MX_USART2_UART_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN USART2_Init 2 */
-
+  __HAL_UART_ENABLE_IT(&huart2, UART_IT_RXNE);
   /* USER CODE END USART2_Init 2 */
 
+}
+
+/**
+  * @brief GPIO Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_GPIO_Init(void)
+{
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+  /* USER CODE BEGIN MX_GPIO_Init_1 */
+
+  /* USER CODE END MX_GPIO_Init_1 */
+
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, DIR_Pin|EN_THETA_Pin|Power_Indicator_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : ESTOP_Pin NC_Switch_Pin */
+  GPIO_InitStruct.Pin = ESTOP_Pin|NC_Switch_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : DIR_Pin EN_THETA_Pin Power_Indicator_Pin */
+  GPIO_InitStruct.Pin = DIR_Pin|EN_THETA_Pin|Power_Indicator_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PWM_PUMP_Pin */
+  GPIO_InitStruct.Pin = PWM_PUMP_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Alternate = GPIO_AF2_TIM4;
+  HAL_GPIO_Init(PWM_PUMP_GPIO_Port, &GPIO_InitStruct);
+
+  /* USER CODE BEGIN MX_GPIO_Init_2 */
+
+  /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
@@ -636,8 +633,13 @@ static void task_hmi(void *pvParameters)
     if (pvParameters);  /* Unused parameter */
     
     const TickType_t xDelay = pdMS_TO_TICKS(500);  /* 500 ms = 2 Hz */
-    
+//    static uart_buffer_t g_uart = {0};
     for (;;) {
+
+//        extern UART_HandleTypeDef huart2;
+//        HAL_UART_Receive_IT(&huart2, g_uart.rx_buffer, 1);
+//        uart_rx_callback(g_uart.rx_buffer);
+
         hmi_update();
         
         /* Periodic status refresh */
