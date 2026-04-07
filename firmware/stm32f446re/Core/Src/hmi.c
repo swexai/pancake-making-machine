@@ -169,7 +169,8 @@ void hmi_process_command(uint8_t *buffer, uint16_t length)
                                      (buffer[3] - '0'));
                 if (temp >= TEMP_SETPOINT_MIN_C && temp <= TEMP_SETPOINT_MAX_C) {
                     g_system_state.thermal.setpoint_c = temp;
-                    uart_printf("Setpoint: %.0f C\r\n", temp);
+                    g_system_state.requested_mode = MODE_WARMUP;
+                    uart_printf("Setpoint: %.0f C - warmup started\r\n", temp);
                 } else {
                     uart_printf("Temp out of range [210-230]\r\n");
                 }
@@ -217,7 +218,7 @@ void hmi_process_command(uint8_t *buffer, uint16_t length)
             uart_printf("\r\n--- Available Commands ---\r\n");
             uart_printf("S - Start cycle\r\n");
             uart_printf("H - Home theta axis\r\n");
-            uart_printf("Txxx - Set temp (e.g., T220)\r\n");
+            uart_printf("Txxx - Set temp and start warmup (e.g., T220)\r\n");
             uart_printf("Pxx - Set pump duty (e.g., P75)\r\n");
             uart_printf("C - Start CIP mode\r\n");
             uart_printf("E - Emergency stop\r\n");
