@@ -16,6 +16,10 @@
 static temperature_sensor_t g_rtd_sensor = {0};
 static thermal_pid_t g_thermal_pid = {0};
 
+#if SIMULATION_MODE
+static bool g_ssr_enabled = false;
+#endif
+
 /* PID Tuning parameters */
 /* These values should be tuned experimentally; starting with conservative gains */
 static const float PID_KP = 50.0f;    /* Proportional gain */
@@ -71,8 +75,7 @@ bool thermal_read_rtd_spi(void)
     last_sim_time = now;
     
     /* Check if SSR is enabled (heating on) */
-    extern TIM_HandleTypeDef htim1;
-    bool heating_on = (htim1.Instance != NULL && HAL_TIM_PWM_GetState(&htim1) == HAL_TIM_STATE_BUSY);
+    bool heating_on = g_ssr_enabled;
     
     if (heating_on) {
         /* Ramp up temperature at 2°C per second when heating */
@@ -260,9 +263,15 @@ void thermal_ssr_enable(bool enable)
     
     if (enable) {
         HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+#if SIMULATION_MODE
+        g_ssr_enabled = true;
+#endif
     } else {
         HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
         __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
+#if SIMULATION_MODE
+        g_ssr_enabled = false;
+#endif
     }
 }
 
