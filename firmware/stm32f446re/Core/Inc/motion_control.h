@@ -15,6 +15,11 @@
 #define HOMING_SPEED_RPM        30              /* slow approach for home */
 #define NOMINAL_SPEED_RPM       60              /* 1.0 rev/s */
 
+/* Motion simulation is configured separately from the global SIMULATION_MODE. */
+#ifndef MOTION_SIMULATION_MODE
+#define MOTION_SIMULATION_MODE 0
+#endif
+
 typedef struct {
     float target_rpm;
     float current_rpm;

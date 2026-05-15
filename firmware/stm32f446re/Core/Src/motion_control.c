@@ -56,7 +56,7 @@ void motion_home_axis(void)
     motion_enable(true);
     motion_set_target_speed(HOMING_SPEED_RPM);
     
-#if SIMULATION_MODE
+#if MOTION_SIMULATION_MODE
     /* Simulation: Simulate homing taking 2 seconds */
     uint32_t start_time = HAL_GetTick();
     while (HAL_GetTick() - start_time < 2000) {
@@ -223,7 +223,7 @@ void motion_update(void)
     float steps_per_second = g_profile.current_velocity * MOTOR_STEPS_PER_REV;
     float step_interval_us = (steps_per_second > 0) ? (1000000.0f / steps_per_second) : 0;
     
-#if SIMULATION_MODE
+#if MOTION_SIMULATION_MODE
     /* In simulation, update position based on velocity without real stepping */
     static uint32_t last_update_us = 0;
     if (last_update_us == 0) last_update_us = now_us;
@@ -241,7 +241,7 @@ void motion_update(void)
     static uint32_t last_debug_ms = 0;
     uint32_t now_ms = HAL_GetTick();
     if (now_ms - last_debug_ms > 2000) {  /* Print every 2 seconds */
-        uart_printf("SIM: Motor RPM=%.1f, Pos=%.2f rev, Homed=%d\r\n",
+        uart_printf("MOTION SIM: Motor RPM=%.1f, Pos=%.2f rev, Homed=%d\r\n",
                    g_stepper.current_rpm, g_stepper.position_revolutions, g_stepper.is_homed);
         last_debug_ms = now_ms;
     }
