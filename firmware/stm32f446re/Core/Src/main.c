@@ -30,6 +30,7 @@
 #include "safety_control.h"
 #include "hmi.h"
 #include "logging.h"
+#include "motion_control_test.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "timers.h"
@@ -157,6 +158,14 @@ int main(void)
   HAL_UART_Transmit(&huart2, (uint8_t*)buffer, length, 100);
   /* Initialize control system and all modules */
   control_system_init();
+  
+  /* Run motion control tests */
+  uart_printf("\r\n=== Running Motion Control Tests ===\r\n");
+  if (motion_test_run_all()) {
+    uart_printf("Motor tests completed successfully!\r\n");
+  } else {
+    uart_printf("WARNING: Some motor tests failed!\r\n");
+  }
   
   /* Create FreeRTOS tasks */
   
@@ -462,7 +471,7 @@ static void MX_TIM2_Init(void)
   sConfigOC.Pulse = 45000;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-  if (HAL_TIM_OC_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+  if (HAL_TIM_OC_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
   {
     Error_Handler();
   }

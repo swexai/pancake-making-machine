@@ -432,7 +432,7 @@ To integrate into your project:
 3. **Verify STM32CubeMX configuration:**
    - SPI1: MISO (PA6), MOSI (PA7), CLK (PA5), ~2 MHz
    - TIM1: PWM CH1 (PA8), CH2 (PA9) for SSR/pump
-   - TIM2: OC CH1 (PA15) for stepper steps
+   - TIM2: OC CH2 (PB3) for stepper steps
    - UART3: RX (PB11), TX (PB10), 115200 baud
    - GPIO: Input PA0 (ESTOP), PA1 (Cover)
    - GPIO: Output PB4 (DIR), PB5 (EN), PB7 (LED)
