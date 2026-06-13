@@ -216,7 +216,9 @@ void control_system_update(void)
     g_system_state.motion.current_rpm = motion_get_rpm();
     g_system_state.motion.position_revs = motion_get_position();
     g_system_state.motion.homed = motion_is_homed();
+    g_system_state.motion.enabled = motion_is_enabled();  /* Sync motor enabled state */
     g_system_state.pump.duty_percent = pump_get_duty_cycle();
+    g_system_state.pump.enabled = pump_is_enabled();  /* Sync pump enabled state */
     
     /* Check for system faults */
     if (safety_has_fault(FAULT_ESTOP) || safety_has_fault(FAULT_COVER_OPEN)) {
