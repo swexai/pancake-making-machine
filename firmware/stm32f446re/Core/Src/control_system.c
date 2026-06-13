@@ -176,7 +176,11 @@ void control_system_state_machine(void)
             break;
             
         case MODE_ESTOP:
-            /* Emergency stop: outputs already disabled by safety */
+            /* Emergency stop: CRITICAL - disable all motion and heating immediately */
+            motion_enable(false);      /* CRITICAL: Stop motor and reset RPM to 0 */
+            pump_enable(false);        /* Stop pump */
+            thermal_ssr_enable(false); /* Cut heater */
+            safety_disable_all_outputs();
             /* Require system reset to recover */
             break;
             

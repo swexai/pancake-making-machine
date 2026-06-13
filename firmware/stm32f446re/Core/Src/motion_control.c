@@ -110,6 +110,11 @@ void motion_enable(bool enable)
     } else {
         /* Set EN_THETA low to disable driver */
         HAL_GPIO_WritePin(EN_THETA_GPIO_Port, EN_THETA_Pin, GPIO_PIN_RESET);
+        
+        /* CRITICAL: Reset motion state when disabling */
+        g_stepper.current_rpm = 0.0f;
+        g_profile.current_velocity = 0.0f;
+        g_profile.target_velocity = 0.0f;
     }
 }
 
