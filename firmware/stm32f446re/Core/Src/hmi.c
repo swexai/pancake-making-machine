@@ -30,8 +30,8 @@ static uart_buffer_t g_uart = {0};
  */
 static void uart_init(void)
 {
-    /* UART2 is already initialized in MX_USART2_UART_Init() with RXNE interrupt enabled */
-    /* The manual ISR handler (USART2_IRQHandler in stm32f4xx_it.c) reads data directly */
+    /* UART2 is initialized in MX_USART2_UART_Init() and NVIC USART2 IRQ is enabled.
+       The IRQ handler directly reads DR and forwards bytes to uart_rx_callback(). */
 }
 
 /**

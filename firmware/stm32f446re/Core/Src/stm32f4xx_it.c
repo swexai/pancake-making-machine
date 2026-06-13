@@ -166,21 +166,21 @@ void DebugMon_Handler(void)
   */
 void USART2_IRQHandler(void)
 {
-	/* 1. DO NOT call HAL_UART_IRQHandler(&huart2); if you want to read DR manually */
+  /* 1. DO NOT call HAL_UART_IRQHandler(&huart2); if you want to read DR manually */
 
-	/* 2. Check for Overrun (Standard F4 clear sequence: Read SR then Read DR) */
-	if (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_ORE) != RESET)
-	{
-		__HAL_UART_CLEAR_OREFLAG(&huart2);
-		(void)USART2->DR; // Dummy read to ensure the flag is cleared
-	}
+  /* 2. Check for Overrun (Standard F4 clear sequence: Read SR then Read DR) */
+  if (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_ORE) != RESET)
+  {
+    __HAL_UART_CLEAR_OREFLAG(&huart2);
+    (void)USART2->DR; // Dummy read to ensure the flag is cleared
+  }
 
-	/* 3. Your manual logic */
-	if (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_RXNE) != RESET)
-	{
-		uint8_t byte = (uint8_t)(USART2->DR & 0xFF);
-		uart_rx_callback(byte);
-	}
+  /* 3. Your manual logic */
+  if (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_RXNE) != RESET)
+  {
+    uint8_t byte = (uint8_t)(USART2->DR & 0xFF);
+    uart_rx_callback(byte);
+  }
 }
 
 /**
