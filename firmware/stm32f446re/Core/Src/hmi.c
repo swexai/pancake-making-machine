@@ -24,11 +24,14 @@ static uart_buffer_t g_uart = {0};
 
 /**
  * @brief Initialize UART peripheral for HMI
+ * Note: UART2 is already initialized with interrupts enabled in MX_USART2_UART_Init()
+ * We use a manual ISR handler in stm32f4xx_it.c to read the data register directly.
+ * No additional HAL setup needed here.
  */
 static void uart_init(void)
 {
-    extern UART_HandleTypeDef huart2;
-    HAL_UART_Receive_IT(&huart2, g_uart.rx_buffer, 1);
+    /* UART2 is already initialized in MX_USART2_UART_Init() with RXNE interrupt enabled */
+    /* The manual ISR handler (USART2_IRQHandler in stm32f4xx_it.c) reads data directly */
 }
 
 /**
@@ -60,13 +63,29 @@ void hmi_init(void)
 /**
  * @brief Update HMI (process pending commands)
  * Called at 2 Hz
+ * CRITICAL: Must safely handle ISR accessing the same buffer
  */
 void hmi_update(void)
 {
-    if (g_uart.command_ready) {
-        hmi_process_command(g_uart.rx_buffer, g_uart.rx_index);
+    /* Disable interrupts to safely read command_ready and rx_index */
+    uint32_t primask = __get_PRIMASK();
+    __disable_irq();
+    
+    bool command_ready = g_uart.command_ready;
+    uint16_t length = g_uart.rx_index;
+    
+    if (command_ready) {
+        /* Clear flags while interrupts are still disabled */
         g_uart.command_ready = false;
         g_uart.rx_index = 0;
+    }
+    
+    /* Re-enable interrupts before processing command */
+    __set_PRIMASK(primask);
+    
+    /* Now process the command outside of critical section */
+    if (command_ready) {
+        hmi_process_command(g_uart.rx_buffer, length);
     }
 }
 
