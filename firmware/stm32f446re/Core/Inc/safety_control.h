@@ -53,6 +53,10 @@ void safety_disable_all_outputs(void);
 void safety_set_fault(safety_fault_t fault);
 void safety_clear_fault(safety_fault_t fault);
 bool safety_has_fault(safety_fault_t fault);
+uint32_t safety_get_fault_flags(void);
+bool safety_is_estop_pressed(void);
+bool safety_is_cover_open(void);
+bool safety_is_thermal_cutoff_active(void);
 const char* safety_fault_description(safety_fault_t fault);
 
 #endif /* SAFETY_CONTROL_H */

@@ -26,12 +26,8 @@ static safety_fault_status_t g_fault_status = {0};
 static void disable_all_outputs(void)
 {
     thermal_ssr_enable(false);
-
-    HAL_GPIO_WritePin(EN_THETA_GPIO_Port, EN_THETA_Pin, GPIO_PIN_RESET);
-
-    extern TIM_HandleTypeDef htim1;
-    HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_2);  /* Pump PWM */
-    HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);  /* SSR */
+    pump_enable(false);
+    motion_enable(false);
 }
 
 /* ============================================================================
@@ -182,6 +178,7 @@ void safety_shutdown(void)
 {
     disable_all_outputs();
     g_system_state.current_mode = MODE_ESTOP;
+    g_fault_status.immediate_shutdown_required = false;
 }
 
 /**
@@ -209,6 +206,9 @@ void safety_set_fault(safety_fault_t fault)
 void safety_clear_fault(safety_fault_t fault)
 {
     g_fault_status.fault_flags &= ~((uint32_t)fault);
+    if (g_fault_status.fault_flags == FAULT_NONE) {
+        g_fault_status.immediate_shutdown_required = false;
+    }
 }
 
 /**
@@ -219,6 +219,42 @@ void safety_clear_fault(safety_fault_t fault)
 bool safety_has_fault(safety_fault_t fault)
 {
     return ((g_fault_status.fault_flags & (uint32_t)fault) != 0);
+}
+
+/**
+ * @brief Get raw safety fault flags
+ * @return Bitmask of active safety faults
+ */
+uint32_t safety_get_fault_flags(void)
+{
+    return g_fault_status.fault_flags;
+}
+
+/**
+ * @brief Query current debounced E-stop state
+ * @return true if E-stop is pressed, false otherwise
+ */
+bool safety_is_estop_pressed(void)
+{
+    return g_safety_inputs.estop_pressed;
+}
+
+/**
+ * @brief Query current debounced cover state
+ * @return true if cover is open, false otherwise
+ */
+bool safety_is_cover_open(void)
+{
+    return g_safety_inputs.cover_open;
+}
+
+/**
+ * @brief Query current thermal cutoff state
+ * @return true if thermal cutoff is active, false otherwise
+ */
+bool safety_is_thermal_cutoff_active(void)
+{
+    return g_safety_inputs.thermal_cutoff_active;
 }
 
 /**
