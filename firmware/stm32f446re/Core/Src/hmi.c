@@ -119,10 +119,10 @@ void hmi_send_status(void)
         g_system_state.thermal.setpoint_c);
     uart_printf("Pump: %s (duty: %.0f%%)\r\n",
         g_system_state.pump.enabled ? "ON" : "OFF",
-        g_system_state.pump.duty_percent);
+        g_system_state.pump.enabled ? g_system_state.pump.duty_percent : 0.0f);
     uart_printf("Theta: %s (RPM: %.1f)\r\n",
         g_system_state.motion.enabled ? "ON" : "OFF",
-        g_system_state.motion.current_rpm);
+        g_system_state.motion.enabled ? g_system_state.motion.current_rpm : 0.0f);
     uart_printf("E-Stop: %s, Cover: %s\r\n",
         g_system_state.safety.estop_pressed ? "PRESSED" : "OK",
         g_system_state.safety.cover_open ? "OPEN" : "CLOSED");
@@ -166,18 +166,30 @@ void hmi_process_command(uint8_t *buffer, uint16_t length)
     switch (cmd) {
         case 'S':  /* Start cycle */
         case 's':
+            if (g_system_state.current_mode == MODE_ESTOP) {
+                uart_printf("Cannot start cycle while in ESTOP. Reset required.\r\n");
+                break;
+            }
             uart_printf("Starting cycle...\r\n");
             g_system_state.requested_mode = MODE_DISPENSE;
             break;
             
         case 'H':  /* Home theta axis */
         case 'h':
+            if (g_system_state.current_mode == MODE_ESTOP) {
+                uart_printf("Cannot home while in ESTOP. Reset required.\r\n");
+                break;
+            }
             uart_printf("Homing theta axis...\r\n");
             motion_home_axis();
             break;
             
         case 'T':  /* Set temperature (format: T220) */
         case 't':
+            if (g_system_state.current_mode == MODE_ESTOP) {
+                uart_printf("Cannot set temperature while in ESTOP. Reset required.\r\n");
+                break;
+            }
             if (length >= 4) {
                 float temp = (float)((buffer[1] - '0') * 100 + 
                                      (buffer[2] - '0') * 10 + 
@@ -194,6 +206,10 @@ void hmi_process_command(uint8_t *buffer, uint16_t length)
             
         case 'P':  /* Set pump duty (format: P75) */
         case 'p':
+            if (g_system_state.current_mode == MODE_ESTOP) {
+                uart_printf("Cannot adjust pump while in ESTOP. Reset required.\r\n");
+                break;
+            }
             if (length >= 3) {
                 float duty = (float)((buffer[1] - '0') * 10 + (buffer[2] - '0'));
                 pump_set_duty_cycle(duty);
@@ -203,6 +219,10 @@ void hmi_process_command(uint8_t *buffer, uint16_t length)
             
         case 'C':  /* CIP mode */
         case 'c':
+            if (g_system_state.current_mode == MODE_ESTOP) {
+                uart_printf("Cannot start CIP while in ESTOP. Reset required.\r\n");
+                break;
+            }
             uart_printf("Starting CIP mode...\r\n");
             g_system_state.requested_mode = MODE_CIP;
             break;
@@ -211,6 +231,8 @@ void hmi_process_command(uint8_t *buffer, uint16_t length)
         case 'e':
             uart_printf("EMERGENCY STOP\r\n");
             g_system_state.requested_mode = MODE_ESTOP;
+            g_system_state.safety.estop_pressed = true;
+            safety_set_fault(FAULT_ESTOP);
             safety_shutdown();
             break;
             

@@ -70,6 +70,17 @@ const char* control_system_get_mode_name(void)
 void control_system_state_machine(void)
 {
     machine_mode_t next_mode = g_system_state.current_mode;
+
+    /* Enforce emergency stop immediately when requested or faulted */
+    if (g_system_state.requested_mode == MODE_ESTOP ||
+        safety_has_fault(FAULT_ESTOP) ||
+        safety_has_fault(FAULT_COVER_OPEN) ||
+        safety_has_fault(FAULT_THERMAL_CUTOFF)) {
+        safety_shutdown();
+        g_system_state.current_mode = MODE_ESTOP;
+        g_system_state.requested_mode = MODE_ESTOP;
+        return;
+    }
     
     switch (g_system_state.current_mode) {
         case MODE_IDLE:
@@ -176,8 +187,10 @@ void control_system_state_machine(void)
             break;
             
         case MODE_ESTOP:
-            /* Emergency stop: outputs already disabled by safety */
-            /* Require system reset to recover */
+            /* Emergency stop: force all outputs off and ignore requests */
+            safety_disable_all_outputs();
+            thermal_ssr_enable(false);
+            g_system_state.requested_mode = MODE_ESTOP;
             break;
             
         default:
@@ -215,9 +228,9 @@ void control_system_update(void)
     g_system_state.motion.enabled = motion_is_enabled();  /* Sync motor enabled state */
     g_system_state.pump.duty_percent = pump_get_duty_cycle();
     g_system_state.pump.enabled = pump_is_enabled();  /* Sync pump enabled state */
-    g_system_state.safety.estop_pressed = safety_is_estop_pressed();
-    g_system_state.safety.cover_open = safety_is_cover_open();
-    g_system_state.safety.thermal_cutoff = safety_is_thermal_cutoff_active();
+    g_system_state.safety.estop_pressed = safety_has_fault(FAULT_ESTOP) || safety_is_estop_pressed();
+    g_system_state.safety.cover_open = safety_has_fault(FAULT_COVER_OPEN) || safety_is_cover_open();
+    g_system_state.safety.thermal_cutoff = safety_has_fault(FAULT_THERMAL_CUTOFF) || safety_is_thermal_cutoff_active();
     g_system_state.safety.fault_flags = safety_get_fault_flags();
 
     /* Check for system faults */
