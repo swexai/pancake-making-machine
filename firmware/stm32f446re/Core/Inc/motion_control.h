@@ -39,6 +39,7 @@ typedef struct {
 
 void motion_init(void);
 void motion_home_axis(void);
+bool motion_is_homing_active(void);
 void motion_enable(bool enable);
 void motion_set_target_speed(float rpm);
 void motion_set_target_rpm(float rpm); /* legacy alias used by control_system */

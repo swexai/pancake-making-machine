@@ -26,7 +26,7 @@ static const float PID_KP = 50.0f;    /* Proportional gain */
 static const float PID_KI = 15.0f;    /* Integral gain */
 static const float PID_KD = 5.0f;     /* Derivative gain */
 static const float PID_INTEGRAL_MAX = 100.0f;  /* Anti-windup limit */
-static const float SSR_DUTY_MIN = 5.0f;    /* Minimum SSR PWM duty (%) */
+static const float SSR_DUTY_MIN = 0.0f;    /* Minimum SSR PWM duty (%) */
 static const float SSR_DUTY_MAX = 90.0f;   /* Maximum SSR PWM duty (%) */
 
 /* ============================================================================
@@ -175,13 +175,13 @@ float thermal_pid_compute(float setpoint, float measurement)
     /* Proportional term */
     float p_term = g_thermal_pid.kp * error;
     
-    /* Integral term (with anti-windup) */
+    /* Integral term (with anti-windup) - allow negative for overshoot correction */
     g_thermal_pid.integral += g_thermal_pid.ki * error * dt;
     if (g_thermal_pid.integral > PID_INTEGRAL_MAX) {
         g_thermal_pid.integral = PID_INTEGRAL_MAX;
     }
-    if (g_thermal_pid.integral < 0.0f) {
-        g_thermal_pid.integral = 0.0f;
+    if (g_thermal_pid.integral < -PID_INTEGRAL_MAX) {
+        g_thermal_pid.integral = -PID_INTEGRAL_MAX;
     }
     float i_term = g_thermal_pid.integral;
     

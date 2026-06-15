@@ -103,8 +103,9 @@ void control_system_state_machine(void)
             break;
             
         case MODE_READY:
-            /* Ready to dispense - maintain temperature */
+            /* Ready to dispense - maintain temperature and support background homing */
             thermal_pid_update();
+            motion_update();  /* Allow homing to progress in background */
             
             if (g_system_state.requested_mode == MODE_DISPENSE) {
                 next_mode = MODE_DISPENSE;

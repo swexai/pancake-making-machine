@@ -16,6 +16,8 @@
 static stepper_motor_t g_stepper = {0};
 static motion_profile_t g_profile = {0};
 static bool g_home_in_progress = false;
+static uint32_t g_home_start_time = 0;
+static const uint32_t HOMING_TIMEOUT_MS = 10000;  /* 10 second timeout */
 
 /* ============================================================================
  * FUNCTION IMPLEMENTATIONS
@@ -39,61 +41,33 @@ void motion_init(void)
 }
 
 /**
- * @brief Home the theta axis using hub sensor
+ * @brief Initiate homing sequence (non-blocking)
  * 
- * Procedure:
- * 1. Slow ramp to HOMING_SPEED_RPM
- * 2. Wait for home switch to trigger
- * 3. Back off and latch position as zero
- * 4. Ramp to nominal speed
+ * Starts the homing procedure. Check motion_is_homed() to see if complete.
+ * Call motion_update() regularly for homing to progress.
  */
 void motion_home_axis(void)
 {
+    if (g_home_in_progress) {
+        return;  /* Already homing */
+    }
+    
     g_home_in_progress = true;
     g_stepper.is_homed = false;
+    g_home_start_time = HAL_GetTick();
     
     /* Start slow approach */
     motion_enable(true);
     motion_set_target_speed(HOMING_SPEED_RPM);
-    
-#if MOTION_SIMULATION_MODE
-    /* Simulation: Simulate homing taking 2 seconds */
-    uint32_t start_time = HAL_GetTick();
-    while (HAL_GetTick() - start_time < 2000) {
-        /* Simulate polling home switch */
-        if (HAL_GetTick() - start_time > 1000) {  /* "Detect" home after 1 second */
-            g_stepper.position_revolutions = 0.0f;
-            g_stepper.step_counter = 0;
-            g_stepper.is_homed = true;
-            break;
-        }
-    }
-#else
-    /* Wait for home switch (this would be polled in main loop) */
-    /* Timeout after 10 seconds */
-    uint32_t timeout_ms = HAL_GetTick() + 10000;
-    
-    while (HAL_GetTick() < timeout_ms && !g_stepper.is_homed) {
-        /* Poll home switch - assuming it's on a GPIO */
-        /* This is pseudo-code; actual implementation depends on hardware */
-        if (HAL_GPIO_ReadPin(NC_Switch_GPIO_Port, NC_Switch_Pin) == GPIO_PIN_SET) {  /* Home switch active */
-            g_stepper.position_revolutions = 0.0f;
-            g_stepper.step_counter = 0;
-            g_stepper.is_homed = true;
-            break;
-        }
-    }
-#endif
-    
-    if (!g_stepper.is_homed) {
-        /* Homing failed - disable motor */
-        motion_enable(false);
-    } else {
-        /* Ramp to nominal speed */
-        motion_set_target_speed(NOMINAL_SPEED_RPM);
-    }
-    
-    g_home_in_progress = false;
+}
+
+/**
+ * @brief Check if homing is in progress
+ * @return true if actively homing, false otherwise
+ */
+bool motion_is_homing_active(void)
+{
+    return g_home_in_progress;
 }
 
 /**
@@ -197,9 +171,47 @@ bool motion_is_enabled(void)
  * - Smooth acceleration/deceleration ramps
  * - Step pulse generation at proper intervals
  * - Position tracking
+ * - Homing state machine (non-blocking)
  */
 void motion_update(void)
 {
+    /* Handle homing state machine first (non-blocking) */
+    if (g_home_in_progress) {
+        uint32_t elapsed_ms = HAL_GetTick() - g_home_start_time;
+        
+        if (elapsed_ms > HOMING_TIMEOUT_MS) {
+            /* Timeout - homing failed */
+            uart_printf("ERROR: Homing timeout\r\n");
+            motion_enable(false);
+            g_home_in_progress = false;
+            return;
+        }
+        
+#if MOTION_SIMULATION_MODE
+        /* Simulation: "Detect" home after 1 second */
+        if (elapsed_ms > 1000 && !g_stepper.is_homed) {
+            g_stepper.position_revolutions = 0.0f;
+            g_stepper.step_counter = 0;
+            g_stepper.is_homed = true;
+            uart_printf("Homing completed successfully\r\n");
+            /* Return to nominal speed */
+            motion_set_target_speed(NOMINAL_SPEED_RPM);
+            g_home_in_progress = false;
+        }
+#else
+        /* Check home switch (active high NC switch) */
+        if (HAL_GPIO_ReadPin(NC_Switch_GPIO_Port, NC_Switch_Pin) == GPIO_PIN_SET) {
+            g_stepper.position_revolutions = 0.0f;
+            g_stepper.step_counter = 0;
+            g_stepper.is_homed = true;
+            uart_printf("Homing completed successfully\r\n");
+            /* Return to nominal speed */
+            motion_set_target_speed(NOMINAL_SPEED_RPM);
+            g_home_in_progress = false;
+        }
+#endif
+    }
+    
     static uint32_t last_step_time_us = 0;
     uint32_t now_us = HAL_GetMicrosecond();  /* Pseudo-function */
     
@@ -242,7 +254,7 @@ void motion_update(void)
     extern void uart_printf(const char *format, ...);
     static uint32_t last_debug_ms = 0;
     uint32_t now_ms = HAL_GetTick();
-    if (now_ms - last_debug_ms > 2000) {  /* Print every 2 seconds */
+    if (now_ms - last_debug_ms > 2000 && !g_home_in_progress) {  /* Print every 2 seconds (not during homing) */
         uart_printf("MOTION SIM: Motor RPM=%.1f, Pos=%.2f rev, Homed=%d\r\n",
                    g_stepper.current_rpm, g_stepper.position_revolutions, g_stepper.is_homed);
         last_debug_ms = now_ms;

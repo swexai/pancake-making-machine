@@ -123,9 +123,10 @@ void hmi_send_status(void)
     uart_printf("Theta: %s (RPM: %.1f)\r\n",
         g_system_state.motion.enabled ? "ON" : "OFF",
         g_system_state.motion.enabled ? g_system_state.motion.current_rpm : 0.0f);
-    uart_printf("E-Stop: %s, Cover: %s\r\n",
+    uart_printf("E-Stop: %s, Cover: %s, Thermal cutoff: %s\r\n",
         g_system_state.safety.estop_pressed ? "PRESSED" : "OK",
-        g_system_state.safety.cover_open ? "OPEN" : "CLOSED");
+        g_system_state.safety.cover_open ? "OPEN" : "CLOSED",
+        g_system_state.safety.thermal_cutoff ? "ACTIVE" : "OK");
     uart_printf("Cycles: %lu\r\n", g_system_state.stats.cycle_count);
 }
 
