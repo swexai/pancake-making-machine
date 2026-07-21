@@ -21,11 +21,11 @@ static bool g_ssr_enabled = false;
 #endif
 
 /* PID Tuning parameters */
-/* These values should be tuned experimentally; starting with conservative gains */
-static const float PID_KP = 50.0f;    /* Proportional gain */
-static const float PID_KI = 15.0f;    /* Integral gain */
-static const float PID_KD = 5.0f;     /* Derivative gain */
-static const float PID_INTEGRAL_MAX = 100.0f;  /* Anti-windup limit */
+/* Conservative tuning to prevent overshoot and thermal runaway */
+static const float PID_KP = 0.8f;     /* Proportional gain - reduced for gradual response */
+static const float PID_KI = 0.15f;    /* Integral gain - much lower to prevent windup */
+static const float PID_KD = 0.2f;     /* Derivative gain - for damping overshoot */
+static const float PID_INTEGRAL_MAX = 20.0f;  /* Anti-windup limit - tighter bound */
 static const float SSR_DUTY_MIN = 0.0f;    /* Minimum SSR PWM duty (%) */
 static const float SSR_DUTY_MAX = 90.0f;   /* Maximum SSR PWM duty (%) */
 
@@ -66,6 +66,7 @@ bool thermal_read_rtd_spi(void)
 #if SIMULATION_MODE
     /* Simulation: Temperature starts at 25°C and ramps up when heating is enabled */
     static float sim_temp = 25.0f;
+    static float sim_last_duty = 0.0f;
     static uint32_t last_sim_time = 0;
     uint32_t now = HAL_GetTick();
     
@@ -74,18 +75,23 @@ bool thermal_read_rtd_spi(void)
     float dt_seconds = (now - last_sim_time) / 1000.0f;
     last_sim_time = now;
     
-    /* Check if SSR is enabled (heating on) */
-    bool heating_on = g_ssr_enabled;
+    /* Check if SSR is enabled AND has non-zero duty (heating on) */
+    bool heating_on = g_ssr_enabled && (sim_last_duty > 0.0f);
     
     if (heating_on) {
-        /* Ramp up temperature at 2°C per second when heating */
-        sim_temp += 2.0f * dt_seconds;
+        /* Ramp up temperature quickly in simulation so warmup completes fast */
+        /* Scale heating rate by actual duty cycle (0-90%) */
+        float heating_scale = sim_last_duty / 90.0f;  /* Normalize to max duty */
+        sim_temp += (20.0f * dt_seconds) * heating_scale;
         if (sim_temp > 250.0f) sim_temp = 250.0f;  /* Safety limit */
     } else {
-        /* Cool down slowly */
+        /* Cool down slowly when heater is off or duty is zero */
         sim_temp -= 0.5f * dt_seconds;
         if (sim_temp < 20.0f) sim_temp = 20.0f;
     }
+    
+    /* Update last known duty for next iteration */
+    sim_last_duty = (g_ssr_enabled) ? 50.0f : 0.0f;  /* Conservative estimate */
     
     g_rtd_sensor.temperature_c = sim_temp;
     g_rtd_sensor.raw_adc = (sim_temp / 300.0f) * 32768.0f;  /* Fake ADC value */
@@ -234,11 +240,16 @@ void thermal_pid_update(void)
     /* Apply SSR control at reduced frequency (10 Hz vs 25 Hz sensor sampling) */
     static uint32_t ssr_update_counter = 0;
     if ((ssr_update_counter++ % 3) == 0) {  /* Every 3rd call = ~10 Hz */
-        /* Set SSR PWM duty via TIM */
-        extern TIM_HandleTypeDef htim1;
-        uint32_t period = htim1.Init.Period + 1;
-        uint32_t pulse = (period * (uint32_t)ssr_duty) / 100;
-        __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, pulse);
+        /* If PID output is at minimum, disable SSR entirely for safety */
+        if (ssr_duty <= SSR_DUTY_MIN) {
+            thermal_ssr_enable(false);
+        } else {
+            /* Set SSR PWM duty via TIM */
+            extern TIM_HandleTypeDef htim1;
+            uint32_t period = htim1.Init.Period + 1;
+            uint32_t pulse = (period * (uint32_t)ssr_duty) / 100;
+            __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, pulse);
+        }
         
 #if SIMULATION_MODE
         /* Debug print in simulation */

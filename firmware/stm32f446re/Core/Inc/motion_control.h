@@ -10,12 +10,14 @@
 #include <stdbool.h>
 
 #define MOTOR_STEP_ANGLE_DEG    0.9f            /* NEMA23 0.9° per step */
-#define MOTOR_MICROSTEPS        8               /* TB6600 configured for 8x */
-#define MOTOR_STEPS_PER_REV     (360.0f / MOTOR_STEP_ANGLE_DEG / MOTOR_MICROSTEPS)
+#define MOTOR_MICROSTEPS        4               /* TB6600 DIP: SW4=OFF SW5=ON SW6=OFF = 4x microstep = 1600 ppr */
+#define MOTOR_STEPS_PER_REV     ((360.0f / MOTOR_STEP_ANGLE_DEG) * MOTOR_MICROSTEPS)  /* 400 * 4 = 1600 */
+_Static_assert((int)((360.0f / 0.9f) * 4) == 1600, "MOTOR_STEPS_PER_REV must equal TB6600 ppr setting");
 #define HOMING_SPEED_RPM        30              /* slow approach for home */
 #define NOMINAL_SPEED_RPM       60              /* 1.0 rev/s */
 
-/* Motion simulation is configured separately from the global SIMULATION_MODE. */
+/* Motion simulation is independent so the motor can be exercised on hardware
+ * while thermal, pump, and safety modules remain in simulation mode. */
 #ifndef MOTION_SIMULATION_MODE
 #define MOTION_SIMULATION_MODE 0
 #endif

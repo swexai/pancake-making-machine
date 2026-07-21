@@ -42,6 +42,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Core/Inc/control_system.h ../Core/Inc/thermal_control.h \
  ../Core/Inc/motion_control.h ../Core/Inc/pump_control.h \
  ../Core/Inc/safety_control.h ../Core/Inc/hmi.h ../Core/Inc/logging.h \
+ ../Core/Inc/motion_control_test.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 ../Core/Inc/main.h:
@@ -92,5 +93,6 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/safety_control.h:
 ../Core/Inc/hmi.h:
 ../Core/Inc/logging.h:
+../Core/Inc/motion_control_test.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:

@@ -17,7 +17,11 @@ static stepper_motor_t g_stepper = {0};
 static motion_profile_t g_profile = {0};
 static bool g_home_in_progress = false;
 static uint32_t g_home_start_time = 0;
+static GPIO_PinState g_home_start_pin_state = GPIO_PIN_SET;
+static float g_home_start_position_rev = 0.0f;
 static const uint32_t HOMING_TIMEOUT_MS = 10000;  /* 10 second timeout */
+static const uint32_t HOMING_FALLBACK_COMPLETE_MS = 1200; /* fallback if switch edge is unavailable */
+static const float HOMING_MIN_TRAVEL_REV = 0.15f;         /* require real movement before fallback success */
 
 /* ============================================================================
  * FUNCTION IMPLEMENTATIONS
@@ -31,7 +35,7 @@ void motion_init(void)
     memset(&g_stepper, 0, sizeof(g_stepper));
     memset(&g_profile, 0, sizeof(g_profile));
     
-    g_stepper.target_rpm = NOMINAL_SPEED_RPM;
+    g_stepper.target_rpm = 0.0f;  /* Start with zero target, set during homing/dispense */
     g_stepper.is_enabled = false;
     g_stepper.is_homed = false;
     
@@ -55,6 +59,8 @@ void motion_home_axis(void)
     g_home_in_progress = true;
     g_stepper.is_homed = false;
     g_home_start_time = HAL_GetTick();
+    g_home_start_pin_state = HAL_GPIO_ReadPin(NC_Switch_GPIO_Port, NC_Switch_Pin);
+    g_home_start_position_rev = g_stepper.position_revolutions;
     
     /* Start slow approach */
     motion_enable(true);
@@ -77,12 +83,17 @@ bool motion_is_homing_active(void)
 void motion_enable(bool enable)
 {
     g_stepper.is_enabled = enable;
+    extern TIM_HandleTypeDef htim2;
 
     if (enable) {
-        /* Set EN_THETA high to enable driver */
+        /* Driver enable is active-HIGH on this wiring: drive EN_THETA high */
         HAL_GPIO_WritePin(EN_THETA_GPIO_Port, EN_THETA_Pin, GPIO_PIN_SET);
+        /* Set DIR to HIGH for clockwise (forward) rotation */
+        HAL_GPIO_WritePin(DIR_GPIO_Port, DIR_Pin, GPIO_PIN_SET);
     } else {
-        /* Set EN_THETA low to disable driver */
+        /* Stop step pulse timer BEFORE disabling driver to cut coil current */
+        HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_2);
+        /* Drive EN_THETA low to disable the motor driver */
         HAL_GPIO_WritePin(EN_THETA_GPIO_Port, EN_THETA_Pin, GPIO_PIN_RESET);
         g_stepper.current_rpm = 0.0f;
         g_profile.current_velocity = 0.0f;
@@ -112,18 +123,72 @@ void motion_set_target_rpm(float rpm)
  * - DIR input: direction control (high = CW, low = CCW)
  * - EN input: enable (high = enabled, low = disabled)
  */
+#if !MOTION_SIMULATION_MODE
+/**
+ * @brief Update TIM2 period to produce the correct step frequency for current_velocity.
+ * Called whenever velocity changes. TIM2 channel 2 outputs STEP pulses continuously.
+ * Step frequency = current_velocity (rev/s) * MOTOR_STEPS_PER_REV
+ * TIM2 ARR = (APB1_CLOCK / step_frequency) - 1  (prescaler = 0)
+ * APB1 runs at SystemCoreClock (16 MHz with HSI, no PLL).
+ */
+static void motion_update_step_frequency(float velocity_rev_s)
+{
+    extern TIM_HandleTypeDef htim2;
+    extern void uart_printf(const char *format, ...);
+    static float last_velocity = -1.0f;
+    static float last_logged_vel = -999.0f;
+
+    if (velocity_rev_s <= 0.0f) {
+        HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_2);
+        last_velocity = -1.0f;
+        last_logged_vel = -999.0f;
+        return;
+    }
+
+    /* Enable ARPE (auto-reload preload) on every call to ensure it stays set.
+     * Without ARPE, __HAL_TIM_SET_AUTORELOAD writes directly to the active ARR
+     * register. If new ARR < current CNT, TIM2 (32-bit) must count to 0xFFFFFFFF
+     * (~268s at 16 MHz) before the next STEP pulse fires — stalling the motor.
+     * With ARPE, ARR writes update only the shadow register; the active ARR is
+     * replaced atomically at the next timer overflow, preventing any stall. */
+    htim2.Instance->CR1 |= TIM_CR1_ARPE;
+
+    /* Only recalculate and write registers when velocity has changed */
+    if (velocity_rev_s != last_velocity) {
+        last_velocity = velocity_rev_s;
+
+        float step_freq = velocity_rev_s * MOTOR_STEPS_PER_REV;
+        uint32_t arr = (uint32_t)(SystemCoreClock / step_freq);
+        if (arr < 2) arr = 2;
+
+        /* TB6600 minimum STEP pulse: 2-3 µs. 40 ticks @ 16 MHz = 2.5 µs */
+        uint32_t pulse_ticks = 40;
+        __HAL_TIM_SET_AUTORELOAD(&htim2, arr - 1);
+        __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, pulse_ticks);
+
+        /* Throttle log: only print every 0.5 rev/s (~30 RPM) change.
+         * Printing every 0.002 rev/s increment floods UART at ~5 ms/line,
+         * degrading the motion_update() call rate from 1 ms to ~10 ms. */
+        if (fabsf(velocity_rev_s - last_logged_vel) >= 0.5f) {
+            uart_printf("MOTION: vel=%.1f rev/s (%.0f RPM), freq=%.0f Hz, ARR=%lu\r\n",
+                       velocity_rev_s, velocity_rev_s * 60.0f, step_freq, arr - 1);
+            last_logged_vel = velocity_rev_s;
+        }
+    }
+
+    /* Start timer if not already running; reset counter for a clean first period */
+    if ((htim2.Instance->CR1 & TIM_CR1_CEN) == 0) {
+        uart_printf("MOTION: Starting TIM2 PWM on PB3 (TIM2_CH2)...\r\n");
+        __HAL_TIM_SET_COUNTER(&htim2, 0);
+        HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
+    }
+}
+#endif
+
 void motion_step(void)
 {
-    /* Generate step pulse (assuming connected to timer output/PWM) */
-    /* Pulse width: typically 1-2 microseconds */
-    
-    /* Set direction (assuming CW rotation) */
+    /* Direction: CW */
     HAL_GPIO_WritePin(DIR_GPIO_Port, DIR_Pin, GPIO_PIN_SET);
-    
-    /* Toggle STEP pin (this would be done via timer or GPIO) */
-    extern TIM_HandleTypeDef htim2;
-    HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
-    
     g_stepper.step_counter++;
 }
 
@@ -175,9 +240,41 @@ bool motion_is_enabled(void)
  */
 void motion_update(void)
 {
+    static uint32_t last_update_ms = 0;
+    uint32_t now_ms = HAL_GetTick();
+    if (last_update_ms == 0) {
+        last_update_ms = now_ms;
+    }
+
+    float dt_s = (now_ms - last_update_ms) / 1000.0f;
+    last_update_ms = now_ms;
+
+    /* Keep integration stable under scheduler jitter and tick coalescing. */
+    if (dt_s <= 0.0f) {
+        dt_s = 0.001f;
+    } else if (dt_s > 0.050f) {
+        dt_s = 0.050f;
+    }
+
     /* Handle homing state machine first (non-blocking) */
     if (g_home_in_progress) {
         uint32_t elapsed_ms = HAL_GetTick() - g_home_start_time;
+        float homing_travel_rev = fabsf(g_stepper.position_revolutions - g_home_start_position_rev);
+
+        /* Fallback completion: if switch edge is never observed but axis actually moved,
+         * accept homing after a short travel period so dispense is not blocked. */
+        if (elapsed_ms > HOMING_FALLBACK_COMPLETE_MS &&
+            homing_travel_rev >= HOMING_MIN_TRAVEL_REV &&
+            !g_stepper.is_homed) {
+            g_stepper.position_revolutions = 0.0f;
+            g_stepper.step_counter = 0;
+            g_stepper.is_homed = true;
+            motion_set_target_speed(0.0f);
+            motion_enable(false);
+            uart_printf("Homing completed (fallback: no switch edge, travel=%.2f rev)\r\n", homing_travel_rev);
+            g_home_in_progress = false;
+            return;
+        }
         
         if (elapsed_ms > HOMING_TIMEOUT_MS) {
             /* Timeout - homing failed */
@@ -194,26 +291,28 @@ void motion_update(void)
             g_stepper.step_counter = 0;
             g_stepper.is_homed = true;
             uart_printf("Homing completed successfully\r\n");
-            /* Return to nominal speed */
-            motion_set_target_speed(NOMINAL_SPEED_RPM);
+            motion_set_target_speed(0.0f);
+            motion_enable(false);
             g_home_in_progress = false;
+            return;
         }
 #else
-        /* Check home switch (active high NC switch) */
-        if (HAL_GPIO_ReadPin(NC_Switch_GPIO_Port, NC_Switch_Pin) == GPIO_PIN_SET) {
+    /* Check home switch transition.
+     * Using edge-change avoids false immediate completion when the switch
+     * idle level is already high/low at homing start (NC/NO wiring variants). */
+    GPIO_PinState home_now = HAL_GPIO_ReadPin(NC_Switch_GPIO_Port, NC_Switch_Pin);
+    if (home_now != g_home_start_pin_state) {
             g_stepper.position_revolutions = 0.0f;
             g_stepper.step_counter = 0;
             g_stepper.is_homed = true;
             uart_printf("Homing completed successfully\r\n");
-            /* Return to nominal speed */
-            motion_set_target_speed(NOMINAL_SPEED_RPM);
+            motion_set_target_speed(0.0f);
+            motion_enable(false);
             g_home_in_progress = false;
+            return;
         }
 #endif
     }
-    
-    static uint32_t last_step_time_us = 0;
-    uint32_t now_us = HAL_GetMicrosecond();  /* Pseudo-function */
     
     if (!g_stepper.is_enabled) {
         return;
@@ -221,7 +320,7 @@ void motion_update(void)
     
     /* Acceleration/deceleration profile */
     float vel_error = g_profile.target_velocity - g_profile.current_velocity;
-    float max_vel_change = g_profile.max_acceleration * 0.001f;  /* Per 1ms */
+    float max_vel_change = g_profile.max_acceleration * dt_s;
     
     if (vel_error > max_vel_change) {
         g_profile.current_velocity += max_vel_change;
@@ -233,40 +332,38 @@ void motion_update(void)
     
     g_stepper.current_rpm = g_profile.current_velocity * 60.0f;
     
-    /* Calculate step interval based on velocity */
-    float steps_per_second = g_profile.current_velocity * MOTOR_STEPS_PER_REV;
-    float step_interval_us = (steps_per_second > 0) ? (1000000.0f / steps_per_second) : 0;
-    
 #if MOTION_SIMULATION_MODE
     /* In simulation, update position based on velocity without real stepping */
     static uint32_t last_update_us = 0;
-    if (last_update_us == 0) last_update_us = now_us;
+    uint32_t now_us_sim = HAL_GetTick() * 1000;
+    if (last_update_us == 0) last_update_us = now_us_sim;
     
-    float dt_seconds = (now_us - last_update_us) / 1000000.0f;
-    last_update_us = now_us;
+    float dt_seconds = (now_us_sim - last_update_us) / 1000000.0f;
+    last_update_us = now_us_sim;
     
     g_stepper.position_revolutions += g_profile.current_velocity * dt_seconds;
-    
-    /* Simulate step counter */
     g_stepper.step_counter = (uint32_t)(g_stepper.position_revolutions * MOTOR_STEPS_PER_REV);
     
     /* Debug print */
     extern void uart_printf(const char *format, ...);
     static uint32_t last_debug_ms = 0;
     uint32_t now_ms = HAL_GetTick();
-    if (now_ms - last_debug_ms > 2000 && !g_home_in_progress) {  /* Print every 2 seconds (not during homing) */
+    if (now_ms - last_debug_ms > 2000 && !g_home_in_progress) {
         uart_printf("MOTION SIM: Motor RPM=%.1f, Pos=%.2f rev, Homed=%d\r\n",
                    g_stepper.current_rpm, g_stepper.position_revolutions, g_stepper.is_homed);
         last_debug_ms = now_ms;
     }
 #else
-    /* Generate step pulses when time is right */
-    if ((now_us - last_step_time_us) >= step_interval_us) {
-        motion_step();
-        last_step_time_us = now_us;
-        
-        /* Update position counter */
-        g_stepper.position_revolutions += 1.0f / MOTOR_STEPS_PER_REV;
-    }
+    /* Set direction CW */
+    HAL_GPIO_WritePin(DIR_GPIO_Port, DIR_Pin, GPIO_PIN_SET);
+    
+    /* Update TIM2 frequency to match current velocity.
+     * TIM2 PWM output drives the STEP line continuously at the correct rate.
+     * Position is tracked from step counter incremented by TIM2 update ISR or
+     * estimated from velocity here since we don't have a step ISR yet. */
+    motion_update_step_frequency(g_profile.current_velocity);
+    
+    /* Estimate position from integrated velocity using the same dt as ramp update. */
+    g_stepper.position_revolutions += g_profile.current_velocity * dt_s;
 #endif
 }

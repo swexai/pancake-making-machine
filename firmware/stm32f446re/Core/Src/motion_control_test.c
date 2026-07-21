@@ -7,6 +7,7 @@
 #include "motion_control.h"
 #include "main.h"
 #include <math.h>
+#include <stdint.h>
 
 /* External function for printing (from logging module or main) */
 extern void uart_printf(const char *format, ...);
@@ -103,6 +104,7 @@ motion_test_result_t motion_test_init(void)
 motion_test_result_t motion_test_enable_disable(void)
 {
     uart_printf("\r\n[MOTION_TEST] === Testing Enable/Disable ===\r\n");
+    uart_printf("EN_THETA expectation: HIGH=enabled, LOW=disabled\r\n");
     
     motion_init();
     
@@ -151,12 +153,15 @@ motion_test_result_t motion_test_speed_control(void)
     
     float test_speeds[] = {30.0f, 60.0f, 120.0f, 0.0f};
     int num_speeds = sizeof(test_speeds) / sizeof(test_speeds[0]);
+    const uint32_t hold_time_ms = 5000;
     
     for (int i = 0; i < num_speeds; i++) {
         motion_set_target_speed(test_speeds[i]);
+        uart_printf("Holding %.1f RPM command for %lu ms...\r\n", test_speeds[i], hold_time_ms);
         
-        /* Run update cycle to let speed ramp */
-        for (int j = 0; j < 100; j++) {
+        /* Keep motor commanded for 5 seconds so physical motion is observable */
+        uint32_t start_time = HAL_GetTick();
+        while ((HAL_GetTick() - start_time) < hold_time_ms) {
             motion_update();
             HAL_Delay(1);
         }
@@ -329,23 +334,43 @@ motion_test_result_t motion_test_homing(void)
     uart_printf("Initiating homing...\r\n");
     motion_home_axis();
     
+    /* Wait for homing to complete by calling motion_update() in a loop */
+    uint32_t start_time = HAL_GetTick();
+    uint32_t timeout_ms = 5000;  /* 5 second timeout */
+    
+    while ((HAL_GetTick() - start_time) < timeout_ms) {
+        motion_update();
+        
+        if (motion_is_homed()) {
+            uart_printf("Homing completed successfully\r\n");
+            break;
+        }
+        
+        HAL_Delay(10);
+    }
+    
     /* Check homing result */
     if (!motion_is_homed()) {
         uart_printf("WARNING: Homing failed or timeout (may be normal if hardware unavailable)\r\n");
+        motion_enable(false);
         return TEST_SKIP;
     }
-    
-    uart_printf("Homing completed successfully\r\n");
     
     /* Verify position is at zero */
     float pos = motion_get_position();
     if (!float_equals(pos, 0.0f, TEST_TOLERANCE)) {
         uart_printf("ERROR: Position should be 0.0 after homing, got %.2f\r\n", pos);
+        motion_enable(false);
         return TEST_FAIL;
     }
     
     uart_printf("Position correctly reset to 0.0 revolutions\r\n");
     uart_printf("Homing test: PASS\r\n");
+    
+    /* Clean up: disable motor after test */
+    motion_enable(false);
+    motion_set_target_speed(0.0f);  /* Reset target speed to zero */
+    
     return TEST_PASS;
 }
 
@@ -362,6 +387,14 @@ bool motion_test_run_all(void)
     uart_printf("========================================\r\n");
     uart_printf("  MOTION CONTROL TEST SUITE\r\n");
     uart_printf("========================================\r\n");
+    uart_printf("Note: these tests validate control-state only, not physical shaft motion.\r\n");
+    uart_printf("EN_THETA expectation: HIGH=enabled, LOW=disabled.\r\n");
+
+#if MOTION_SIMULATION_MODE
+    uart_printf("Mode: motion simulation\r\n");
+#else
+    uart_printf("Mode: real motor hardware\r\n");
+#endif
     
     motion_test_result_t results[6];
     
@@ -399,6 +432,9 @@ bool motion_test_run_all(void)
     uart_printf("\nTotal: %d passed, %d failed, %d skipped\r\n", 
                pass_count, fail_count, skip_count);
     uart_printf("========================================\r\n\r\n");
+    
+    /* CRITICAL: Ensure motor is disabled after all tests */
+    motion_enable(false);
     
     return (fail_count == 0);
 }

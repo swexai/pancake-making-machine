@@ -1,0 +1,9 @@
+../Core/Src/motion_control_test.c:24:13:float_equals	2
+../Core/Src/motion_control_test.c:33:6:motion_test_print_result	5
+../Core/Src/motion_control_test.c:67:22:motion_test_init	4
+../Core/Src/motion_control_test.c:104:22:motion_test_enable_disable	4
+../Core/Src/motion_control_test.c:147:22:motion_test_speed_control	4
+../Core/Src/motion_control_test.c:192:22:motion_test_position_tracking	5
+../Core/Src/motion_control_test.c:241:22:motion_test_acceleration	10
+../Core/Src/motion_control_test.c:320:22:motion_test_homing	6
+../Core/Src/motion_control_test.c:384:6:motion_test_run_all	4

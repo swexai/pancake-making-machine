@@ -128,14 +128,24 @@ void control_system_state_machine(void)
         case MODE_DISPENSE:
             /* Active dispense: rotate plate, pump batter, monitor */
             thermal_pid_update();
-            motion_update();
             pump_update();
-            
-            /* Check if dispense cycle complete (~5 seconds) */
+
+            /* Initialize dispense on first entry: explicitly arm motor and pump.
+             * Also handles the case where the READY→DISPENSE transition was
+             * processed when the motor was already at target speed (no velocity
+             * change → no MOTION log), ensuring the timer is running. */
             static uint32_t dispense_start_ms = 0;
             if (dispense_start_ms == 0) {
                 dispense_start_ms = HAL_GetTick();
+                motion_enable(true);
+                motion_set_target_rpm((float)THETA_TARGET_RPM);
+                pump_enable(true);
+                pump_set_duty_cycle(85.0f);
+                uart_printf("DISPENSE: motor armed at %d RPM, pump at 85%%\r\n",
+                            (int)THETA_TARGET_RPM);
             }
+
+            motion_update();
             
             if ((HAL_GetTick() - dispense_start_ms) >= DISPENSE_DURATION_MS) {
                 /* End dispense */
@@ -149,16 +159,15 @@ void control_system_state_machine(void)
             break;
             
         case MODE_COOLDOWN:
-            /* Cool plate after dispense */
-            thermal_pid_update();
+            /* Cool plate after dispense - disable heater and let it cool naturally */
+            thermal_ssr_enable(false);  /* Cut power immediately to allow cooling */
             
             /* Stay here until temperature below safe handling level (~100°C) */
             if (g_system_state.thermal.current_c < 100.0f) {
-                thermal_ssr_enable(false);
                 next_mode = MODE_IDLE;
             }
             
-            /* Or return to READY if operator immediately wants another cycle */
+            /* Or return to WARMUP if operator immediately wants another cycle */
             if (g_system_state.requested_mode == MODE_WARMUP) {
                 next_mode = MODE_WARMUP;
             }

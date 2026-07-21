@@ -4,6 +4,7 @@
 "./Core/Src/logging.o"
 "./Core/Src/main.o"
 "./Core/Src/motion_control.o"
+"./Core/Src/motion_control_test.o"
 "./Core/Src/pump_control.o"
 "./Core/Src/safety_control.o"
 "./Core/Src/stm32f4xx_hal_msp.o"

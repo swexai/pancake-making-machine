@@ -92,6 +92,9 @@ static void task_pump_control(void *pvParameters);
 static void task_hmi(void *pvParameters);
 static void task_logging(void *pvParameters);
 
+/* Boot diagnostic helper */
+static void run_boot_motion_spin_test(uint32_t hold_ms, float rpm);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -111,6 +114,62 @@ uint32_t HAL_GetMicrosecond(void)
 int _fstat(int fd, struct stat *st) {
   st->st_mode = S_IFCHR;
   return 0;
+}
+
+static void run_boot_motion_spin_test(uint32_t hold_ms, float rpm)
+{
+    extern TIM_HandleTypeDef htim2;
+    
+    uart_printf("\r\n=== Boot Motor Spin Diagnostic ===\r\n");
+    uart_printf("Commanding %.1f RPM for %lu ms\r\n", rpm, hold_ms);
+
+    motion_enable(true);
+    
+    /* Verify EN pin state */
+    GPIO_PinState en_state = HAL_GPIO_ReadPin(EN_THETA_GPIO_Port, EN_THETA_Pin);
+    uart_printf("EN_THETA pin after motion_enable(true): %s\r\n", 
+               en_state == GPIO_PIN_SET ? "HIGH (enabled)" : "LOW (disabled)");
+    
+    /* Verify DIR pin state */
+    GPIO_PinState dir_state = HAL_GPIO_ReadPin(DIR_GPIO_Port, DIR_Pin);
+    uart_printf("DIR pin: %s\r\n", dir_state == GPIO_PIN_SET ? "HIGH (CW)" : "LOW (CCW)");
+    
+    /* Check TIM2 PWM status */
+    uint32_t tim2_cr1 = htim2.Instance->CR1;
+    uart_printf("TIM2 CR1 (enable bit): %s\r\n", 
+               (tim2_cr1 & TIM_CR1_CEN) ? "RUNNING" : "STOPPED");
+    
+    motion_set_target_speed(rpm);
+
+    uint32_t start = HAL_GetTick();
+    uint32_t sample_count = 0;
+    while ((HAL_GetTick() - start) < hold_ms) {
+        motion_update();
+        
+        /* Sample status every 1 second */
+        if ((sample_count % 1000) == 0) {
+            en_state = HAL_GPIO_ReadPin(EN_THETA_GPIO_Port, EN_THETA_Pin);
+            tim2_cr1 = htim2.Instance->CR1;
+            float current_rpm = motion_get_rpm();
+            uart_printf("[%lu ms] EN=%s TIM2=%s RPM=%.1f\r\n",
+                       (HAL_GetTick() - start),
+                       en_state == GPIO_PIN_SET ? "HIGH" : "LOW",
+                       (tim2_cr1 & TIM_CR1_CEN) ? "RUN" : "STOP",
+                       current_rpm);
+        }
+        
+        sample_count++;
+        HAL_Delay(1);
+    }
+
+    motion_set_target_speed(0.0f);
+    motion_enable(false);
+    
+    en_state = HAL_GPIO_ReadPin(EN_THETA_GPIO_Port, EN_THETA_Pin);
+    uart_printf("EN_THETA pin after motion_enable(false): %s\r\n", 
+               en_state == GPIO_PIN_SET ? "HIGH (error!)" : "LOW (disabled)");
+    
+    uart_printf("Boot motor spin diagnostic complete\r\n");
 }
 
 /* USER CODE END 0 */
@@ -158,6 +217,19 @@ int main(void)
   HAL_UART_Transmit(&huart2, (uint8_t*)buffer, length, 100);
   /* Initialize control system and all modules */
   control_system_init();
+
+#if SIMULATION_MODE
+  uart_printf("Simulation: thermal/pump/safety active\r\n");
+#else
+  uart_printf("Simulation: disabled\r\n");
+#endif
+
+#if MOTION_SIMULATION_MODE
+  uart_printf("Motion path: SIMULATED\r\n");
+#else
+  uart_printf("Motion path: REAL HARDWARE\r\n");
+  run_boot_motion_spin_test(5000, 60.0f);
+#endif
   
   /* Run motion control tests */
   uart_printf("\r\n=== Running Motion Control Tests ===\r\n");
@@ -167,12 +239,15 @@ int main(void)
     uart_printf("WARNING: Some motor tests failed!\r\n");
   }
   
+  /* CRITICAL: Fully reset motion state after tests before starting FreeRTOS */
+  motion_init();
+  
   /* Create FreeRTOS tasks */
   
   /* Safety task - HIGHEST priority (1 kHz rate) */
   xTaskCreate(task_safety_monitor, 
               "SafetyMonitor",
-              configMINIMAL_STACK_SIZE + 128,
+              configMINIMAL_STACK_SIZE + 512,  /* Increased: calls control_system_update deep chain */
               NULL,
               5,  /* Priority: very high */
               NULL);
@@ -180,7 +255,7 @@ int main(void)
   /* Thermal control task (25 Hz rate) */
   xTaskCreate(task_thermal_control,
               "ThermalCtrl",
-              configMINIMAL_STACK_SIZE + 256,
+              configMINIMAL_STACK_SIZE + 384,  /* Increased: uart_printf uses 256-byte local buffer */
               NULL,
               4,  /* Priority: high */
               NULL);
@@ -204,7 +279,7 @@ int main(void)
   /* HMI task (2 Hz rate) */
   xTaskCreate(task_hmi,
               "HMI",
-              configMINIMAL_STACK_SIZE + 256,
+              configMINIMAL_STACK_SIZE + 384,  /* Increased: uart_printf uses 256-byte local buffer */
               NULL,
               2,  /* Priority: below normal */
               NULL);
@@ -457,7 +532,7 @@ static void MX_TIM2_Init(void)
   {
     Error_Handler();
   }
-  if (HAL_TIM_OC_Init(&htim2) != HAL_OK)
+  if (HAL_TIM_PWM_Init(&htim2) != HAL_OK)
   {
     Error_Handler();
   }
@@ -467,11 +542,11 @@ static void MX_TIM2_Init(void)
   {
     Error_Handler();
   }
-  sConfigOC.OCMode = TIM_OCMODE_TOGGLE;
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
   sConfigOC.Pulse = 45000;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-  if (HAL_TIM_OC_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
+  if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
   {
     Error_Handler();
   }
@@ -547,7 +622,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PWM_PUMP_Pin */
+  /*Configure GPIO pin : STEP_THETA on PB3 as TIM2_CH2 */
+  GPIO_InitStruct.Pin = GPIO_PIN_3;  /* PB3 = TIM2_CH2 */
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Alternate = GPIO_AF1_TIM2;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
   GPIO_InitStruct.Pin = PWM_PUMP_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -609,10 +690,12 @@ static void task_motion_control(void *pvParameters)
 {
     if (pvParameters);  /* Unused parameter */
     
-    const TickType_t xDelay = pdMS_TO_TICKS(40);  /* 40 ms = 25 Hz */
+  const TickType_t xDelay = pdMS_TO_TICKS(40);  /* 40 ms = 25 Hz */
     
     for (;;) {
-        motion_update();
+    /* Motion update is driven from control_system_state_machine() in
+     * SafetyMonitor task. Keep this task passive to avoid concurrent
+     * updates of motion profile/timer state from two contexts. */
         vTaskDelay(xDelay);
     }
 }

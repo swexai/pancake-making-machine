@@ -7,6 +7,7 @@
 #include "hmi.h"
 #include "control_system.h"
 #include "motion_control.h"
+#include "safety_control.h"
 #include "logging.h"
 #include <string.h>
 #include <stdio.h>
