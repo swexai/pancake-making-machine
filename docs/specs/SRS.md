@@ -9,7 +9,7 @@
 
 ### 2.2 Functional Requirements (Fxx)
 
-**F‑01** The system shall rotate the plate at **1.0 rev/s** (±1%) during dispense.
+**F‑01** The system shall rotate the plate at **0.2 rev/s (12 RPM)** (±1%) during dispense.
 **F‑02** The system shall deposit batter via **7 nozzles** forming concentric rings.
 **F‑03** The system shall control the pump to deliver **28.3 mL/s** (±5%) total during the 5 s dispense.
 **F‑04** The system shall provide per‑nozzle **trim adjustment** to achieve target **mL/s** proportional to ring radius.

@@ -33,7 +33,7 @@ PT100 → MAX31865 → Temp PID → SSR → heater → plate. Target: 210–230 
 ![Temperature Control Loop](docs/architecture/png/control_temp_loop.png)
 
 ### 4.2 Motion (θ-axis)
-1.0 rev/s with homing + jerk-limited ramps; STEP/DIR/EN → TB6600 → NEMA23; hardware EN cut.
+0.2 rev/s (12 RPM) with homing + jerk-limited ramps; STEP/DIR/EN → TB6600 → NEMA23; hardware EN cut.
 
 ![Theta Motion](docs/architecture/png/control_theta_motion.png)
 
@@ -53,7 +53,7 @@ Safety (1 kHz), TempCtrl (25 Hz; SSR 10 Hz), ThetaCtrl (timer-driven), PumpCtrl 
 ---
 
 ## 6) Timing & Key Parameters
-- θ speed: **0.2 rev/s**  
+- θ speed: **0.2 rev/s (12 RPM)**  
 - Dispense: **5 s**, **~28.3 mL/s** total (~141 mL)  
 - Temp sample: **25 Hz** (PID), **10 Hz** SSR drive  
 - Safety scan: **1 kHz** • Logging: **1 Hz**
