@@ -151,7 +151,7 @@ motion_test_result_t motion_test_speed_control(void)
     motion_init();
     motion_enable(true);
     
-    float test_speeds[] = {30.0f, 60.0f, 120.0f, 0.0f};
+    float test_speeds[] = {6.0f, 12.0f, 24.0f, 0.0f};
     int num_speeds = sizeof(test_speeds) / sizeof(test_speeds[0]);
     const uint32_t hold_time_ms = 5000;
     
@@ -204,7 +204,7 @@ motion_test_result_t motion_test_position_tracking(void)
     
     /* Enable motor and set speed */
     motion_enable(true);
-    motion_set_target_speed(60.0f);  /* 60 RPM = 1 rev/s */
+    motion_set_target_speed(12.0f);  /* 12 RPM = 0.2 rev/s */
     
     /* Run motion for a measured time period */
     uint32_t start_time = HAL_GetTick();
@@ -216,12 +216,12 @@ motion_test_result_t motion_test_position_tracking(void)
     }
     
     float final_position = motion_get_position();
-    uart_printf("Position after 2 seconds at 60 RPM: %.2f revolutions\r\n", 
+    uart_printf("Position after 2 seconds at 12 RPM: %.2f revolutions\r\n", 
                final_position);
     
-    /* At 60 RPM (1 rev/s), after 2 seconds we should have ~2 revolutions */
-    if (final_position < 1.5f || final_position > 2.5f) {
-        uart_printf("WARNING: Position may be inaccurate (expected ~2.0, got %.2f)\r\n", 
+    /* At 12 RPM (0.2 rev/s), after 2 seconds we should have ~0.4 revolutions */
+    if (final_position < 0.3f || final_position > 0.5f) {
+        uart_printf("WARNING: Position may be inaccurate (expected ~0.4, got %.2f)\r\n", 
                    final_position);
     }
     
@@ -246,8 +246,8 @@ motion_test_result_t motion_test_acceleration(void)
     motion_enable(true);
     
     /* Test acceleration phase */
-    uart_printf("Starting acceleration test from 0 to 60 RPM...\r\n");
-    motion_set_target_speed(60.0f);
+    uart_printf("Starting acceleration test from 0 to 12 RPM...\r\n");
+    motion_set_target_speed(12.0f);
     
     float prev_rpm = 0.0f;
     uint32_t sample_count = 0;
@@ -260,7 +260,7 @@ motion_test_result_t motion_test_acceleration(void)
             uart_printf("t=%3ldms: RPM = %.2f\r\n", i, current_rpm);
             
             /* Verify monotonic increase during acceleration */
-            if (current_rpm < prev_rpm && current_rpm > 59.0f) {
+            if (current_rpm < prev_rpm && current_rpm > 11.0f) {
                 uart_printf("ERROR: RPM decreased during acceleration phase\r\n");
                 motion_enable(false);
                 return TEST_FAIL;
@@ -268,7 +268,7 @@ motion_test_result_t motion_test_acceleration(void)
             prev_rpm = current_rpm;
             sample_count++;
             
-            if (current_rpm >= 59.0f) {
+            if (current_rpm >= 11.0f) {
                 uart_printf("Reached target speed after ~%ldms\r\n", i);
                 break;
             }
@@ -277,9 +277,9 @@ motion_test_result_t motion_test_acceleration(void)
     }
     
     /* Test deceleration phase */
-    uart_printf("\nStarting deceleration test from 60 to 0 RPM...\r\n");
+    uart_printf("\nStarting deceleration test from 12 to 0 RPM...\r\n");
     motion_set_target_speed(0.0f);
-    prev_rpm = 60.0f;
+    prev_rpm = 12.0f;
     
     for (uint32_t i = 0; i < 10000; i++) {
         motion_update();

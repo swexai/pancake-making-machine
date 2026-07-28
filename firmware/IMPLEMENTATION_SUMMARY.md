@@ -127,9 +127,9 @@ motion_profile_t       // Velocity planning and acceleration
 
 **Motor Specifications:**
 - NEMA23 stepper (0.9° per step)
-- TB6600 driver (8x microstepping)
-- Steps per revolution: 400 (full steps) / 3200 (microsteps)
-- Target speed: 1.0 rev/s (60 RPM)
+- TB6600 driver (4x microstepping)
+- Steps per revolution: 400 (full steps) / 1600 (microsteps)
+- Target speed: 0.2 rev/s (12 RPM)
 - Max acceleration: 2 rev/s²
 
 **Homing Algorithm:**
@@ -476,7 +476,7 @@ To integrate into your project:
 | Safety response time | < 50 ms | < 1 ms (1 kHz monitoring) |
 | Thermal sample rate | 25 Hz | ✓ 40 ms interval |
 | Temperature stability | ±3°C | ✓ PID controller |
-| Motor speed accuracy | 1.0 rev/s | ✓ Timer-based |
+| Motor speed accuracy | 0.2 rev/s | ✓ Timer-based |
 | Pump flow range | 0-100% | ✓ 10 kHz PWM |
 | State machine update | < 10 ms | ✓ ~2-5 ms |
 | Memory footprint | < 50 kB | ✓ ~40 kB |

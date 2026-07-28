@@ -66,11 +66,11 @@ R(T) = R0[1 + A*T + B*T²]  (for T ≥ 0°C)
 - Ki = 15.0 (integral gain)  
 - Kd = 5.0  (derivative gain)
 
-### 2. Motion Control (1.0 rev/s rotation)
+### 2. Motion Control (0.2 rev/s rotation)
 
 **Stepper Motor Interface:**
 - NEMA23 motor with 0.9° step angle
-- TB6600 microstepping driver (8x microsteps)
+- TB6600 microstepping driver (4x microsteps, 1600 steps/rev)
 - Step/Direction/Enable logic
 
 **Features:**

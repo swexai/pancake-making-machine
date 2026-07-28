@@ -14,7 +14,7 @@
 #define MOTOR_STEPS_PER_REV     ((360.0f / MOTOR_STEP_ANGLE_DEG) * MOTOR_MICROSTEPS)  /* 400 * 4 = 1600 */
 _Static_assert((int)((360.0f / 0.9f) * 4) == 1600, "MOTOR_STEPS_PER_REV must equal TB6600 ppr setting");
 #define HOMING_SPEED_RPM        30              /* slow approach for home */
-#define NOMINAL_SPEED_RPM       60              /* 1.0 rev/s */
+#define NOMINAL_SPEED_RPM       12              /* 0.2 rev/s */
 
 /* Motion simulation is independent so the motor can be exercised on hardware
  * while thermal, pump, and safety modules remain in simulation mode. */

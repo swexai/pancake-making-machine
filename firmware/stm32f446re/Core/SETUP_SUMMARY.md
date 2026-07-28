@@ -21,7 +21,7 @@ This folder contains a complete template for the Pancake-Making Machine STM32F44
 ### 3. **Application Skeleton** (`src/`)
    Headers for 5 FreeRTOS tasks:
    - `thermal_control.h` — PT100 + MAX31865 + SSR (25 Hz sample, 10 Hz SSR drive)
-   - `motion_control.h` — NEMA23 stepper + TB6600 (1 kHz STEP)
+   - `motion_control.h` — NEMA23 stepper + TB6600 (320 Hz STEP at 12 RPM target)
    - `pump_control.h` — Dispense pump PWM (10 Hz)
    - `safety.h` — E-STOP + cover switch (1 kHz monitor)
    - `hmi_logger.h` — Console I/O (1 Hz logging)
@@ -84,7 +84,7 @@ Flash using STM32CubeIDE, ST-Link utility, or OpenOCD.
 |------|------|----------|---------|
 | Safety | 1 kHz | 5 | Hardware safety chain monitor |
 | ThermalCtrl | 25 Hz | 4 | PID loop (SSR driven @ 10 Hz) |
-| MotionCtrl | Timer-driven | 3 | Stepper STEP generation (~1 kHz) |
+| MotionCtrl | Timer-driven | 3 | Stepper STEP generation (320 Hz at 12 RPM target) |
 | PumpCtrl | 10 Hz | 2 | Dispense PWM control |
 | HMI | 1 Hz | 1 | Console logging, command parsing |
 
@@ -96,8 +96,8 @@ Flash using STM32CubeIDE, ST-Link utility, or OpenOCD.
 ### Motion Control
 - **Motor**: NEMA23 with TB6600 driver
 - **Control**: STEP/DIR/EN on GPIO (PB3, PB4, PB5)
-- **Frequency**: ~500 Hz STEP rate = 0.2 rev/s rotation
-- **Timing**: TIM2 toggle mode @ 1 kHz → 500 Hz STEP output
+- **Frequency**: 320 Hz STEP rate = 0.2 rev/s rotation with 1600 steps/rev
+- **Timing**: TIM2 PWM output is updated at runtime for the commanded RPM
 - **Homing**: GPIO limit switch (not shown in current pin map — add if needed)
 
 ### Dispense
@@ -149,7 +149,7 @@ firmware/stm32f446re/
 After build & flash:
 - [ ] **UART Console**: Connect serial monitor (115200 baud) → see "System startup" message
 - [ ] **Thermal**: Use multimeter on PT100 → verify SPI read ≈ room temp
-- [ ] **Motion**: GPIO scope on PB3 (STEP) → verify ~500 Hz toggle
+- [ ] **Motion**: GPIO scope on PB3 (STEP) → verify ~320 Hz at 12 RPM target
 - [ ] **Pump**: GPIO scope on PB6 (PWM) → verify 10 Hz @ variable duty
 - [ ] **Safety**: Short PA0 (E-STOP) → motor & heater de-energize (hardware + firmware)
 - [ ] **HMI**: Type command via serial → motor homes, heater targets 210 °C

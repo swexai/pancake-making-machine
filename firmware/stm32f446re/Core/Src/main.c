@@ -228,7 +228,7 @@ int main(void)
   uart_printf("Motion path: SIMULATED\r\n");
 #else
   uart_printf("Motion path: REAL HARDWARE\r\n");
-  run_boot_motion_spin_test(5000, 60.0f);
+  run_boot_motion_spin_test(5000, 12.0f);
 #endif
   
   /* Run motion control tests */

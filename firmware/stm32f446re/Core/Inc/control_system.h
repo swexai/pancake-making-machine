@@ -23,8 +23,8 @@
 #define T_LOG_INTERVAL          1000UL            /* 1 Hz -> 1000 ms */
 
 /* Dispense/Motion Parameters */
-#define THETA_TARGET_RPM        60.0f             /* 1.0 rev/s */
-#define THETA_TARGET_RPS        1.0f              /* revolutions per second */
+#define THETA_TARGET_RPM        12.0f             /* 0.2 rev/s */
+#define THETA_TARGET_RPS        0.2f              /* revolutions per second */
 #define DISPENSE_DURATION_MS    5000              /* 5 seconds */
 #define TOTAL_FLOW_ML_S         28.3f             /* mL/s */
 #define TOTAL_BATTER_ML         141.5f            /* mL total */

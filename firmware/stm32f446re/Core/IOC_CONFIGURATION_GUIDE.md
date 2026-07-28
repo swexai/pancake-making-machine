@@ -83,8 +83,8 @@ STM32CubeMX project for the Pancake-Making Machine control system. This guide do
 
 ### 3.3 TIM2 (Stepper STEP Pulse Generation)
 - **Mode**: Output Compare, Toggle on match
-- **Prescaler**: 0 (use 180 MHz directly)
-- **Period (ARR)**: 90000 (1 kHz STEP frequency ÷ 2 = 500 Hz max, ~0.2 rev/s for NEMA23)
+- **Prescaler**: 0 (firmware computes ARR from `SystemCoreClock`)
+- **Period (ARR)**: 90000 initial safe value; firmware updates ARR at runtime for the target speed (12 RPM = 0.2 rev/s = 320 Hz STEP with 1600 steps/rev)
 - **Pulse (CCR1)**: 45000 (toggle=50% duty)
 - **Output**: PB3 (STEP signal)
 - **Update Interrupt**: Enabled (1 kHz for step counting)
@@ -237,7 +237,7 @@ After generating code:
 3. Import project into STM32CubeIDE
 4. Create application tasks in `src/` for:
    - `thermal_control_task()` — reads MAX31865, controls SSR (25 Hz)
-   - `motion_control_task()` — stepper control, homing (1 kHz STEP)
+   - `motion_control_task()` — stepper control, homing (320 Hz STEP at 12 RPM target)
    - `pump_control_task()` — PWM dispense (10 Hz)
    - `safety_task()` — monitors E-STOP, cover (1 kHz)
    - `hmi_logger_task()` — UART logging (1 Hz)

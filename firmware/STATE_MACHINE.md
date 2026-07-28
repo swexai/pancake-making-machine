@@ -38,7 +38,7 @@
     ┌─────▼──────┐      ┌──────▼────┐ │    ┌─────────────▼─────┐
     │  DISPENSE  │      │   CIP     │ │    │    (stay READY)   │
     │            │      │           │ │    └───────────────────┘
-    │ Θ = 1 rev/s│      │ Pump on   │ │
+    │ Θ=0.2 rev/s│      │ Pump on   │ │
     │ Pump on    │      │ No heat   │ │
     │ T=5.0 sec  │      │ Water in  │ │
     │            │      │ CIP time  │ │
@@ -123,7 +123,7 @@
 - **Active Actions:**
   1. **t = 0-5 seconds:**
      - Enable stepper motor (EN_THETA = 1)
-     - Ramp motor to 1.0 rev/s (60 RPM)
+     - Ramp motor to 0.2 rev/s (12 RPM)
      - Enable pump PWM (duty = 85%)
      - Maintain plate temperature with PID
   2. **t = 5.0 seconds:**
@@ -136,12 +136,12 @@
   - → ESTOP: If safety fault
 - **Cycle Timing:**
   ```
-  Starting plate rotation (0-1 sec):
+  Starting plate rotation (0-0.1 sec):
     Smooth acceleration ramp: a_max = 2 rev/s²
     
-  Steady rotation (1-5 sec):
-    θ = 1.0 rev/s (constant)
-    ψ(t) = t - 0.5 sec (position in revolutions)
+  Steady rotation (0.1-5 sec):
+    θ = 0.2 rev/s (constant)
+    ψ(t) = 0.2 * (t - 0.05 sec) (position in revolutions)
     
   Dispense exit (at 5 sec):
     Ramp-down over 0.5 sec if implemented
@@ -322,18 +322,18 @@ Settling: ~30 seconds
 ```
 RPM
  ↑  
-60├─────────────────────────── Target (1.0 rev/s = 60 RPM)
+12├─────────────────────────── Target (0.2 rev/s = 12 RPM)
   │     ╱─────────────────────
-45├────╱
+ 9├────╱
   │   ╱  (a_max = 2 rev/s²)
-30├──╱
+ 6├──╱
   │ ╱
-15├╱
+ 3├╱
   │
   0└────────────────────────→ time (sec)
-  0    5    10    15    20   25
+  0   .05   .10   .15   .20  .25
   
-Ramp time: ~15-20 seconds from 0 → 60 RPM
+Ramp time: ~0.1 seconds from 0 → 12 RPM
 Profile: Trapezoidal (ramp-up, hold, ramp-down if needed)
 ```
 
@@ -346,13 +346,13 @@ Time    Motor             Pump              Plate Temp
 (sec)   (EN, RPM)         (PWM)             Control
 ────────────────────────────────────────────────────────
 0.0     Start ramp        OFF               PID active
-        (0 → 60 RPM)      
+        (0 → 12 RPM)      
 
-1.0     Steady 60 RPM     ON (85%)          ±3°C band
-        (full rotation)   Flow: 28.3 mL/s   
+1.0     Steady 12 RPM     ON (85%)          ±3°C band
+        (~0.2 rev)        Flow: 28.3 mL/s   
 
-4.0     Steady 60 RPM     ON (85%)          Stable
-        (4 revolutions)   @28.3 mL/s        ±3°C
+4.0     Steady 12 RPM     ON (85%)          Stable
+        (~0.8 rev)        @28.3 mL/s        ±3°C
 
 5.0     OFF (EN = 0)      OFF (PWM = 0)     Continue heating
         (coast)           (stop)            to setpoint
