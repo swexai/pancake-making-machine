@@ -1,2 +1,3 @@
 # ignore git debug folder
 firmware\stm32f446re\Debug
+hardware\kicad\experiment
