@@ -52,52 +52,6 @@
 		)
 	)
 	(sheet
-		(at 1121.41 824.23)
-		(size 466.09 240.03)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(stroke
-			(width 0.1524)
-			(type solid)
-		)
-		(fill
-			(color 0 0 0 0)
-		)
-		(uuid "15e581af-9f3c-4753-b1e5-164e69cdc199")
-		(property "Sheetname" "Experiment"
-			(at 1121.41 823.5184 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-			)
-		)
-		(property "Sheetfile" "experiment.kicad_sch"
-			(at 1121.41 1064.8446 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-			)
-		)
-		(instances
-			(project "swexai_ctrl"
-				(path "/e84fb207-b24a-4674-962a-61fd98366889"
-					(page "9")
-				)
-			)
-		)
-	)
-	(sheet
 		(at 1126.49 24.13)
 		(size 480.06 320.04)
 		(exclude_from_sim no)

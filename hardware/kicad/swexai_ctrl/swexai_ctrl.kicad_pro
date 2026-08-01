@@ -234,7 +234,7 @@
       "no_connect_dangling": "warning",
       "pin_not_connected": "error",
       "pin_not_driven": "error",
-      "pin_to_pin": "warning",
+      "pin_to_pin": "error",
       "power_pin_not_driven": "error",
       "same_local_global_label": "warning",
       "similar_label_and_power": "warning",
@@ -437,7 +437,7 @@
         "uuid": "e84fb207-b24a-4674-962a-61fd98366889"
       }
     ],
-    "used_designators": "F1,V1,D1-3,#PWR1-4,C1-3,R1-2,#FLG1-3,#GND1",
+    "used_designators": "F1,V1,D1-11,#PWR1-4,C1-11,#GND1,#FLG1-26,R1-17,J1-9,U1-8,TP1",
     "variants": []
   },
   "sheets": [
@@ -472,10 +472,6 @@
     [
       "597838ba-81d9-4611-be07-a7dca222c5d6",
       "Connector"
-    ],
-    [
-      "15e581af-9f3c-4753-b1e5-164e69cdc199",
-      "Experiment"
     ]
   ],
   "text_variables": {},
