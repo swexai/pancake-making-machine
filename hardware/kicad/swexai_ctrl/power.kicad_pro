@@ -234,7 +234,7 @@
       "no_connect_dangling": "warning",
       "pin_not_connected": "error",
       "pin_not_driven": "error",
-      "pin_to_pin": "error",
+      "pin_to_pin": "warning",
       "power_pin_not_driven": "error",
       "same_local_global_label": "warning",
       "similar_label_and_power": "warning",
@@ -256,7 +256,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "swexai_ctrl.kicad_pro",
+    "filename": "power.kicad_pro",
     "version": 3
   },
   "net_settings": {
@@ -417,57 +417,19 @@
     "meta": {
       "version": 1
     },
-    "ngspice": {
-      "fix_include_paths": true,
-      "meta": {
-        "version": 0
-      },
-      "model_mode": 4,
-      "workbook_filename": "swexai_ctrl.wbk"
-    },
     "page_layout_descr_file": "",
     "plot_directory": "",
     "reuse_designators": true,
     "subpart_first_id": 65,
     "subpart_id_separator": 0,
-    "top_level_sheets": [
-      {
-        "filename": "swexai_ctrl.kicad_sch",
-        "name": "SWEXAI_CTRL",
-        "uuid": "e84fb207-b24a-4674-962a-61fd98366889"
-      }
-    ],
-    "used_designators": "F1,V1,D1-11,#PWR1-4,C1-14,#GND1,#FLG1-26,R1-26,J1-14,U1-11,TP1,J_5V_INPUT1,TH1",
+    "top_level_sheets": [],
+    "used_designators": "",
     "variants": []
   },
   "sheets": [
     [
-      "e84fb207-b24a-4674-962a-61fd98366889",
-      "SWEXAI_CTRL"
-    ],
-    [
-      "f30a5e68-bef5-4d0e-8d46-fa5a6dd73a9b",
-      "Power"
-    ],
-    [
-      "dd0f04a3-0dac-4a3b-adb4-f125491d97ff",
-      "DigitalInputs"
-    ],
-    [
-      "02a622d5-3c62-4390-9a18-231366494dcd",
-      "DigitalOutputs"
-    ],
-    [
-      "6dcfa9c4-da79-4dc4-a232-7434517030e9",
-      "MotionControl"
-    ],
-    [
-      "2027c986-3c6f-41af-b899-37a93d59ecec",
-      "Temperature"
-    ],
-    [
-      "1f35e80c-3401-44b7-8bd6-0413d6421370",
-      "STM32_Interface"
+      "967bc40d-3ddf-4094-aa3a-19af77e479f1",
+      "Root"
     ]
   ],
   "text_variables": {},

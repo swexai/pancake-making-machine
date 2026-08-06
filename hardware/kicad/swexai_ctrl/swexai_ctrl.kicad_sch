@@ -21,7 +21,7 @@
 			(color 0 0 0 0)
 		)
 		(uuid "02a622d5-3c62-4390-9a18-231366494dcd")
-		(property "Sheetname" "Outputs"
+		(property "Sheetname" "DigitalOutputs"
 			(at 471.17 18.3384 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -144,52 +144,6 @@
 		)
 	)
 	(sheet
-		(at 1154.43 443.23)
-		(size 490.22 254)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(stroke
-			(width 0.1524)
-			(type solid)
-		)
-		(fill
-			(color 0 0 0 0)
-		)
-		(uuid "597838ba-81d9-4611-be07-a7dca222c5d6")
-		(property "Sheetname" "Connector"
-			(at 1154.43 442.5184 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-			)
-		)
-		(property "Sheetfile" "connector.kicad_sch"
-			(at 1154.43 697.8146 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-			)
-		)
-		(instances
-			(project "swexai_ctrl"
-				(path "/e84fb207-b24a-4674-962a-61fd98366889"
-					(page "8")
-				)
-			)
-		)
-	)
-	(sheet
 		(at 433.07 339.09)
 		(size 410.21 264.16)
 		(exclude_from_sim no)
@@ -205,7 +159,7 @@
 			(color 0 0 0 0)
 		)
 		(uuid "6dcfa9c4-da79-4dc4-a232-7434517030e9")
-		(property "Sheetname" "Stepper"
+		(property "Sheetname" "MotionControl"
 			(at 433.07 338.3784 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -216,7 +170,7 @@
 				(justify left bottom)
 			)
 		)
-		(property "Sheetfile" "stepper.kicad_sch"
+		(property "Sheetfile" "motioncontrol.kicad_sch"
 			(at 433.07 603.8346 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -251,7 +205,7 @@
 			(color 0 0 0 0)
 		)
 		(uuid "dd0f04a3-0dac-4a3b-adb4-f125491d97ff")
-		(property "Sheetname" "Inputs"
+		(property "Sheetname" "DigitalInputs"
 			(at 2.54 668.5784 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -308,7 +262,7 @@
 				(justify left bottom)
 			)
 		)
-		(property "Sheetfile" "untitled.kicad_sch"
+		(property "Sheetfile" "power.kicad_sch"
 			(at 5.08 591.1346 0)
 			(show_name no)
 			(do_not_autoplace no)
