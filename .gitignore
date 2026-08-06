@@ -1,3 +1,10 @@
 # ignore git debug folder
 firmware\stm32f446re\Debug
 hardware\kicad\experiment
+hardware/kicad/swexai_ctrl/.history
+hardware/kicad/experiment/experiment.kicad_prl
+hardware/kicad/experiment/experiment.kicad_pro
+hardware/kicad/experiment/experiment.kicad_sch
+hardware/kicad/experiment/experiment.wbk
+hardware/kicad/experiment/power.kicad_sch
+hardware/kicad/swexai_ctrl/.history
