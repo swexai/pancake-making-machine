@@ -61,22 +61,42 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define ESTOP_Pin GPIO_PIN_0
 #define ESTOP_GPIO_Port GPIOA
-#define NC_Switch_Pin GPIO_PIN_1
-#define NC_Switch_GPIO_Port GPIOA
+#define COVER_SW_Pin GPIO_PIN_1
+#define COVER_SW_GPIO_Port GPIOA
 #define USART_TX_Pin GPIO_PIN_2
 #define USART_TX_GPIO_Port GPIOA
 #define USART_RX_Pin GPIO_PIN_3
 #define USART_RX_GPIO_Port GPIOA
 #define SPI1_CLK_Pin GPIO_PIN_5
 #define SPI1_CLK_GPIO_Port GPIOA
-#define DIR_Pin GPIO_PIN_4
-#define DIR_GPIO_Port GPIOB
-#define EN_THETA_Pin GPIO_PIN_5
-#define EN_THETA_GPIO_Port GPIOB
+#define START_BTN_Pin GPIO_PIN_4
+#define START_BTN_GPIO_Port GPIOC
+#define STOP_BTN_Pin GPIO_PIN_5
+#define STOP_BTN_GPIO_Port GPIOC
+#define HOME_THETA_Pin GPIO_PIN_6
+#define HOME_THETA_GPIO_Port GPIOC
+#define HOME_RADIAL_Pin GPIO_PIN_7
+#define HOME_RADIAL_GPIO_Port GPIOC
+#define RADIAL_STEP_Pin GPIO_PIN_8
+#define RADIAL_STEP_GPIO_Port GPIOA
+#define BATTER_LOW_Pin GPIO_PIN_10
+#define BATTER_LOW_GPIO_Port GPIOC
+#define SPARE_DI_Pin GPIO_PIN_11
+#define SPARE_DI_GPIO_Port GPIOC
+#define THETA_STEP_Pin GPIO_PIN_3
+#define THETA_STEP_GPIO_Port GPIOB
+#define THETA_DIR_Pin GPIO_PIN_4
+#define THETA_DIR_GPIO_Port GPIOB
+#define THETA_EN_Pin GPIO_PIN_5
+#define THETA_EN_GPIO_Port GPIOB
 #define PWM_PUMP_Pin GPIO_PIN_6
 #define PWM_PUMP_GPIO_Port GPIOB
 #define Power_Indicator_Pin GPIO_PIN_7
 #define Power_Indicator_GPIO_Port GPIOB
+#define RADIAL_DIR_Pin GPIO_PIN_8
+#define RADIAL_DIR_GPIO_Port GPIOB
+#define RADIAL_EN_Pin GPIO_PIN_9
+#define RADIAL_EN_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

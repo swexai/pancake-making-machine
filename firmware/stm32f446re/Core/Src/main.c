@@ -518,9 +518,9 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 1 */
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 0;
+  htim2.Init.Prescaler = 8999;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 90000;
+  htim2.Init.Period = 99;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
@@ -543,7 +543,7 @@ static void MX_TIM2_Init(void)
     Error_Handler();
   }
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 45000;
+  sConfigOC.Pulse = 50;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
@@ -604,31 +604,54 @@ static void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, DIR_Pin|EN_THETA_Pin|Power_Indicator_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, START_BTN_Pin|STOP_BTN_Pin|HOME_THETA_Pin|HOME_RADIAL_Pin
+                          |SPARE_DI_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : ESTOP_Pin NC_Switch_Pin */
-  GPIO_InitStruct.Pin = ESTOP_Pin|NC_Switch_Pin;
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, THETA_DIR_Pin|THETA_EN_Pin|Power_Indicator_Pin|RADIAL_DIR_Pin
+                          |RADIAL_EN_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : ESTOP_Pin COVER_SW_Pin */
+  GPIO_InitStruct.Pin = ESTOP_Pin|COVER_SW_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : DIR_Pin EN_THETA_Pin Power_Indicator_Pin */
-  GPIO_InitStruct.Pin = DIR_Pin|EN_THETA_Pin|Power_Indicator_Pin;
+  /*Configure GPIO pins : START_BTN_Pin STOP_BTN_Pin HOME_THETA_Pin HOME_RADIAL_Pin
+                           SPARE_DI_Pin */
+  GPIO_InitStruct.Pin = START_BTN_Pin|STOP_BTN_Pin|HOME_THETA_Pin|HOME_RADIAL_Pin
+                          |SPARE_DI_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PA15 */
+  GPIO_InitStruct.Pin = GPIO_PIN_15;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : BATTER_LOW_Pin */
+  GPIO_InitStruct.Pin = BATTER_LOW_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(BATTER_LOW_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : THETA_DIR_Pin THETA_EN_Pin Power_Indicator_Pin RADIAL_DIR_Pin
+                           RADIAL_EN_Pin */
+  GPIO_InitStruct.Pin = THETA_DIR_Pin|THETA_EN_Pin|Power_Indicator_Pin|RADIAL_DIR_Pin
+                          |RADIAL_EN_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : STEP_THETA on PB3 as TIM2_CH2 */
-  GPIO_InitStruct.Pin = GPIO_PIN_3;  /* PB3 = TIM2_CH2 */
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.Alternate = GPIO_AF1_TIM2;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  /*Configure GPIO pin : PWM_PUMP_Pin */
   GPIO_InitStruct.Pin = PWM_PUMP_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
