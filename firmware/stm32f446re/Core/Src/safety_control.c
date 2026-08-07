@@ -91,7 +91,7 @@ void safety_cover_check(void)
     /* Simulation: Cover is always closed */
     GPIO_PinState cover_pin = GPIO_PIN_SET;  /* Closed */
 #else
-    GPIO_PinState cover_pin = HAL_GPIO_ReadPin(NC_Switch_GPIO_Port, NC_Switch_Pin);
+    GPIO_PinState cover_pin = HAL_GPIO_ReadPin(COVER_SW_GPIO_Port, COVER_SW_Pin);
 #endif
     
     if (cover_pin == GPIO_PIN_RESET) {

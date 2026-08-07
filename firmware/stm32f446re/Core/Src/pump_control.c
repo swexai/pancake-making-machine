@@ -35,10 +35,12 @@ static const float ring_flow_targets[NUM_NOZZLES] = {
  */
 void pump_init(void)
 {
+    extern TIM_HandleTypeDef htim4;
+
     memset(&g_pump, 0, sizeof(g_pump));
     memset(&g_pump_trim, 0, sizeof(g_pump_trim));
     
-    g_pump.pwm_period = PUMP_TIMER_PERIOD;
+    g_pump.pwm_period = htim4.Init.Period + 1U;
     g_pump.pwm_pulse = 0;
     g_pump.is_enabled = false;
     g_pump.duty_cycle_percent = 0.0f;
@@ -59,17 +61,17 @@ void pump_init(void)
  */
 void pump_enable(bool enable)
 {
-    extern TIM_HandleTypeDef htim1;
+    extern TIM_HandleTypeDef htim4;
 
     g_pump.is_enabled = enable;
 
     if (enable) {
-        /* Start PWM on TIM1 CH2 (assumed pump PWM pin) */
-        HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
+        /* Start pump PWM on TIM4 CH1 (PB6 / PWM_PUMP) */
+        HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
     } else {
         /* Stop PWM */
-        HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_2);
-        __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, 0);
+        HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_1);
+        __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, 0);
         g_pump.duty_cycle_percent = 0.0f;
     }
 }
@@ -80,7 +82,7 @@ void pump_enable(bool enable)
  */
 void pump_set_duty_cycle(float percent)
 {
-    extern TIM_HandleTypeDef htim1;
+    extern TIM_HandleTypeDef htim4;
     
     /* Clamp to valid range */
     if (percent < PUMP_DUTY_MIN_PCT) {
@@ -96,7 +98,7 @@ void pump_set_duty_cycle(float percent)
     g_pump.pwm_pulse = (g_pump.pwm_period * percent) / 100.0f;
     
     /* Update PWM */
-    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, (uint32_t)g_pump.pwm_pulse);
+    __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, (uint32_t)g_pump.pwm_pulse);
     
 #if SIMULATION_MODE
     /* Debug print */

@@ -59,7 +59,7 @@ void motion_home_axis(void)
     g_home_in_progress = true;
     g_stepper.is_homed = false;
     g_home_start_time = HAL_GetTick();
-    g_home_start_pin_state = HAL_GPIO_ReadPin(NC_Switch_GPIO_Port, NC_Switch_Pin);
+    g_home_start_pin_state = HAL_GPIO_ReadPin(HOME_THETA_GPIO_Port, HOME_THETA_Pin);
     g_home_start_position_rev = g_stepper.position_revolutions;
     
     /* Start slow approach */
@@ -86,15 +86,15 @@ void motion_enable(bool enable)
     extern TIM_HandleTypeDef htim2;
 
     if (enable) {
-        /* Driver enable is active-HIGH on this wiring: drive EN_THETA high */
-        HAL_GPIO_WritePin(EN_THETA_GPIO_Port, EN_THETA_Pin, GPIO_PIN_SET);
+        /* Driver enable is active-HIGH on this wiring: drive THETA_EN high */
+        HAL_GPIO_WritePin(THETA_EN_GPIO_Port, THETA_EN_Pin, GPIO_PIN_SET);
         /* Set DIR to HIGH for clockwise (forward) rotation */
-        HAL_GPIO_WritePin(DIR_GPIO_Port, DIR_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(THETA_DIR_GPIO_Port, THETA_DIR_Pin, GPIO_PIN_SET);
     } else {
         /* Stop step pulse timer BEFORE disabling driver to cut coil current */
         HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_2);
-        /* Drive EN_THETA low to disable the motor driver */
-        HAL_GPIO_WritePin(EN_THETA_GPIO_Port, EN_THETA_Pin, GPIO_PIN_RESET);
+        /* Drive THETA_EN low to disable the motor driver */
+        HAL_GPIO_WritePin(THETA_EN_GPIO_Port, THETA_EN_Pin, GPIO_PIN_RESET);
         g_stepper.current_rpm = 0.0f;
         g_profile.current_velocity = 0.0f;
     }
@@ -188,7 +188,7 @@ static void motion_update_step_frequency(float velocity_rev_s)
 void motion_step(void)
 {
     /* Direction: CW */
-    HAL_GPIO_WritePin(DIR_GPIO_Port, DIR_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(THETA_DIR_GPIO_Port, THETA_DIR_Pin, GPIO_PIN_SET);
     g_stepper.step_counter++;
 }
 
@@ -300,7 +300,7 @@ void motion_update(void)
     /* Check home switch transition.
      * Using edge-change avoids false immediate completion when the switch
      * idle level is already high/low at homing start (NC/NO wiring variants). */
-    GPIO_PinState home_now = HAL_GPIO_ReadPin(NC_Switch_GPIO_Port, NC_Switch_Pin);
+    GPIO_PinState home_now = HAL_GPIO_ReadPin(HOME_THETA_GPIO_Port, HOME_THETA_Pin);
     if (home_now != g_home_start_pin_state) {
             g_stepper.position_revolutions = 0.0f;
             g_stepper.step_counter = 0;
@@ -355,7 +355,7 @@ void motion_update(void)
     }
 #else
     /* Set direction CW */
-    HAL_GPIO_WritePin(DIR_GPIO_Port, DIR_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(THETA_DIR_GPIO_Port, THETA_DIR_Pin, GPIO_PIN_SET);
     
     /* Update TIM2 frequency to match current velocity.
      * TIM2 PWM output drives the STEP line continuously at the correct rate.
