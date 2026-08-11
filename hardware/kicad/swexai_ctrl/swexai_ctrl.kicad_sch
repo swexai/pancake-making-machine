@@ -98,52 +98,6 @@
 		)
 	)
 	(sheet
-		(at 457.2 711.2)
-		(size 400.05 259.08)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(stroke
-			(width 0.1524)
-			(type solid)
-		)
-		(fill
-			(color 0 0 0 0)
-		)
-		(uuid "2027c986-3c6f-41af-b899-37a93d59ecec")
-		(property "Sheetname" "Temperature"
-			(at 457.2 710.4884 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-			)
-		)
-		(property "Sheetfile" "temperature.kicad_sch"
-			(at 457.2 970.8646 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-			)
-		)
-		(instances
-			(project "swexai_ctrl"
-				(path "/e84fb207-b24a-4674-962a-61fd98366889"
-					(page "6")
-				)
-			)
-		)
-	)
-	(sheet
 		(at 433.07 339.09)
 		(size 410.21 264.16)
 		(exclude_from_sim no)

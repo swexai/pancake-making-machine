@@ -2240,7 +2240,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "TerminalBlock:TerminalBlock_MaiXu_MX126-5.0-06P_1x06_P5.00mm"
 			(at 196.85 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -2338,7 +2338,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_DIP:DIP-18_W7.62mm"
 			(at 151.13 92.71 0)
 			(hide yes)
 			(show_name no)
@@ -2475,7 +2475,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "TerminalBlock:TerminalBlock_MaiXu_MX126-5.0-06P_1x06_P5.00mm"
 			(at 196.85 83.82 0)
 			(hide yes)
 			(show_name no)
@@ -2882,5 +2882,4 @@
 			(page "1")
 		)
 	)
-	(embedded_fonts no)
 )

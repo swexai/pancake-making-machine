@@ -2003,7 +2003,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 128.27 84.582 90)
 			(hide yes)
 			(show_name no)
@@ -2239,7 +2239,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 128.27 76.962 90)
 			(hide yes)
 			(show_name no)
@@ -2319,7 +2319,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 128.27 82.042 90)
 			(hide yes)
 			(show_name no)
@@ -2399,7 +2399,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 128.27 87.122 90)
 			(hide yes)
 			(show_name no)
@@ -2557,7 +2557,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 128.27 92.202 90)
 			(hide yes)
 			(show_name no)
@@ -2639,7 +2639,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "TerminalBlock:TerminalBlock_MaiXu_MX126-5.0-04P_1x04_P5.00mm"
 			(at 207.01 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -2725,7 +2725,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 128.27 89.662 90)
 			(hide yes)
 			(show_name no)
@@ -2807,7 +2807,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "TerminalBlock:TerminalBlock_MaiXu_MX126-5.0-04P_1x04_P5.00mm"
 			(at 207.01 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -2971,7 +2971,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 128.27 79.502 90)
 			(hide yes)
 			(show_name no)
@@ -3129,7 +3129,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_DIP:DIP-18_W7.62mm"
 			(at 157.48 100.33 0)
 			(hide yes)
 			(show_name no)
@@ -3336,7 +3336,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 128.27 94.742 90)
 			(hide yes)
 			(show_name no)

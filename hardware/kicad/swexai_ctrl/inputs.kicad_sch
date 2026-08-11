@@ -4635,7 +4635,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "TerminalBlock:TerminalBlock_MaiXu_MX126-5.0-02P_1x02_P5.00mm"
 			(at 35.56 22.86 0)
 			(hide yes)
 			(show_name no)
@@ -4714,7 +4714,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "TerminalBlock:TerminalBlock_MaiXu_MX126-5.0-02P_1x02_P5.00mm"
 			(at 39.37 201.93 0)
 			(hide yes)
 			(show_name no)
@@ -5331,7 +5331,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 130.5052 38.1 0)
 			(hide yes)
 			(show_name no)
@@ -5775,7 +5775,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 131.7752 96.52 0)
 			(hide yes)
 			(show_name no)
@@ -6287,7 +6287,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "TerminalBlock:TerminalBlock_MaiXu_MX126-5.0-02P_1x02_P5.00mm"
 			(at 36.83 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -6449,7 +6449,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 131.7752 67.31 0)
 			(hide yes)
 			(show_name no)
@@ -6528,7 +6528,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "TerminalBlock:TerminalBlock_MaiXu_MX126-5.0-02P_1x02_P5.00mm"
 			(at 40.64 231.14 0)
 			(hide yes)
 			(show_name no)
@@ -7031,7 +7031,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "TerminalBlock:TerminalBlock_MaiXu_MX126-5.0-02P_1x02_P5.00mm"
 			(at 38.1 172.72 0)
 			(hide yes)
 			(show_name no)
@@ -7113,7 +7113,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 134.3152 217.17 0)
 			(hide yes)
 			(show_name no)
@@ -7459,7 +7459,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 135.5852 246.38 0)
 			(hide yes)
 			(show_name no)
@@ -7538,7 +7538,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "TerminalBlock:TerminalBlock_MaiXu_MX126-5.0-02P_1x02_P5.00mm"
 			(at 36.83 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -7620,7 +7620,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 133.0452 187.96 0)
 			(hide yes)
 			(show_name no)
@@ -7895,7 +7895,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 131.7752 125.73 0)
 			(hide yes)
 			(show_name no)
@@ -8416,7 +8416,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "TerminalBlock:TerminalBlock_MaiXu_MX126-5.0-02P_1x02_P5.00mm"
 			(at 36.83 110.49 0)
 			(hide yes)
 			(show_name no)
@@ -8495,7 +8495,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "TerminalBlock:TerminalBlock_MaiXu_MX126-5.0-02P_1x02_P5.00mm"
 			(at 39.37 139.7 0)
 			(hide yes)
 			(show_name no)
@@ -8577,7 +8577,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 134.3152 154.94 0)
 			(hide yes)
 			(show_name no)
