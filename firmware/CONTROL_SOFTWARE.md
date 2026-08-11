@@ -4,6 +4,12 @@
 
 The Injera-making machine control software is a real-time embedded system built with FreeRTOS running on an STM32F446RE microcontroller. The system implements multi-threaded control of three subsystems: thermal control (heating), motion control (plate rotation), and dispense control (pump), with comprehensive safety monitoring.
 
+Current baseline is aligned to `pancake-making-machine.ioc` (STM32CubeMX 6.15.0):
+- Core clock source: HSI, `SYSCLK = 16 MHz`
+- Time base: TIM6
+- Enabled communication/control peripherals: SPI1, TIM1, TIM2, USART2
+- GPIO labels use `ESTOP`, `COVER_SW`, `THETA_*`, `RADIAL_*`, `PWM_PUMP`, `BATTER_LOW`, `SPARE_DI`
+
 ## Architecture
 
 ### Task-Based Structure (FreeRTOS)
@@ -62,9 +68,9 @@ R(T) = R0[1 + A*T + B*T²]  (for T ≥ 0°C)
 ```
 
 **PID Tuning Parameters** (starting values):
-- Kp = 50.0 (proportional gain)
-- Ki = 15.0 (integral gain)  
-- Kd = 5.0  (derivative gain)
+- Kp = 0.8 (proportional gain)
+- Ki = 0.15 (integral gain)  
+- Kd = 0.2  (derivative gain)
 
 ### 2. Motion Control (0.2 rev/s rotation)
 
@@ -82,7 +88,8 @@ R(T) = R0[1 + A*T + B*T²]  (for T ≥ 0°C)
 ### 3. Pump Control (28.3 mL/s total, 7 nozzles)
 
 **PWM-Based Pump Control:**
-- Frequency: 10 kHz PWM
+- PWM output on `PB6 (PWM_PUMP)` via TIM4 CH1 in firmware
+- Current runtime configuration: 10 Hz PWM (aligned with low-rate dispense control loop)
 - Dispensing: 5 seconds per cycle (141.5 mL total)
 - Per-nozzle trim adjustments (0-100%)
 
@@ -145,7 +152,7 @@ ESTOP ──[watchdog/reset]──> ERROR
 
 ### UART Serial Protocol (115200 baud, 8N1)
 
-**Command Format:** Single character commands sent via UART3
+**Command Format:** Single character commands sent via USART2
 
 | Command | Function | Example |
 |---------|----------|---------|
@@ -200,16 +207,30 @@ typedef struct {
 ```
 **Port A (GPIOA):**
 PA0  - ESTOP (input, active low)
-PA1  - NC_Switch/Cover (input, active low)
+PA1  - COVER_SW (input, active low)
 PA2  - UART_TX
 PA3  - UART_RX
 PA5  - SPI1_CLK (MAX31865)
+PA6  - SPI1_MISO
+PA7  - SPI1_MOSI
+PA8  - RADIAL_STEP (TIM1_CH1)
 
 **Port B (GPIOB):**
-PB4  - DIR (stepper direction)
-PB5  - EN_THETA (stepper enable)
+PB3  - THETA_STEP (TIM2_CH2)
+PB4  - THETA_DIR (stepper direction)
+PB5  - THETA_EN (stepper enable)
 PB6  - PWM_PUMP (pump PWM output)
 PB7  - Power_Indicator (LED)
+PB8  - RADIAL_DIR
+PB9  - RADIAL_EN
+
+**Port C (GPIOC):**
+PC4  - START_BTN
+PC5  - STOP_BTN
+PC6  - HOME_THETA
+PC7  - HOME_RADIAL
+PC10 - BATTER_LOW (input)
+PC11 - SPARE_DI
 
 **SPI1:**
 SPI1_MOSI - PA7
@@ -217,8 +238,9 @@ SPI1_MISO - PA6
 SPI1_CLK  - PA5
 
 **Timers:**
-TIM1 - PWM outputs (SSR, pump)
-TIM2 - Stepper step pulses
+TIM1 CH1 - PA8 output (used by thermal SSR control path)
+TIM2 CH2 - PB3 stepper pulse generation
+TIM4 CH1 - PB6 pump PWM output (initialized in firmware user code)
 ```
 
 ## Compilation and Integration
@@ -274,7 +296,7 @@ target_sources(firmware PRIVATE
    ```
 
 2. **Initial Gains** (conservative):
-   - Kp = 50.0, Ki = 15.0, Kd = 5.0
+    - Kp = 0.8, Ki = 0.15, Kd = 0.2
 
 3. **Adjust if Needed:**
    - **Overshoots setpoint:** Reduce Kp or increase Kd
@@ -305,7 +327,7 @@ Command: T7,50  (trim nozzle 7 to 50%)
 
 ### Motion Safety  
 - Homing required before dispense
-- E-stop cuts power to stepper enable line
+- E-stop drives `THETA_EN` disable path in firmware and shuts motion task outputs
 - Cover interlock prevents operation when open
 
 ### System Faults
@@ -362,6 +384,6 @@ Command: T7,50  (trim nozzle 7 to 50%)
 
 ---
 
-**Version:** 1.0  
-**Last Updated:** 2026-03-22  
+**Version:** 1.1  
+**Last Updated:** 2026-08-07  
 **Target Hardware:** STM32F446RE with FreeRTOS
