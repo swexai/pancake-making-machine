@@ -1,0 +1,678 @@
+** Drc report for swexai_ctrl.kicad_pcb **
+** Created on 2026-08-16T22:54:42 **
+** Report includes: Errors **
+
+** Found 0 DRC violations **
+
+** Found 165 unconnected pads **
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(3523.62 mils, 2795.28 mils): PTH pad 1 [+24V_PROTECTED] of C1
+    @(3312.99 mils, 2795.28 mils): Pad 2 [+24V_PROTECTED] of D1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(3822.83 mils, 2795.28 mils): Pad 1 [+24V_PROTECTED] of C2 on F.Cu
+    @(3523.62 mils, 2795.28 mils): PTH pad 1 [+24V_PROTECTED] of C1
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4049.21 mils, 2795.28 mils): Pad 1 [+24V_PROTECTED] of D2 on F.Cu
+    @(3822.83 mils, 2795.28 mils): Pad 1 [+24V_PROTECTED] of C2 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4375.98 mils, 2795.28 mils): Pad 1 [+24V_PROTECTED] of R1 on F.Cu
+    @(4049.21 mils, 2795.28 mils): Pad 1 [+24V_PROTECTED] of D2 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(8070.87 mils, 4218.90 mils): PTH pad 10 [+24V_PROTECTED] of U9
+    @(4375.98 mils, 2795.28 mils): Pad 1 [+24V_PROTECTED] of R1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4447.83 mils, 2795.28 mils): Pad 2 [Net-(D3-A)] of R1 on F.Cu
+    @(4607.28 mils, 2795.28 mils): Pad 2 [Net-(D3-A)] of D3 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(7526.57 mils, 3397.64 mils): Pad 1 [Net-(U9-I1)] of R18 on F.Cu
+    @(7770.87 mils, 3418.90 mils): PTH pad 1 [Net-(U9-I1)] of U9
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(7526.57 mils, 3513.78 mils): Pad 1 [Net-(U9-I2)] of R19 on F.Cu
+    @(7770.87 mils, 3518.90 mils): PTH pad 2 [Net-(U9-I2)] of U9
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(7526.57 mils, 3629.92 mils): Pad 1 [Net-(U9-I3)] of R20 on F.Cu
+    @(7770.87 mils, 3618.90 mils): PTH pad 3 [Net-(U9-I3)] of U9
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(7526.57 mils, 3746.06 mils): Pad 1 [Net-(U9-I4)] of R21 on F.Cu
+    @(7770.87 mils, 3718.90 mils): PTH pad 4 [Net-(U9-I4)] of U9
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(7526.57 mils, 3862.20 mils): Pad 1 [Net-(U9-I5)] of R22 on F.Cu
+    @(7770.87 mils, 3818.90 mils): PTH pad 5 [Net-(U9-I5)] of U9
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(7526.57 mils, 3978.35 mils): Pad 1 [Net-(U9-I6)] of R23 on F.Cu
+    @(7770.87 mils, 3918.90 mils): PTH pad 6 [Net-(U9-I6)] of U9
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(7526.57 mils, 4094.49 mils): Pad 1 [Net-(U9-I7)] of R24 on F.Cu
+    @(7770.87 mils, 4018.90 mils): PTH pad 7 [Net-(U9-I7)] of U9
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(7526.57 mils, 4210.63 mils): Pad 1 [Net-(U9-I8)] of R25 on F.Cu
+    @(7770.87 mils, 4118.90 mils): PTH pad 8 [Net-(U9-I8)] of U9
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(8070.87 mils, 4118.90 mils): PTH pad 11 [/DigitalOutputs/FIELD_SPARE2] of U9
+    @(8385.83 mils, 4645.67 mils): PTH pad 4 [/DigitalOutputs/FIELD_SPARE2] of J11
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(8070.87 mils, 4018.90 mils): PTH pad 12 [/DigitalOutputs/FIELD_SPARE1] of U9
+    @(8385.83 mils, 4448.82 mils): PTH pad 3 [/DigitalOutputs/FIELD_SPARE1] of J11
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(8070.87 mils, 3918.90 mils): PTH pad 13 [/DigitalOutputs/FIELD_AXISB_EN] of U9
+    @(8385.83 mils, 4251.97 mils): PTH pad 2 [/DigitalOutputs/FIELD_AXISB_EN] of J11
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(8070.87 mils, 3818.90 mils): PTH pad 14 [/DigitalOutputs/FIELD_AXISA_EN] of U9
+    @(8385.83 mils, 4055.12 mils): PTH pad 1 [/DigitalOutputs/FIELD_AXISA_EN] of J11
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(8070.87 mils, 3718.90 mils): PTH pad 15 [/DigitalOutputs/FIELD_HEATER_EN] of U9
+    @(8385.83 mils, 3740.16 mils): PTH pad 4 [/DigitalOutputs/FIELD_HEATER_EN] of J10
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(8070.87 mils, 3618.90 mils): PTH pad 16 [/DigitalOutputs/FIELD_BUZZER] of U9
+    @(8385.83 mils, 3543.31 mils): PTH pad 3 [/DigitalOutputs/FIELD_BUZZER] of J10
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(8070.87 mils, 3518.90 mils): PTH pad 17 [/DigitalOutputs/FIELD_RED_LAMP] of U9
+    @(8385.83 mils, 3346.46 mils): PTH pad 2 [/DigitalOutputs/FIELD_RED_LAMP] of J10
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(8070.87 mils, 3418.90 mils): PTH pad 18 [/DigitalOutputs/FIELD_GREEN_LAMP] of U9
+    @(8385.83 mils, 3149.61 mils): PTH pad 1 [/DigitalOutputs/FIELD_GREEN_LAMP] of J10
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6833.08 mils, 2413.39 mils): PTH pad 1 [LOGIC_GREEN_LAMP] of J16
+    @(7598.43 mils, 3397.64 mils): Pad 2 [LOGIC_GREEN_LAMP] of R18 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6833.08 mils, 2513.39 mils): PTH pad 2 [LOGIC_RED_LAMP] of J16
+    @(7598.43 mils, 3513.78 mils): Pad 2 [LOGIC_RED_LAMP] of R19 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6833.08 mils, 2613.39 mils): PTH pad 3 [LOGIC_BUZZER] of J16
+    @(7598.43 mils, 3629.92 mils): Pad 2 [LOGIC_BUZZER] of R20 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6833.08 mils, 2713.39 mils): PTH pad 4 [LOGIC_HEATER_EN] of J16
+    @(7598.43 mils, 3746.06 mils): Pad 2 [LOGIC_HEATER_EN] of R21 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6833.08 mils, 2813.39 mils): PTH pad 5 [LOGIC_SPARE1] of J16
+    @(7598.43 mils, 3862.20 mils): Pad 2 [LOGIC_SPARE1] of R22 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6833.08 mils, 2913.39 mils): PTH pad 6 [LOGIC_SPARE2] of J16
+    @(7598.43 mils, 3978.35 mils): Pad 2 [LOGIC_SPARE2] of R23 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6833.08 mils, 3013.39 mils): PTH pad 7 [LOGIC_SPARE3] of J16
+    @(7598.43 mils, 4094.49 mils): Pad 2 [LOGIC_SPARE3] of R24 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6833.08 mils, 3113.39 mils): PTH pad 8 [LOGIC_SPARE4] of J16
+    @(7598.43 mils, 4210.63 mils): Pad 2 [LOGIC_SPARE4] of R25 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5162.40 mils, 3740.16 mils): Pad 1 [LOGIC_STOP_BTN] of R9 on F.Cu
+    @(4958.66 mils, 3962.20 mils): PTH pad 4 [LOGIC_STOP_BTN] of U4
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5356.30 mils, 3738.58 mils): Pad 1 [LOGIC_STOP_BTN] of C7 on F.Cu
+    @(5162.40 mils, 3740.16 mils): Pad 1 [LOGIC_STOP_BTN] of R9 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5356.30 mils, 3738.58 mils): Pad 1 [LOGIC_STOP_BTN] of C7 on F.Cu
+    @(6675.60 mils, 2713.39 mils): PTH pad 4 [LOGIC_STOP_BTN] of J15
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(3897.64 mils, 2795.28 mils): Pad 2 [GND_LOGIC] of C2 on F.Cu
+    @(3622.05 mils, 2795.28 mils): PTH pad 2 [GND_LOGIC] of C1
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4218.50 mils, 2795.28 mils): Pad 2 [GND_LOGIC] of D2 on F.Cu
+    @(4533.46 mils, 2795.28 mils): Pad 1 [GND_LOGIC] of D3 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4218.50 mils, 2795.28 mils): Pad 2 [GND_LOGIC] of D2 on F.Cu
+    @(3897.64 mils, 2795.28 mils): Pad 2 [GND_LOGIC] of C2 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4566.93 mils, 2480.31 mils): PTH pad 2 [GND_LOGIC] of J_5V_INPUT1
+    @(4533.46 mils, 2795.28 mils): Pad 1 [GND_LOGIC] of D3 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4951.18 mils, 4316.14 mils): PTH pad 3 [GND_LOGIC] of U5
+    @(4958.66 mils, 4062.20 mils): PTH pad 3 [GND_LOGIC] of U4
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4951.18 mils, 4577.56 mils): PTH pad 3 [GND_LOGIC] of U6
+    @(4951.18 mils, 4316.14 mils): PTH pad 3 [GND_LOGIC] of U5
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4951.18 mils, 4577.56 mils): PTH pad 3 [GND_LOGIC] of U6
+    @(4951.18 mils, 4838.98 mils): PTH pad 3 [GND_LOGIC] of U7
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4951.18 mils, 4838.98 mils): PTH pad 3 [GND_LOGIC] of U7
+    @(4952.69 mils, 5099.37 mils): PTH pad 3 [GND_LOGIC] of U8
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4958.66 mils, 3277.95 mils): PTH pad 3 [GND_LOGIC] of U1
+    @(4958.66 mils, 3539.37 mils): PTH pad 3 [GND_LOGIC] of U2
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4958.66 mils, 3277.95 mils): PTH pad 3 [GND_LOGIC] of U1
+    @(4533.46 mils, 2795.28 mils): Pad 1 [GND_LOGIC] of D3 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4958.66 mils, 3539.37 mils): PTH pad 3 [GND_LOGIC] of U2
+    @(4958.66 mils, 3800.79 mils): PTH pad 3 [GND_LOGIC] of U3
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4958.66 mils, 4062.20 mils): PTH pad 3 [GND_LOGIC] of U4
+    @(4958.66 mils, 3800.79 mils): PTH pad 3 [GND_LOGIC] of U3
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4958.66 mils, 4062.20 mils): PTH pad 3 [GND_LOGIC] of U4
+    @(5431.10 mils, 4094.09 mils): Pad 2 [GND_LOGIC] of C10 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5431.10 mils, 3501.57 mils): Pad 2 [GND_LOGIC] of C5 on F.Cu
+    @(5431.10 mils, 3620.08 mils): Pad 2 [GND_LOGIC] of C6 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5431.10 mils, 3501.57 mils): Pad 2 [GND_LOGIC] of C5 on F.Cu
+    @(5431.10 mils, 3383.07 mils): Pad 2 [GND_LOGIC] of C4 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5431.10 mils, 3620.08 mils): Pad 2 [GND_LOGIC] of C6 on F.Cu
+    @(5431.10 mils, 3738.58 mils): Pad 2 [GND_LOGIC] of C7 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5431.10 mils, 3620.08 mils): Pad 2 [GND_LOGIC] of C6 on F.Cu
+    @(5846.46 mils, 3650.59 mils): Pad 19 [GND_LOGIC] of U11 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5431.10 mils, 3857.09 mils): Pad 2 [GND_LOGIC] of C8 on F.Cu
+    @(5431.10 mils, 3738.58 mils): Pad 2 [GND_LOGIC] of C7 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5431.10 mils, 3975.59 mils): Pad 2 [GND_LOGIC] of C9 on F.Cu
+    @(5431.10 mils, 4094.09 mils): Pad 2 [GND_LOGIC] of C10 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5431.10 mils, 3975.59 mils): Pad 2 [GND_LOGIC] of C9 on F.Cu
+    @(5431.10 mils, 3857.09 mils): Pad 2 [GND_LOGIC] of C8 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5431.10 mils, 4094.09 mils): Pad 2 [GND_LOGIC] of C10 on F.Cu
+    @(5431.10 mils, 4212.60 mils): Pad 2 [GND_LOGIC] of C11 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5846.46 mils, 3676.18 mils): Pad 18 [GND_LOGIC] of U11 on F.Cu
+    @(5846.46 mils, 3650.59 mils): Pad 19 [GND_LOGIC] of U11 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5846.46 mils, 3676.18 mils): Pad 18 [GND_LOGIC] of U11 on F.Cu
+    @(5846.46 mils, 3804.13 mils): Pad 13 [GND_LOGIC] of U11 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6181.10 mils, 3661.02 mils): Pad 2 [GND_LOGIC] of C_DVDD1 on F.Cu
+    @(6181.10 mils, 3898.03 mils): Pad 2 [GND_LOGIC] of C_VDD1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6181.10 mils, 3661.02 mils): Pad 2 [GND_LOGIC] of C_DVDD1 on F.Cu
+    @(5846.46 mils, 3650.59 mils): Pad 19 [GND_LOGIC] of U11 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6220.47 mils, 5157.48 mils): PTH pad 7 [GND_LOGIC] of U10
+    @(6320.47 mils, 5157.48 mils): PTH pad 8 [GND_LOGIC] of U10
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6220.47 mils, 5157.48 mils): PTH pad 7 [GND_LOGIC] of U10
+    @(5431.10 mils, 4212.60 mils): Pad 2 [GND_LOGIC] of C11 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6320.47 mils, 5157.48 mils): PTH pad 8 [GND_LOGIC] of U10
+    @(6420.47 mils, 5157.48 mils): PTH pad 9 [GND_LOGIC] of U10
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5162.40 mils, 4055.12 mils): Pad 1 [LOGIC_HOME_TRANSFER] of R13 on F.Cu
+    @(4951.18 mils, 4477.56 mils): PTH pad 4 [LOGIC_HOME_TRANSFER] of U6
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5356.30 mils, 3975.59 mils): Pad 1 [LOGIC_HOME_TRANSFER] of C9 on F.Cu
+    @(5162.40 mils, 4055.12 mils): Pad 1 [LOGIC_HOME_TRANSFER] of R13 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5356.30 mils, 3975.59 mils): Pad 1 [LOGIC_HOME_TRANSFER] of C9 on F.Cu
+    @(6675.60 mils, 2913.39 mils): PTH pad 6 [LOGIC_HOME_TRANSFER] of J15
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(3355.31 mils, 2342.52 mils): PTH pad 1 [+24V_IN] of F1
+    @(3355.31 mils, 2539.37 mils): PTH pad 1 [+24V_IN] of F1
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(3155.51 mils, 2795.28 mils): Pad 1 [Net-(D1-K)] of D1 on F.Cu
+    @(4056.10 mils, 2539.37 mils): PTH pad 2 [Net-(D1-K)] of F1
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4056.10 mils, 2539.37 mils): PTH pad 2 [Net-(D1-K)] of F1
+    @(4056.10 mils, 2342.52 mils): PTH pad 2 [Net-(D1-K)] of F1
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4960.63 mils, 5433.07 mils): PTH pad 1 [+5V_CONTROL] of J1
+    @(5354.33 mils, 5433.07 mils): PTH pad 3 [+5V_CONTROL] of J1
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5354.33 mils, 5433.07 mils): PTH pad 3 [+5V_CONTROL] of J1
+    @(5748.03 mils, 5433.07 mils): PTH pad 5 [+5V_CONTROL] of J1
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5748.03 mils, 5433.07 mils): PTH pad 5 [+5V_CONTROL] of J1
+    @(6259.84 mils, 5433.07 mils): PTH pad 1 [+5V_CONTROL] of J12
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6259.84 mils, 5433.07 mils): PTH pad 1 [+5V_CONTROL] of J12
+    @(6653.54 mils, 5433.07 mils): PTH pad 3 [+5V_CONTROL] of J12
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6259.84 mils, 5433.07 mils): PTH pad 1 [+5V_CONTROL] of J12
+    @(6360.64 mils, 2519.69 mils): PTH pad 2 [+5V_CONTROL] of J13
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6360.64 mils, 2519.69 mils): PTH pad 2 [+5V_CONTROL] of J13
+    @(4370.08 mils, 2480.31 mils): PTH pad 1 [+5V_CONTROL] of J_5V_INPUT1
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6653.54 mils, 5433.07 mils): PTH pad 3 [+5V_CONTROL] of J12
+    @(7047.24 mils, 5433.07 mils): PTH pad 5 [+5V_CONTROL] of J12
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5920.47 mils, 4857.48 mils): PTH pad 15 [Net-(J12-Pin_2)] of U10
+    @(6456.69 mils, 5433.07 mils): PTH pad 2 [Net-(J12-Pin_2)] of J12
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6020.47 mils, 4857.48 mils): PTH pad 14 [Net-(J12-Pin_4)] of U10
+    @(6850.39 mils, 5433.07 mils): PTH pad 4 [Net-(J12-Pin_4)] of J12
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6120.47 mils, 4857.48 mils): PTH pad 13 [Net-(J12-Pin_6)] of U10
+    @(7244.09 mils, 5433.07 mils): PTH pad 6 [Net-(J12-Pin_6)] of J12
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5162.40 mils, 4330.71 mils): Pad 1 [LOGIC_SPARE_DI] of R17 on F.Cu
+    @(4952.69 mils, 4999.37 mils): PTH pad 4 [LOGIC_SPARE_DI] of U8
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5356.30 mils, 4212.60 mils): Pad 1 [LOGIC_SPARE_DI] of C11 on F.Cu
+    @(5162.40 mils, 4330.71 mils): Pad 1 [LOGIC_SPARE_DI] of R17 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5356.30 mils, 4212.60 mils): Pad 1 [LOGIC_SPARE_DI] of C11 on F.Cu
+    @(6675.60 mils, 3113.39 mils): PTH pad 8 [LOGIC_SPARE_DI] of J15
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5234.25 mils, 3348.43 mils): Pad 2 [+3V3] of R4 on F.Cu
+    @(5234.25 mils, 3464.57 mils): Pad 2 [+3V3] of R5 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5234.25 mils, 3464.57 mils): Pad 2 [+3V3] of R5 on F.Cu
+    @(5234.25 mils, 3622.05 mils): Pad 2 [+3V3] of R7 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5234.25 mils, 3622.05 mils): Pad 2 [+3V3] of R7 on F.Cu
+    @(5234.25 mils, 3740.16 mils): Pad 2 [+3V3] of R9 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5234.25 mils, 3622.05 mils): Pad 2 [+3V3] of R7 on F.Cu
+    @(5570.87 mils, 3650.59 mils): Pad 2 [+3V3] of U11 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5234.25 mils, 3740.16 mils): Pad 2 [+3V3] of R9 on F.Cu
+    @(5234.25 mils, 3858.27 mils): Pad 2 [+3V3] of R11 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5234.25 mils, 3858.27 mils): Pad 2 [+3V3] of R11 on F.Cu
+    @(5234.25 mils, 4055.12 mils): Pad 2 [+3V3] of R13 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5234.25 mils, 4055.12 mils): Pad 2 [+3V3] of R13 on F.Cu
+    @(5234.25 mils, 4216.54 mils): Pad 2 [+3V3] of R15 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5234.25 mils, 4216.54 mils): Pad 2 [+3V3] of R15 on F.Cu
+    @(5234.25 mils, 4330.71 mils): Pad 2 [+3V3] of R17 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5570.87 mils, 3676.18 mils): Pad 3 [+3V3] of U11 on F.Cu
+    @(5570.87 mils, 3650.59 mils): Pad 2 [+3V3] of U11 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6106.30 mils, 3661.02 mils): Pad 1 [+3V3] of C_DVDD1 on F.Cu
+    @(6106.30 mils, 3898.03 mils): Pad 1 [+3V3] of C_VDD1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6106.30 mils, 3661.02 mils): Pad 1 [+3V3] of C_DVDD1 on F.Cu
+    @(5570.87 mils, 3650.59 mils): Pad 2 [+3V3] of U11 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6360.64 mils, 2419.69 mils): PTH pad 1 [+3V3] of J13
+    @(6106.30 mils, 3661.02 mils): Pad 1 [+3V3] of C_DVDD1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4958.66 mils, 3177.95 mils): PTH pad 4 [LOGIC_ESTOP] of U1
+    @(5162.40 mils, 3348.43 mils): Pad 1 [LOGIC_ESTOP] of R4 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5162.40 mils, 3348.43 mils): Pad 1 [LOGIC_ESTOP] of R4 on F.Cu
+    @(5356.30 mils, 3383.07 mils): Pad 1 [LOGIC_ESTOP] of C4 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5356.30 mils, 3383.07 mils): Pad 1 [LOGIC_ESTOP] of C4 on F.Cu
+    @(6675.60 mils, 2413.39 mils): PTH pad 1 [LOGIC_ESTOP] of J15
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5162.40 mils, 4216.54 mils): Pad 1 [LOGIC_BATTER_LOW] of R15 on F.Cu
+    @(4951.18 mils, 4738.98 mils): PTH pad 4 [LOGIC_BATTER_LOW] of U7
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5356.30 mils, 4094.09 mils): Pad 1 [LOGIC_BATTER_LOW] of C10 on F.Cu
+    @(5162.40 mils, 4216.54 mils): Pad 1 [LOGIC_BATTER_LOW] of R15 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5356.30 mils, 4094.09 mils): Pad 1 [LOGIC_BATTER_LOW] of C10 on F.Cu
+    @(6675.60 mils, 3013.39 mils): PTH pad 7 [LOGIC_BATTER_LOW] of J15
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5620.47 mils, 5157.48 mils): PTH pad 1 [LOGIC_AXISA_STEP] of U10
+    @(6518.12 mils, 2627.17 mils): PTH pad 3 [LOGIC_AXISA_STEP] of J14
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6518.12 mils, 2627.17 mils): PTH pad 3 [LOGIC_AXISA_STEP] of J14
+    @(6518.12 mils, 2427.17 mils): PTH pad 1 [LOGIC_AXISA_STEP] of J14
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5720.47 mils, 5157.48 mils): PTH pad 2 [LOGIC_AXISA_DIR] of U10
+    @(6518.12 mils, 2527.17 mils): PTH pad 2 [LOGIC_AXISA_DIR] of J14
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5920.47 mils, 5157.48 mils): PTH pad 4 [LOGIC_TRANSFER_STEP] of U10
+    @(6518.12 mils, 2727.17 mils): PTH pad 4 [LOGIC_TRANSFER_STEP] of J14
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6020.47 mils, 5157.48 mils): PTH pad 5 [LOGIC_TRANSFER_DIR] of U10
+    @(6518.12 mils, 2827.17 mils): PTH pad 5 [LOGIC_TRANSFER_DIR] of J14
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6120.47 mils, 5157.48 mils): PTH pad 6 [LOGIC_TRANSFER_EN] of U10
+    @(6518.12 mils, 2927.17 mils): PTH pad 6 [LOGIC_TRANSFER_EN] of J14
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5820.47 mils, 4857.48 mils): PTH pad 16 [Net-(J1-Pin_6)] of U10
+    @(5944.88 mils, 5433.07 mils): PTH pad 6 [Net-(J1-Pin_6)] of J1
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5551.18 mils, 5433.07 mils): PTH pad 4 [Net-(J1-Pin_4)] of J1
+    @(5720.47 mils, 4857.48 mils): PTH pad 17 [Net-(J1-Pin_4)] of U10
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5157.48 mils, 5433.07 mils): PTH pad 2 [Net-(J1-Pin_2)] of J1
+    @(5620.47 mils, 4857.48 mils): PTH pad 18 [Net-(J1-Pin_2)] of U10
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4958.66 mils, 3439.37 mils): PTH pad 4 [LOGIC_COVER_SW] of U2
+    @(5162.40 mils, 3464.57 mils): Pad 1 [LOGIC_COVER_SW] of R5 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5162.40 mils, 3464.57 mils): Pad 1 [LOGIC_COVER_SW] of R5 on F.Cu
+    @(5356.30 mils, 3501.57 mils): Pad 1 [LOGIC_COVER_SW] of C5 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5356.30 mils, 3501.57 mils): Pad 1 [LOGIC_COVER_SW] of C5 on F.Cu
+    @(6675.60 mils, 2513.39 mils): PTH pad 2 [LOGIC_COVER_SW] of J15
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5162.40 mils, 3622.05 mils): Pad 1 [LOGIC_START_BTN] of R7 on F.Cu
+    @(4958.66 mils, 3700.79 mils): PTH pad 4 [LOGIC_START_BTN] of U3
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5356.30 mils, 3620.08 mils): Pad 1 [LOGIC_START_BTN] of C6 on F.Cu
+    @(5162.40 mils, 3622.05 mils): Pad 1 [LOGIC_START_BTN] of R7 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5356.30 mils, 3620.08 mils): Pad 1 [LOGIC_START_BTN] of C6 on F.Cu
+    @(6675.60 mils, 2613.39 mils): PTH pad 3 [LOGIC_START_BTN] of J15
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5162.40 mils, 3858.27 mils): Pad 1 [LOGIC_HOME_AXISA] of R11 on F.Cu
+    @(4951.18 mils, 4216.14 mils): PTH pad 4 [LOGIC_HOME_AXISA] of U5
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5356.30 mils, 3857.09 mils): Pad 1 [LOGIC_HOME_AXISA] of C8 on F.Cu
+    @(5162.40 mils, 3858.27 mils): Pad 1 [LOGIC_HOME_AXISA] of R11 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5356.30 mils, 3857.09 mils): Pad 1 [LOGIC_HOME_AXISA] of C8 on F.Cu
+    @(6675.60 mils, 2813.39 mils): PTH pad 5 [LOGIC_HOME_AXISA] of J15
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6360.64 mils, 2619.69 mils): PTH pad 3 [GND] of J13
+    @(7007.87 mils, 2913.10 mils): PTH pad 6 [GND] of J17
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5846.46 mils, 3752.95 mils): Pad 15 [SPI1_SCK] of U11 on F.Cu
+    @(7007.87 mils, 2413.10 mils): PTH pad 1 [SPI1_SCK] of J17
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5846.46 mils, 3701.77 mils): Pad 17 [SPI1_MISO] of U11 on F.Cu
+    @(7007.87 mils, 2513.10 mils): PTH pad 2 [SPI1_MISO] of J17
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5846.46 mils, 3778.54 mils): Pad 14 [SPI1_MOSI] of U11 on F.Cu
+    @(7007.87 mils, 2613.10 mils): PTH pad 3 [SPI1_MOSI] of J17
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5846.46 mils, 3727.36 mils): Pad 16 [TEMP_CS] of U11 on F.Cu
+    @(7007.87 mils, 2713.10 mils): PTH pad 4 [TEMP_CS] of J17
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5570.87 mils, 3625.00 mils): Pad 1 [TEMP_DRDY] of U11 on F.Cu
+    @(7007.87 mils, 2813.10 mils): PTH pad 5 [TEMP_DRDY] of J17
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5570.87 mils, 3829.72 mils): Pad 9 [Net-(J18-Pin_2)] of U11 on F.Cu
+    @(5570.87 mils, 3855.31 mils): Pad 10 [Net-(J18-Pin_2)] of U11 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6106.30 mils, 3779.53 mils): Pad 1 [Net-(J18-Pin_2)] of C_RTD1 on F.Cu
+    @(5570.87 mils, 3829.72 mils): Pad 9 [Net-(J18-Pin_2)] of U11 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6456.69 mils, 3779.53 mils): PTH pad 2 [Net-(J18-Pin_2)] of J18
+    @(6106.30 mils, 3779.53 mils): Pad 1 [Net-(J18-Pin_2)] of C_RTD1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5846.46 mils, 3829.72 mils): Pad 12 [Net-(J18-Pin_3)] of U11 on F.Cu
+    @(5846.46 mils, 3855.31 mils): Pad 11 [Net-(J18-Pin_3)] of U11 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6181.10 mils, 3779.53 mils): Pad 2 [Net-(J18-Pin_3)] of C_RTD1 on F.Cu
+    @(5846.46 mils, 3829.72 mils): Pad 12 [Net-(J18-Pin_3)] of U11 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(6456.69 mils, 3879.53 mils): PTH pad 3 [Net-(J18-Pin_3)] of J18
+    @(6181.10 mils, 3779.53 mils): Pad 2 [Net-(J18-Pin_3)] of C_RTD1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5570.87 mils, 3804.13 mils): Pad 8 [Net-(J18-Pin_1)] of U11 on F.Cu
+    @(6456.69 mils, 3679.53 mils): PTH pad 1 [Net-(J18-Pin_1)] of J18
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5570.87 mils, 3701.77 mils): Pad 4 [Net-(U11-BIAS)] of U11 on F.Cu
+    @(5570.87 mils, 3727.36 mils): Pad 5 [Net-(U11-BIAS)] of U11 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5570.87 mils, 3727.36 mils): Pad 5 [Net-(U11-BIAS)] of U11 on F.Cu
+    @(5633.37 mils, 4094.49 mils): Pad 1 [Net-(U11-BIAS)] of RREF1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5570.87 mils, 3752.95 mils): Pad 6 [Net-(U11-ISENSOR)] of U11 on F.Cu
+    @(5570.87 mils, 3778.54 mils): Pad 7 [Net-(U11-ISENSOR)] of U11 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(5570.87 mils, 3778.54 mils): Pad 7 [Net-(U11-ISENSOR)] of U11 on F.Cu
+    @(5705.22 mils, 4094.49 mils): Pad 2 [Net-(U11-ISENSOR)] of RREF1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4090.58 mils, 3828.89 mils): Pad 2 [Net-(R3-Pad2)] of R3 on F.Cu
+    @(4658.66 mils, 3439.37 mils): PTH pad 1 [Net-(R3-Pad2)] of U2
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4094.03 mils, 3395.82 mils): Pad 2 [Net-(R2-Pad2)] of R2 on F.Cu
+    @(4658.66 mils, 3177.95 mils): PTH pad 1 [Net-(R2-Pad2)] of U1
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4096.80 mils, 4195.03 mils): Pad 2 [Net-(R6-Pad2)] of R6 on F.Cu
+    @(4658.66 mils, 3700.79 mils): PTH pad 1 [Net-(R6-Pad2)] of U3
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4115.47 mils, 4592.49 mils): Pad 2 [Net-(R8-Pad2)] of R8 on F.Cu
+    @(4658.66 mils, 3962.20 mils): PTH pad 1 [Net-(R8-Pad2)] of U4
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4116.95 mils, 4771.93 mils): Pad 2 [Net-(R10-Pad2)] of R10 on F.Cu
+    @(4651.18 mils, 4216.14 mils): PTH pad 1 [Net-(R10-Pad2)] of U5
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4093.36 mils, 3592.67 mils): Pad 2 [Net-(R12-Pad2)] of R12 on F.Cu
+    @(4651.18 mils, 4477.56 mils): PTH pad 1 [Net-(R12-Pad2)] of U6
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4096.80 mils, 3986.37 mils): Pad 2 [Net-(R14-Pad2)] of R14 on F.Cu
+    @(4651.18 mils, 4738.98 mils): PTH pad 1 [Net-(R14-Pad2)] of U7
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4106.55 mils, 4380.07 mils): Pad 2 [Net-(R16-Pad2)] of R16 on F.Cu
+    @(4652.69 mils, 4999.37 mils): PTH pad 1 [Net-(R16-Pad2)] of U8
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(3188.51 mils, 3400.55 mils): PTH pad 1 [Net-(J2-Pin_1)] of J2
+    @(4022.17 mils, 3395.82 mils): Pad 1 [Net-(J2-Pin_1)] of R2 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(3188.51 mils, 3798.77 mils): PTH pad 1 [Net-(J3-Pin_1)] of J3
+    @(4018.73 mils, 3828.89 mils): Pad 1 [Net-(J3-Pin_1)] of R3 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(3188.51 mils, 4197.00 mils): PTH pad 1 [Net-(J4-Pin_1)] of J4
+    @(4024.95 mils, 4195.03 mils): Pad 1 [Net-(J4-Pin_1)] of R6 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(3188.51 mils, 4595.23 mils): PTH pad 1 [Net-(J5-Pin_1)] of J5
+    @(4043.62 mils, 4592.49 mils): Pad 1 [Net-(J5-Pin_1)] of R8 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(3652.64 mils, 4778.70 mils): PTH pad 1 [Net-(J6-Pin_1)] of J6
+    @(4045.10 mils, 4771.93 mils): Pad 1 [Net-(J6-Pin_1)] of R10 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(3653.08 mils, 3584.90 mils): PTH pad 1 [Net-(J7-Pin_1)] of J7
+    @(4021.50 mils, 3592.67 mils): Pad 1 [Net-(J7-Pin_1)] of R12 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(3653.08 mils, 3983.13 mils): PTH pad 1 [Net-(J8-Pin_1)] of J8
+    @(4024.95 mils, 3986.37 mils): Pad 1 [Net-(J8-Pin_1)] of R14 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(3653.08 mils, 4381.35 mils): PTH pad 1 [Net-(J9-Pin_1)] of J9
+    @(4034.70 mils, 4380.07 mils): Pad 1 [Net-(J9-Pin_1)] of R16 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4433.59 mils, 3592.67 mils): Pad 2 [Net-(D9-A)] of D9 on F.Cu
+    @(3849.93 mils, 3584.90 mils): PTH pad 2 [Net-(D9-A)] of J7
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4651.18 mils, 4577.56 mils): PTH pad 2 [Net-(D9-A)] of U6
+    @(4433.59 mils, 3592.67 mils): Pad 2 [Net-(D9-A)] of D9 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(3385.36 mils, 3400.55 mils): PTH pad 2 [Net-(D4-A)] of J2
+    @(4433.59 mils, 3395.82 mils): Pad 2 [Net-(D4-A)] of D4 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4433.59 mils, 3395.82 mils): Pad 2 [Net-(D4-A)] of D4 on F.Cu
+    @(4658.66 mils, 3277.95 mils): PTH pad 2 [Net-(D4-A)] of U1
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(3385.36 mils, 3798.77 mils): PTH pad 2 [Net-(D5-A)] of J3
+    @(4433.59 mils, 3828.89 mils): Pad 2 [Net-(D5-A)] of D5 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4433.59 mils, 3828.89 mils): Pad 2 [Net-(D5-A)] of D5 on F.Cu
+    @(4658.66 mils, 3539.37 mils): PTH pad 2 [Net-(D5-A)] of U2
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(3385.36 mils, 4595.23 mils): PTH pad 2 [Net-(D7-A)] of J5
+    @(4440.54 mils, 4604.19 mils): Pad 2 [Net-(D7-A)] of D7 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4440.54 mils, 4604.19 mils): Pad 2 [Net-(D7-A)] of D7 on F.Cu
+    @(4658.66 mils, 4062.20 mils): PTH pad 2 [Net-(D7-A)] of U4
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(3849.50 mils, 4778.70 mils): PTH pad 2 [Net-(D8-A)] of J6
+    @(4448.29 mils, 4778.70 mils): Pad 2 [Net-(D8-A)] of D8 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4448.29 mils, 4778.70 mils): Pad 2 [Net-(D8-A)] of D8 on F.Cu
+    @(4651.18 mils, 4316.14 mils): PTH pad 2 [Net-(D8-A)] of U5
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4434.51 mils, 3991.30 mils): Pad 2 [Net-(D10-A)] of D10 on F.Cu
+    @(3849.93 mils, 3983.13 mils): PTH pad 2 [Net-(D10-A)] of J8
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4651.18 mils, 4838.98 mils): PTH pad 2 [Net-(D10-A)] of U7
+    @(4434.51 mils, 3991.30 mils): Pad 2 [Net-(D10-A)] of D10 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4434.51 mils, 4385.00 mils): Pad 2 [Net-(D11-A)] of D11 on F.Cu
+    @(3849.93 mils, 4381.35 mils): PTH pad 2 [Net-(D11-A)] of J9
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4652.69 mils, 5099.37 mils): PTH pad 2 [Net-(D11-A)] of U8
+    @(4434.51 mils, 4385.00 mils): Pad 2 [Net-(D11-A)] of D11 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(3385.36 mils, 4197.00 mils): PTH pad 2 [Net-(D6-A)] of J4
+    @(4434.51 mils, 4188.15 mils): Pad 2 [Net-(D6-A)] of D6 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(4434.51 mils, 4188.15 mils): Pad 2 [Net-(D6-A)] of D6 on F.Cu
+    @(4658.66 mils, 3800.79 mils): PTH pad 2 [Net-(D6-A)] of U3
+
+** Found 0 Footprint errors **
+
+** Ignored checks **
+    - Footprint has no courtyard defined
+    - Track endpoint not centered on via
+    - Tuning profile track geometries
+    - Footprint doesn't match symbol's footprint filters
+    - Footprint component type doesn't match footprint pads
+
+** End of Report **

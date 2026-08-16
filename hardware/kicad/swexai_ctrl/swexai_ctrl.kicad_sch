@@ -52,8 +52,8 @@
 		)
 	)
 	(sheet
-		(at 1126.49 24.13)
-		(size 480.06 320.04)
+		(at 1121.41 13.97)
+		(size 480.06 287.02)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -66,9 +66,9 @@
 		(fill
 			(color 0 0 0 0)
 		)
-		(uuid "1f35e80c-3401-44b7-8bd6-0413d6421370")
-		(property "Sheetname" "STM32_Interface"
-			(at 1126.49 23.4184 0)
+		(uuid "423a7969-2a12-45a1-b5cc-4fdbe000ddae")
+		(property "Sheetname" "MCU_Interface"
+			(at 1121.41 13.2584 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -78,8 +78,8 @@
 				(justify left bottom)
 			)
 		)
-		(property "Sheetfile" "stm32_interface.kicad_sch"
-			(at 1126.49 344.7546 0)
+		(property "Sheetfile" "mcu_interface.kicad_sch"
+			(at 1121.41 301.5746 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -92,7 +92,7 @@
 		(instances
 			(project "swexai_ctrl"
 				(path "/e84fb207-b24a-4674-962a-61fd98366889"
-					(page "7")
+					(page "6")
 				)
 			)
 		)
@@ -139,6 +139,52 @@
 			(project "swexai_ctrl"
 				(path "/e84fb207-b24a-4674-962a-61fd98366889"
 					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 1123.95 383.54)
+		(size 483.87 260.35)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "ac0d8fe7-ad46-45b3-badd-3a5cca305ab9")
+		(property "Sheetname" "temperature"
+			(at 1123.95 382.8284 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "temperature.kicad_sch"
+			(at 1123.95 644.4746 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "swexai_ctrl"
+				(path "/e84fb207-b24a-4674-962a-61fd98366889"
+					(page "8")
 				)
 			)
 		)

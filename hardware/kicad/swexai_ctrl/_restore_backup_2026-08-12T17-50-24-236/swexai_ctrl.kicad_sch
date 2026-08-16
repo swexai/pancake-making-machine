@@ -1,0 +1,290 @@
+(kicad_sch
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "e84fb207-b24a-4674-962a-61fd98366889")
+	(paper "A4")
+	(lib_symbols)
+	(sheet
+		(at 471.17 19.05)
+		(size 381 226.06)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "02a622d5-3c62-4390-9a18-231366494dcd")
+		(property "Sheetname" "DigitalOutputs"
+			(at 471.17 18.3384 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "outputs.kicad_sch"
+			(at 471.17 245.6946 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "swexai_ctrl"
+				(path "/e84fb207-b24a-4674-962a-61fd98366889"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 1126.49 24.13)
+		(size 480.06 320.04)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "1f35e80c-3401-44b7-8bd6-0413d6421370")
+		(property "Sheetname" "STM32_Interface"
+			(at 1126.49 23.4184 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "stm32_interface.kicad_sch"
+			(at 1126.49 344.7546 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "swexai_ctrl"
+				(path "/e84fb207-b24a-4674-962a-61fd98366889"
+					(page "7")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 444.5 643.89)
+		(size 415.29 293.37)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "32b3e936-668a-428e-8be7-24265e5c28be")
+		(property "Sheetname" "MCU_Interface"
+			(at 444.5 643.1784 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "mcu_interface.kicad_sch"
+			(at 444.5 937.8446 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "swexai_ctrl"
+				(path "/e84fb207-b24a-4674-962a-61fd98366889"
+					(page "6")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 433.07 339.09)
+		(size 410.21 264.16)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "6dcfa9c4-da79-4dc4-a232-7434517030e9")
+		(property "Sheetname" "MotionControl"
+			(at 433.07 338.3784 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "motioncontrol.kicad_sch"
+			(at 433.07 603.8346 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "swexai_ctrl"
+				(path "/e84fb207-b24a-4674-962a-61fd98366889"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 2.54 669.29)
+		(size 314.96 293.37)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "dd0f04a3-0dac-4a3b-adb4-f125491d97ff")
+		(property "Sheetname" "DigitalInputs"
+			(at 2.54 668.5784 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "inputs.kicad_sch"
+			(at 2.54 963.2446 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "swexai_ctrl"
+				(path "/e84fb207-b24a-4674-962a-61fd98366889"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 5.08 304.8)
+		(size 294.64 285.75)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "f30a5e68-bef5-4d0e-8d46-fa5a6dd73a9b")
+		(property "Sheetname" "Power"
+			(at 5.08 304.0884 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "power.kicad_sch"
+			(at 5.08 591.1346 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "swexai_ctrl"
+				(path "/e84fb207-b24a-4674-962a-61fd98366889"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)

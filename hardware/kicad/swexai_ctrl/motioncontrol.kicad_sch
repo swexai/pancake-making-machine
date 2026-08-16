@@ -7,7 +7,7 @@
 	(title_block
 		(comment 1 "STM32 TIM2 PWM\n      ↓\nULN2803 input\n      ↓\nULN2803 low-side output\n      ↓\nDRI0043 PUL input\n      ↓\nStepper driver\n      ↓\nMotor rotation")
 		(comment 2 "For the θ-axis, use three ULN2803 channels:")
-		(comment 3 "Then duplicate the same interface for the radial axis:")
+		(comment 3 "Then duplicate the same interface for the AXISB axis:")
 		(comment 4 "Two axes consume six channels, leaving only two channels for other loads.")
 		(comment 5 "That means the motor-interface ULN2803 should likely be separate from the general-output ULN2803 used for lamps, buzzer, SSRs, and actuators.")
 	)
@@ -1096,7 +1096,7 @@
 			(embedded_fonts no)
 		)
 	)
-	(text "FIELD_RADIAL_DIR_N"
+	(text "FIELD_AXISB_DIR_N"
 		(exclude_from_sim no)
 		(at 170.434 80.264 0)
 		(effects
@@ -1106,7 +1106,7 @@
 		)
 		(uuid "0530ce9c-7cbe-42bf-9147-6a7041caf4db")
 	)
-	(text "FIELD_THETA_ENA_N"
+	(text "FIELD_AXISA_ENA_N"
 		(exclude_from_sim no)
 		(at 169.926 75.438 0)
 		(effects
@@ -1116,7 +1116,7 @@
 		)
 		(uuid "177390de-3712-4a0d-b39b-7ada9650d342")
 	)
-	(text "FIELD_RADIAL_PUL_N"
+	(text "FIELD_AXISB_PUL_N"
 		(exclude_from_sim no)
 		(at 170.688 78.232 0)
 		(effects
@@ -1126,7 +1126,7 @@
 		)
 		(uuid "37916e46-2c3f-465d-a15a-9dafababddf1")
 	)
-	(text "FIELD_THETA_PUL_N"
+	(text "FIELD_AXISA_PUL_N"
 		(exclude_from_sim no)
 		(at 169.672 69.85 0)
 		(effects
@@ -1136,7 +1136,7 @@
 		)
 		(uuid "d0ebb540-6d21-4e4d-ae4e-f522a675b7d6")
 	)
-	(text "FIELD_RADIAL_ENA_N"
+	(text "FIELD_AXISB_ENA_N"
 		(exclude_from_sim no)
 		(at 170.434 82.55 0)
 		(effects
@@ -1146,7 +1146,7 @@
 		)
 		(uuid "e9b84635-e8f6-4858-86fa-fcc2570fa975")
 	)
-	(text "FIELD_THETA_DIR_N"
+	(text "FIELD_AXISA_DIR_N"
 		(exclude_from_sim no)
 		(at 169.672 72.898 0)
 		(effects
@@ -1846,7 +1846,7 @@
 		)
 		(uuid "ffdd35a3-11e1-4bd8-922d-011a2adea744")
 	)
-	(global_label "LOGIC_RADIAL_EN"
+	(global_label "LOGIC_TRANSFER_EN"
 		(shape input)
 		(at 96.52 83.82 180)
 		(fields_autoplaced yes)
@@ -1870,7 +1870,7 @@
 			)
 		)
 	)
-	(global_label "LOGIC_THETA_EN"
+	(global_label "LOGIC_AXISA_EN"
 		(shape input)
 		(at 96.52 76.2 180)
 		(fields_autoplaced yes)
@@ -1918,7 +1918,7 @@
 			)
 		)
 	)
-	(global_label "LOGIC_THETA_STEP"
+	(global_label "LOGIC_AXISA_STEP"
 		(shape input)
 		(at 96.52 71.12 180)
 		(fields_autoplaced yes)
@@ -1942,7 +1942,7 @@
 			)
 		)
 	)
-	(global_label "LOGIC_RADIAL_DIR"
+	(global_label "LOGIC_TRANSFER_DIR"
 		(shape input)
 		(at 96.52 81.28 180)
 		(fields_autoplaced yes)
@@ -1966,7 +1966,7 @@
 			)
 		)
 	)
-	(global_label "LOGIC_RADIAL_STEP"
+	(global_label "LOGIC_TRANSFER_STEP"
 		(shape input)
 		(at 96.52 78.74 180)
 		(fields_autoplaced yes)
@@ -2014,7 +2014,7 @@
 			)
 		)
 	)
-	(global_label "LOGIC_THETA_DIR"
+	(global_label "LOGIC_AXISA_DIR"
 		(shape input)
 		(at 96.52 73.66 180)
 		(fields_autoplaced yes)
@@ -2229,7 +2229,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "J_THETA_DRIVER"
+		(property "Value" "J_AXISA_DRIVER"
 			(at 199.39 71.1199 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2464,7 +2464,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "J_RADIAL_DRIVER"
+		(property "Value" "J_AXISB_DRIVER"
 			(at 199.39 86.3599 0)
 			(show_name no)
 			(do_not_autoplace no)
