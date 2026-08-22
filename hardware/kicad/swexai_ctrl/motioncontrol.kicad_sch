@@ -2218,7 +2218,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "776a2132-6062-490d-82c4-b552405614c9")
-		(property "Reference" "J1"
+		(property "Reference" "J12_1"
 			(at 199.39 68.5799 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2294,7 +2294,7 @@
 		(instances
 			(project "swexai_ctrl"
 				(path "/e84fb207-b24a-4674-962a-61fd98366889/6dcfa9c4-da79-4dc4-a232-7434517030e9"
-					(reference "J1")
+					(reference "J12_1")
 					(unit 1)
 				)
 			)
@@ -2453,7 +2453,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b61d14ad-9efe-4df1-a280-1939059110d6")
-		(property "Reference" "J12"
+		(property "Reference" "J12_2"
 			(at 199.39 83.8199 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2529,7 +2529,7 @@
 		(instances
 			(project "swexai_ctrl"
 				(path "/e84fb207-b24a-4674-962a-61fd98366889/6dcfa9c4-da79-4dc4-a232-7434517030e9"
-					(reference "J12")
+					(reference "J12_2")
 					(unit 1)
 				)
 			)

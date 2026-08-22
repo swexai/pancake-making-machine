@@ -60,8 +60,8 @@
           "hatch_smoothing_level": 0,
           "hatch_smoothing_value": 0.1,
           "hatch_thickness": 1.0,
-          "min_clearance": 0.5,
-          "min_island_area": 9.99999999996,
+          "min_clearance": 0.0,
+          "min_island_area": 10.0,
           "min_thickness": 0.25,
           "pad_connection": 1,
           "remove_islands": 0,
@@ -69,7 +69,13 @@
           "thermal_relief_spoke_width": 0.5
         }
       },
-      "diff_pair_dimensions": [],
+      "diff_pair_dimensions": [
+        {
+          "gap": 0.0,
+          "via_gap": 0.0,
+          "width": 0.0
+        }
+      ],
       "drc_exclusions": [],
       "meta": {
         "version": 2
@@ -203,7 +209,9 @@
           "td_width_to_size_filter_ratio": 0.9
         }
       ],
-      "track_widths": [],
+      "track_widths": [
+        0.0
+      ],
       "tuning_pattern_settings": {
         "diff_pair_defaults": {
           "corner_radius_percentage": 80,
@@ -230,7 +238,12 @@
           "spacing": 0.6
         }
       },
-      "via_dimensions": [],
+      "via_dimensions": [
+        {
+          "diameter": 0.0,
+          "drill": 0.0
+        }
+      ],
       "zones_allow_external_fillets": false
     },
     "ipc2581": {
@@ -527,7 +540,7 @@
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "priority": 0,
         "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.5,
+        "track_width": 0.75,
         "tuning_profile": ""
       },
       {
@@ -570,7 +583,7 @@
       },
       {
         "netclass": "SIGNAL",
-        "pattern": "SPI, GPIO, STEP, DIR, EN, sensor logic, etc."
+        "pattern": "SPI"
       },
       {
         "netclass": "CONTROL_5V",
@@ -578,7 +591,39 @@
       },
       {
         "netclass": "POWER_24V",
-        "pattern": "+24V_IN, +24V_PROTECTED"
+        "pattern": "+24V_IN"
+      },
+      {
+        "netclass": "POWER_24V",
+        "pattern": "+24V_PROTECTED"
+      },
+      {
+        "netclass": "SIGNAL",
+        "pattern": "GPIO"
+      },
+      {
+        "netclass": "SIGNAL",
+        "pattern": "LOGIC.+STEP"
+      },
+      {
+        "netclass": "SIGNAL",
+        "pattern": "LOGIC.+DIR"
+      },
+      {
+        "netclass": "SIGNAL",
+        "pattern": "LOGIC.+EN"
+      },
+      {
+        "netclass": "SIGNAL",
+        "pattern": "SPI1.+"
+      },
+      {
+        "netclass": "SIGNAL",
+        "pattern": "TEMP_CS"
+      },
+      {
+        "netclass": "SIGNAL",
+        "pattern": "TEMP_DRDY"
       }
     ]
   },
@@ -731,7 +776,7 @@
         "uuid": "e84fb207-b24a-4674-962a-61fd98366889"
       }
     ],
-    "used_designators": "V1,F1,C_VDD1,#PWR1-4,D1-11,C1-14,#GND1,#FLG1-26,R1-26,J_24V_INPUT1,J1-19,C_DVDD1,U1-12,TP1,J_5V_INPUT1,TH1-2,C_RTD1",
+    "used_designators": "V1,F1,C_VDD1,#PWR1-4,D1-11,C1-14,R1-26,#GND1,#FLG1-26,J_24V_INPUT1,J1-19,C_DVDD1,U1-12,TP1,J_5V_INPUT1,TH1-2,C_RTD1",
     "variants": []
   },
   "sheets": [
