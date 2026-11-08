@@ -1070,6 +1070,17 @@
 			(embedded_fonts no)
 		)
 	)
+	(text "TEMPERATURE SENSING - ARCHITECTURE NOTE\n\n* MAX31865 (U11) interfaces a PT100 RTD sensor to the STM32.\n* SPI1 provides temperature data and sensor diagnostics.\n* RREF1 (430Ω, 0.1%) provides the precision reference.\n* C_RTD1 (100nF) filters noise on the RTD inputs.\n* C_VDD1/C_DVDD1 (100nF) decouple the 3.3V supply.\n* A 3-wire PT100 configuration is used.\n* Circuit operates in the GND_LOGIC domain.\n\nNOTE: Configure MAX31865 for 3-wire RTD operation and verify sensor wiring before use.\n"
+		(exclude_from_sim no)
+		(at 34.544 151.892 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "441e660b-86a8-413d-ab9a-f1ab5b2efb2a")
+	)
 	(junction
 		(at 138.43 55.88)
 		(diameter 0)
@@ -2306,7 +2317,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 179.832 71.12 90)
 			(hide yes)
 			(show_name no)

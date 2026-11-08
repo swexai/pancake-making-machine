@@ -4,13 +4,6 @@
 	(generator_version "10.0")
 	(uuid "fa44f1fc-9976-4bd9-b162-ecce5a2efb7c")
 	(paper "A4")
-	(title_block
-		(comment 1 "STM32 TIM2 PWM\n      ↓\nULN2803 input\n      ↓\nULN2803 low-side output\n      ↓\nDRI0043 PUL input\n      ↓\nStepper driver\n      ↓\nMotor rotation")
-		(comment 2 "For the θ-axis, use three ULN2803 channels:")
-		(comment 3 "Then duplicate the same interface for the AXISB axis:")
-		(comment 4 "Two axes consume six channels, leaving only two channels for other loads.")
-		(comment 5 "That means the motor-interface ULN2803 should likely be separate from the general-output ULN2803 used for lamps, buzzer, SSRs, and actuators.")
-	)
 	(lib_symbols
 		(symbol "Connector:Screw_Terminal_01x06"
 			(pin_names
@@ -1135,6 +1128,17 @@
 			)
 		)
 		(uuid "d0ebb540-6d21-4e4d-ae4e-f522a675b7d6")
+	)
+	(text "**ARCHITECTURE NOTE - MOTION CONTROL**\n**Purpose:** Interface STM32 GPIO signals with external stepper drivers for Axis A (dispensing) and Axis B (transfer).\n\n**Design decisions:**\n\n* U10 (ULN2803A) provides six open-collector outputs for STEP, DIR and ENABLE.\n* Stepper-driver PUL+, DIR+ and ENA+ connect to +5V_CONTROL.\n* U10 uses GND_LOGIC; no galvanic isolation is provided by U10 itself.\n* U10 COM is unused because its outputs drive driver control inputs.\n* U10 is mounted on the PCB bottom (B.Cu) to preserve existing routing.\n\n**Constraint:** Verify driver input timing, ENABLE polarity and bottom-side assembly orientation before manufacturing.\n"
+		(exclude_from_sim no)
+		(at 33.528 170.688 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "d1c8c655-f5d5-4da0-9295-b31302cdd217")
 	)
 	(text "FIELD_AXISB_ENA_N"
 		(exclude_from_sim no)

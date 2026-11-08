@@ -799,6 +799,17 @@
 			(embedded_fonts no)
 		)
 	)
+	(text "DIGITAL OUTPUTS - ARCHITECTURE NOTE\n\n* Eight digital outputs for lamps, buzzer, heater enable and auxiliary controls.\n* PC817 optocouplers (U12-U19) isolate STM32 logic from field circuitry.\n* R18-R25 (470Ω) limit optocoupler LED current.\n* U9 (ULN2803A) provides eight active-low, open-collector outputs.\n* U21 converts +24V_PROTECTED to +5V_FIELD.\n* Field loads connect between +24V_PROTECTED and U9 outputs.\n* GND_LOGIC and GND_FIELD remain electrically separate.\n\nNOTE: Verify load currents, startup states and supply isolation before fabrication.\n"
+		(exclude_from_sim no)
+		(at 25.908 141.224 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "f524d3a9-bbd3-4b99-b783-a66f4732b016")
+	)
 	(global_label "LOGIC_BATTER_LOW"
 		(shape input)
 		(at 96.52 104.14 180)
@@ -871,7 +882,7 @@
 			)
 		)
 	)
-	(global_label "LOGIC_SPARE2"
+	(global_label "LOGIC_SPARE4"
 		(shape input)
 		(at 148.59 68.58 180)
 		(fields_autoplaced yes)
@@ -883,7 +894,7 @@
 		)
 		(uuid "20658326-8b02-45c2-88d1-301cb3d839f7")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 127.1596 68.58 0)
+			(at 131.9372 68.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -992,7 +1003,7 @@
 			)
 		)
 	)
-	(global_label "LOGIC_SPARE1"
+	(global_label "LOGIC_SPARE3"
 		(shape input)
 		(at 148.59 66.04 180)
 		(fields_autoplaced yes)
@@ -1004,7 +1015,7 @@
 		)
 		(uuid "47f596bd-842c-4d1c-8741-e355f85a8e1b")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 127.1596 66.04 0)
+			(at 131.9372 66.04 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1352,7 +1363,7 @@
 			)
 		)
 	)
-	(global_label "LOGIC_SPARE4"
+	(global_label "LOGIC_SPARE2"
 		(shape input)
 		(at 148.59 73.66 180)
 		(fields_autoplaced yes)
@@ -1364,7 +1375,7 @@
 		)
 		(uuid "c72e288a-23fc-45e4-bcc7-f1c539d22ae1")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 127.1596 73.66 0)
+			(at 131.9372 73.66 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1496,7 +1507,7 @@
 			)
 		)
 	)
-	(global_label "LOGIC_SPARE3"
+	(global_label "LOGIC_SPARE1"
 		(shape input)
 		(at 148.59 71.12 180)
 		(fields_autoplaced yes)
@@ -1508,7 +1519,7 @@
 		)
 		(uuid "fb3cddaf-d46a-4138-9239-5c0764261338")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 127.1596 71.12 0)
+			(at 131.9372 71.12 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)

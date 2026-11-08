@@ -998,6 +998,17 @@
 			(embedded_fonts no)
 		)
 	)
+	(text "DIGITAL INPUTS - ARCHITECTURE NOTE\n\n* Eight 24V digital inputs for switches and sensors.\n* PC817 optocouplers (U1-U8) provide galvanic isolation.\n* R2-R16 limit input current; D4-D11 provide reverse-polarity protection.\n* R4-R17 provide 3.3V pull-ups; C4-C11 filter input noise.\n* Inputs are active-low: activated switch = logic LOW.\n* GND_FIELD and GND_LOGIC remain electrically isolated.\n\nNOTE: Verify input voltage, switching thresholds and isolation before fabrication.\n"
+		(exclude_from_sim no)
+		(at 14.986 268.732 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "dbc817ba-6810-4858-8ce7-8a50bc04896a")
+	)
 	(junction
 		(at 49.53 172.72)
 		(diameter 0)
